@@ -51,6 +51,7 @@ export interface Product {
 
 export interface Category {
   _id: string
+  code?: string
   name: string
   parentCategory?: string | null
   subCategories?: Category[]

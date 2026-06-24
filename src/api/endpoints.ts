@@ -1,4 +1,5 @@
 import { api, listQueryParams, localeQueryParams } from './client'
+import type { ApiListEnvelope } from './normalizers'
 import type {
   AuthResponse,
   Cart,
@@ -23,7 +24,7 @@ export const endpoints = {
   currencies: () => api.get<{ data: { code: string; name: string }[] }>('/currencies'),
 
   categories: (language: Language, currency: Currency) =>
-    api.get<{ data: Category[] }>('/categories', {
+    api.get<ApiListEnvelope<Category>>('/categories', {
       params: withLocale(language, currency),
     }),
 
@@ -47,7 +48,7 @@ export const endpoints = {
     currency: Currency,
     pagination?: PaginationParams & { filter?: Record<string, unknown> | string; fields?: string },
   ) =>
-    api.get<PaginatedResponse<Product>>('/products', {
+    api.get<ApiListEnvelope<Product>>('/products', {
       params: listQueryParams({ language, currency }, pagination),
     }),
 

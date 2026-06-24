@@ -1,23 +1,27 @@
-import { Link, Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
+import { LocaleLink } from '@/components/ui/LocaleLink'
 import { Container } from '@/components/layout/Container'
+import { useTranslation } from '@/i18n'
 
 export function AuthLayout() {
+  const { t } = useTranslation()
+
   return (
     <div className="flex min-h-screen flex-col bg-bg text-text">
       <header className="border-b border-header-border bg-[rgb(28_25_23/96%)] text-header-text">
         <Container wide>
           <div className="flex min-h-[var(--header-height)] items-center">
-            <Link
+            <LocaleLink
               to="/"
               className="flex leading-none"
-              aria-label="Campfire Store home"
+              aria-label={t('common.homeAria')}
             >
               <img
                 src="/img/campfire_logo_light.png"
-                alt="Campfire Store"
+                alt={t('common.storeName')}
                 className="block h-12 w-auto -translate-y-[0.4rem]"
               />
-            </Link>
+            </LocaleLink>
           </div>
         </Container>
       </header>

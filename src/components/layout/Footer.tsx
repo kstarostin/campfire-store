@@ -1,20 +1,24 @@
-import { Link } from 'react-router-dom'
+import { LocaleLink } from '@/components/ui/LocaleLink'
 import { API_BASE_URL } from '@/api/config'
 import { Container } from '@/components/layout/Container'
-import { staticCategories } from '@/data/staticCategories'
-
-const shopLinks = [
-  { label: 'All products', to: '/products' },
-  ...staticCategories.slice(0, 3).map((category) => ({
-    label: category.name,
-    to: `/categories/${category.id}`,
-  })),
-]
+import { LoadingState } from '@/components/ui/LoadingState'
+import { useTranslation } from '@/i18n'
+import { useCategories } from '@/hooks/useCategories'
 
 const footerLinkClass = 'footer-link cursor-pointer text-[0.9375rem]'
 
 export function Footer() {
+  const { t } = useTranslation()
+  const categories = useCategories()
   const swaggerUrl = API_BASE_URL.replace(/\/$/, '') + '/api-docs/'
+
+  const shopLinks = [
+    { label: t('footer.allProducts'), to: '/products' },
+    ...(categories.data?.slice(0, 3).map((category) => ({
+      label: category.name,
+      to: `/categories/${category._id}`,
+    })) ?? []),
+  ]
 
   return (
     <footer className="mt-4 border-t border-border bg-footer-bg py-8">
@@ -23,48 +27,51 @@ export function Footer() {
           <div className="col-span-3 min-w-0 md:col-span-1">
             <img
               src="/img/campfire_logo_dark.png"
-              alt="Campfire Store"
+              alt={t('common.storeName')}
               className="h-7 w-auto"
             />
             <p className="mt-3 text-[0.9375rem] text-text-muted md:max-w-[20rem]">
-              Gear up for the trail, water, and road — kayaks, bikes, camping
-              essentials, and more for your next adventure.
+              {t('footer.blurb')}
             </p>
           </div>
 
           <div className="min-w-0">
-            <h3 className="m-0 mb-3 font-display text-base">Shop</h3>
-            <ul className="m-0 list-none p-0">
-              {shopLinks.map((link) => (
-                <li key={link.to} className="mt-2 first:mt-0">
-                  <Link to={link.to} className={footerLinkClass}>
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <h3 className="m-0 mb-3 font-display text-base">{t('footer.shop')}</h3>
+            {categories.isLoading ? (
+              <LoadingState label={t('home.categoriesLoading')} />
+            ) : (
+              <ul className="m-0 list-none p-0">
+                {shopLinks.map((link) => (
+                  <li key={link.to} className="mt-2 first:mt-0">
+                    <LocaleLink to={link.to} className={footerLinkClass}>
+                      {link.label}
+                    </LocaleLink>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           <div className="min-w-0">
-            <h3 className="m-0 mb-3 font-display text-base">Account</h3>
+            <h3 className="m-0 mb-3 font-display text-base">{t('footer.account')}</h3>
             <ul className="m-0 list-none p-0">
               {[
-                { label: 'Sign in', to: '/login' },
-                { label: 'Cart', to: '/cart' },
-                { label: 'Orders', to: '/orders' },
-                { label: 'Profile', to: '/account' },
+                { label: t('nav.signIn'), to: '/login' },
+                { label: t('footer.cart'), to: '/cart' },
+                { label: t('footer.orders'), to: '/orders' },
+                { label: t('footer.profile'), to: '/account' },
               ].map((link) => (
                 <li key={link.to} className="mt-2 first:mt-0">
-                  <Link to={link.to} className={footerLinkClass}>
+                  <LocaleLink to={link.to} className={footerLinkClass}>
                     {link.label}
-                  </Link>
+                  </LocaleLink>
                 </li>
               ))}
             </ul>
           </div>
 
           <div className="min-w-0">
-            <h3 className="m-0 mb-3 font-display text-base">API</h3>
+            <h3 className="m-0 mb-3 font-display text-base">{t('footer.api')}</h3>
             <ul className="m-0 list-none p-0">
               <li>
                 <a
@@ -73,7 +80,7 @@ export function Footer() {
                   rel="noreferrer"
                   className={footerLinkClass}
                 >
-                  Swagger docs
+                  {t('footer.swagger')}
                 </a>
               </li>
               <li className="mt-2">
@@ -83,7 +90,7 @@ export function Footer() {
                   rel="noreferrer"
                   className={footerLinkClass}
                 >
-                  GitHub
+                  {t('footer.github')}
                 </a>
               </li>
             </ul>
@@ -91,7 +98,7 @@ export function Footer() {
         </div>
 
         <div className="mt-8 border-t border-border pt-4 text-[0.8125rem] text-text-muted">
-          <span>© {new Date().getFullYear()} Campfire Store</span>
+          <span>{t('footer.copyright', { year: new Date().getFullYear() })}</span>
         </div>
       </Container>
     </footer>

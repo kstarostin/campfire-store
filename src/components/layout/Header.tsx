@@ -1,14 +1,16 @@
 import { ChevronDown, Heart, Menu, ShoppingCart, User } from 'lucide-react'
 import { useEffect, useId, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { LocaleLink } from '@/components/ui/LocaleLink'
 import { Container } from '@/components/layout/Container'
 import { LocalePill } from '@/components/layout/LocalePill'
 import { MegaMenu } from '@/components/layout/MegaMenu'
 import { MobileNav } from '@/components/layout/MobileNav'
 import { SearchField } from '@/components/layout/SearchField'
+import { useTranslation } from '@/i18n'
 import { useIsAuthenticated } from '@/store/authStore'
 
 export function Header() {
+  const { t } = useTranslation()
   const megaMenuId = useId()
   const headerRef = useRef<HTMLElement>(null)
   const [megaOpen, setMegaOpen] = useState(false)
@@ -47,19 +49,22 @@ export function Header() {
       >
         <Container wide>
           <div className="flex min-h-[var(--header-height)] items-center gap-2 md:gap-4">
-            <Link
+            <LocaleLink
               to="/"
               className="flex leading-none"
-              aria-label="Campfire Store home"
+              aria-label={t('common.homeAria')}
             >
               <img
                 src="/img/campfire_logo_light.png"
-                alt="Campfire Store"
+                alt={t('common.storeName')}
                 className="block h-12 w-auto -translate-y-[0.4rem]"
               />
-            </Link>
+            </LocaleLink>
 
-            <nav className="ml-4 hidden items-center gap-5 text-[0.9375rem] font-medium md:flex" aria-label="Main">
+            <nav
+              className="ml-4 hidden items-center gap-5 text-[0.9375rem] font-medium md:flex"
+              aria-label={t('nav.main')}
+            >
               <button
                 type="button"
                 className={`inline-flex cursor-pointer items-center gap-1 border-0 bg-transparent p-0 font-inherit font-medium text-inherit hover:text-[#fdba74] ${
@@ -73,7 +78,7 @@ export function Header() {
                 }}
                 onMouseEnter={() => setMegaOpen(true)}
               >
-                Explore
+                {t('nav.explore')}
                 <ChevronDown
                   size={16}
                   className={`transition-transform duration-150 ${megaOpen ? 'rotate-180' : ''}`}
@@ -87,18 +92,18 @@ export function Header() {
             <div className="ml-auto flex shrink-0 items-center gap-1">
               <LocalePill />
 
-              <Link
+              <LocaleLink
                 to="/wishlist"
                 className="header-icon-btn hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full md:inline-flex"
-                aria-label="Wishlist"
+                aria-label={t('nav.wishlist')}
               >
                 <Heart size={20} />
-              </Link>
+              </LocaleLink>
 
-              <Link
+              <LocaleLink
                 to="/cart"
                 className="header-icon-btn relative inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full"
-                aria-label="Cart"
+                aria-label={t('nav.cart')}
               >
                 <ShoppingCart size={20} />
                 {cartCount > 0 ? (
@@ -106,20 +111,20 @@ export function Header() {
                     {cartCount}
                   </span>
                 ) : null}
-              </Link>
+              </LocaleLink>
 
-              <Link
+              <LocaleLink
                 to={isAuthenticated ? '/account' : '/login'}
                 className="header-icon-btn hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full md:inline-flex"
-                aria-label={isAuthenticated ? 'Account' : 'Sign in'}
+                aria-label={isAuthenticated ? t('nav.account') : t('nav.signIn')}
               >
                 <User size={20} />
-              </Link>
+              </LocaleLink>
 
               <button
                 type="button"
                 className="header-icon-btn inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full md:hidden"
-                aria-label="Menu"
+                aria-label={t('nav.menu')}
                 aria-expanded={mobileOpen}
                 onClick={() => setMobileOpen(true)}
               >

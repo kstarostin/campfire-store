@@ -1,6 +1,8 @@
 import { Search } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
+import { useLocaleNavigate } from '@/hooks/useLocaleNavigate'
+import { useTranslation } from '@/i18n'
 
 interface SearchFieldProps {
   className?: string
@@ -8,7 +10,8 @@ interface SearchFieldProps {
 }
 
 export function SearchField({ className = '', id = 'header-search' }: SearchFieldProps) {
-  const navigate = useNavigate()
+  const { t } = useTranslation()
+  const navigate = useLocaleNavigate()
   const [searchParams] = useSearchParams()
   const [query, setQuery] = useState(() => searchParams.get('q') ?? '')
 
@@ -23,6 +26,7 @@ export function SearchField({ className = '', id = 'header-search' }: SearchFiel
     <form
       className={`flex min-w-0 flex-1 md:mx-auto md:max-w-[22rem] ${className}`.trim()}
       role="search"
+      aria-label={t('nav.searchAria')}
       onSubmit={handleSubmit}
     >
       <label htmlFor={id} className="w-full min-w-0">
@@ -33,7 +37,7 @@ export function SearchField({ className = '', id = 'header-search' }: SearchFiel
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search gear, brands, categories…"
+            placeholder={t('nav.searchPlaceholder')}
             className="w-full min-w-0 border-0 bg-transparent text-header-text outline-none placeholder:text-[#a8a29e]"
           />
         </span>

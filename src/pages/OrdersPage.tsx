@@ -1,10 +1,13 @@
 import { PagePlaceholder } from '@/components/ui/PagePlaceholder'
+import { useTranslation } from '@/i18n'
 
 export function OrdersPage() {
+  const { t } = useTranslation()
+
   return (
     <PagePlaceholder
-      title="Orders"
-      description="Order history — coming in Phase 7."
+      title={t('pages.orders')}
+      description={t('pages.ordersHint')}
     />
   )
 }

@@ -1,10 +1,13 @@
 import { PagePlaceholder } from '@/components/ui/PagePlaceholder'
+import { useTranslation } from '@/i18n'
 
 export function ProductsPage() {
+  const { t } = useTranslation()
+
   return (
     <PagePlaceholder
-      title="All products"
-      description="Full product catalog will be added in a later phase."
+      title={t('pages.allProducts')}
+      description={t('pages.allProductsHint')}
     />
   )
 }

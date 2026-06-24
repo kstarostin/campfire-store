@@ -1,10 +1,13 @@
 import { PagePlaceholder } from '@/components/ui/PagePlaceholder'
+import { useTranslation } from '@/i18n'
 
 export function CartPage() {
+  const { t } = useTranslation()
+
   return (
     <PagePlaceholder
-      title="Shopping cart"
-      description="Cart management will be added in Phase 6."
+      title={t('pages.cart')}
+      description={t('pages.cartHint')}
     />
   )
 }

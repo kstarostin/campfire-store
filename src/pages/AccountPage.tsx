@@ -1,10 +1,13 @@
 import { PagePlaceholder } from '@/components/ui/PagePlaceholder'
+import { useTranslation } from '@/i18n'
 
 export function AccountPage() {
+  const { t } = useTranslation()
+
   return (
     <PagePlaceholder
-      title="Account"
-      description="Profile and address management — coming in Phase 5."
+      title={t('pages.account')}
+      description={t('pages.accountHint')}
     />
   )
 }

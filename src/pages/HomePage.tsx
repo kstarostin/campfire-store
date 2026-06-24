@@ -1,10 +1,15 @@
-import { PagePlaceholder } from '@/components/ui/PagePlaceholder'
+import { CategoryRow } from '@/components/home/CategoryRow'
+import { FeaturedProducts } from '@/components/home/FeaturedProducts'
+import { Hero } from '@/components/home/Hero'
+import { PromoStrip } from '@/components/home/PromoStrip'
 
 export function HomePage() {
   return (
-    <PagePlaceholder
-      title="Home"
-      description="Phase 2 will add the hero, category row, featured products, and promo strip."
-    />
+    <>
+      <Hero />
+      <CategoryRow />
+      <FeaturedProducts />
+      <PromoStrip />
+    </>
   )
 }

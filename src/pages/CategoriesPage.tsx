@@ -1,10 +1,13 @@
 import { PagePlaceholder } from '@/components/ui/PagePlaceholder'
+import { useTranslation } from '@/i18n'
 
 export function CategoriesPage() {
+  const { t } = useTranslation()
+
   return (
     <PagePlaceholder
-      title="All categories"
-      description="Category grid will be wired to the API in Phase 3."
+      title={t('pages.allCategories')}
+      description={t('pages.allCategoriesHint')}
     />
   )
 }

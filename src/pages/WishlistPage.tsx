@@ -1,10 +1,13 @@
 import { PagePlaceholder } from '@/components/ui/PagePlaceholder'
+import { useTranslation } from '@/i18n'
 
 export function WishlistPage() {
+  const { t } = useTranslation()
+
   return (
     <PagePlaceholder
-      title="Wishlist"
-      description="Server-backed wishlist — coming in Phase 8."
+      title={t('pages.wishlist')}
+      description={t('pages.wishlistHint')}
     />
   )
 }
