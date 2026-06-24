@@ -11,13 +11,13 @@ export function MegaMenu({ open, id }: MegaMenuProps) {
   return (
     <div
       id={id}
-      aria-label="Category menu"
+      aria-label="Explore menu"
       aria-hidden={!open}
       className={`absolute inset-x-0 top-full border-t border-header-border bg-header-bg shadow-md ${
         open ? 'block' : 'hidden'
       }`}
     >
-      <Container className="py-5 pb-4">
+      <Container wide className="py-5 pb-4">
         <div className="grid grid-cols-2 gap-x-6 gap-y-5 md:grid-cols-3">
           {staticCategories.map((category) => (
             <div key={category.id}>

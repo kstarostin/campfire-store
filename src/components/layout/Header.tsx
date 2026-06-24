@@ -45,7 +45,7 @@ export function Header() {
         }`}
         onMouseLeave={() => setMegaOpen(false)}
       >
-        <Container>
+        <Container wide>
           <div className="flex min-h-[var(--header-height)] items-center gap-2 md:gap-4">
             <Link
               to="/"
@@ -73,7 +73,7 @@ export function Header() {
                 }}
                 onMouseEnter={() => setMegaOpen(true)}
               >
-                Categories
+                Explore
                 <ChevronDown
                   size={16}
                   className={`transition-transform duration-150 ${megaOpen ? 'rotate-180' : ''}`}

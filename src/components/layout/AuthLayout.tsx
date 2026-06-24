@@ -5,7 +5,7 @@ export function AuthLayout() {
   return (
     <div className="flex min-h-screen flex-col bg-bg text-text">
       <header className="border-b border-header-border bg-[rgb(28_25_23/96%)] text-header-text">
-        <Container>
+        <Container wide>
           <div className="flex min-h-[var(--header-height)] items-center">
             <Link
               to="/"
