@@ -29,16 +29,23 @@ export interface ProductListFilter {
   values?: string[]
   min?: number
   max?: number
+  quickFilters?: PriceQuickFilter[]
+}
+
+export interface PriceQuickFilter {
+  max: number
+  count: number
 }
 
 interface ApiCategoryDocument {
   _id: string
   code?: string
+  icon?: string
   name?: string
   nameI18n?: Partial<Record<Language, string>>
   parentCategory?: string | null
   root?: boolean
-  subCategories?: Category[]
+  subCategories?: ApiCategoryDocument[]
 }
 
 interface ApiBadgeDocument {
@@ -61,6 +68,10 @@ export interface ParsedProductList {
   products: Product[]
   filters: ProductListFilter[]
   total: number
+  page: number
+  limit: number
+  pages: number
+  query?: string
 }
 
 function localizedName(
@@ -78,9 +89,12 @@ export function normalizeCategory(
   return {
     _id: document._id,
     code: document.code,
+    icon: document.icon,
     name: localizedName(document.nameI18n, language, document.name),
     parentCategory: document.parentCategory ?? null,
-    subCategories: document.subCategories,
+    subCategories: document.subCategories?.map((subcategory) =>
+      normalizeCategory(subcategory, language),
+    ),
   }
 }
 
@@ -129,7 +143,12 @@ function normalizeProduct(document: ApiProductDocument, language: Language): Pro
 }
 
 export function parseProductList(
-  response: ApiListEnvelope<ApiProductDocument>,
+  response: ApiListEnvelope<ApiProductDocument> & {
+    currentPage?: number
+    resultsPerPage?: number
+    pages?: number
+    query?: string
+  },
   language: Language,
 ): ParsedProductList {
   const payload = response.data
@@ -144,10 +163,19 @@ export function parseProductList(
       response.results ??
       response.resultsFound ??
       documents.length,
+    page: response.currentPage ?? 1,
+    limit: response.resultsPerPage ?? documents.length,
+    pages: response.pages ?? 1,
+    query: response.query,
   }
 }
 
 export function getManufacturerFilterValues(filters: ProductListFilter[]): string[] {
   const manufacturerFilter = filters.find((filter) => filter.name === 'manufacturer')
   return manufacturerFilter?.values ?? []
+}
+
+export function getPriceQuickFilters(filters: ProductListFilter[]): PriceQuickFilter[] {
+  const priceFilter = filters.find((filter) => filter.name === 'priceI18n')
+  return priceFilter?.quickFilters ?? []
 }

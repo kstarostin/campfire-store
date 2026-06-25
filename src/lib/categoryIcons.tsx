@@ -2,6 +2,7 @@ import {
   Backpack,
   Bike,
   Mountain,
+  Package,
   Sailboat,
   Shirt,
   Tent,
@@ -9,18 +10,25 @@ import {
 } from 'lucide-react'
 
 /**
- * Map icons from stable API category codes (language-independent).
- * Display names are localized and must not be used for matching.
+ * Maps API `category.icon` keys to Lucide components.
+ * Keep in sync with campfire-store-api/utils/categoryIconUtils.js
  */
-export function getCategoryIcon(code?: string): LucideIcon {
-  const slug = (code ?? '').toLowerCase()
+const CATEGORY_ICON_MAP: Record<string, LucideIcon> = {
+  sailboat: Sailboat,
+  bike: Bike,
+  tent: Tent,
+  backpack: Backpack,
+  shirt: Shirt,
+  mountain: Mountain,
+  package: Package,
+}
 
-  if (slug.includes('kayak')) return Sailboat
-  if (slug.includes('bike') || slug.includes('bicy')) return Bike
-  if (slug.includes('camp') || slug.includes('tent')) return Tent
-  if (slug.includes('backpack') || slug === 'accessories') return Backpack
-  if (slug.includes('cloth') || slug.includes('pant')) return Shirt
-  if (slug.includes('ski') || slug.includes('mountain')) return Mountain
+const FALLBACK_ICON = Package
 
-  return Backpack
+/**
+ * Resolve a category icon key from the API to a Lucide component.
+ */
+export function getCategoryIcon(icon?: string | null): LucideIcon {
+  if (!icon) return FALLBACK_ICON
+  return CATEGORY_ICON_MAP[icon.toLowerCase()] ?? FALLBACK_ICON
 }

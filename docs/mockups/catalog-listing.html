@@ -1,0 +1,1282 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Campfire Store — Catalog listing mockup</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      :root {
+        --font-sans: 'Inter', system-ui, sans-serif;
+        --font-display: 'Fraunces', Georgia, serif;
+
+        --color-bg: #fafafa;
+        --color-header-bg: #1c1917;
+        --color-header-border: #292524;
+        --color-footer-bg: #f0f0f0;
+        --color-surface: #ffffff;
+        --color-surface-muted: #f5f5f5;
+        --color-border: #e5e5e5;
+        --color-text: #171717;
+        --color-text-muted: #737373;
+        --color-primary: #ea580c;
+        --color-primary-hover: #c2410c;
+        --color-primary-subtle: #fff7ed;
+        --color-secondary: #047857;
+        --color-secondary-hover: #065f46;
+        --color-secondary-subtle: #e8f7f0;
+        --color-secondary-muted: #d1ebe0;
+
+        --radius-sm: 0.5rem;
+        --radius-md: 0.75rem;
+        --radius-lg: 1rem;
+        --shadow-sm: 0 1px 2px rgb(0 0 0 / 6%);
+        --shadow-md: 0 10px 28px rgb(0 0 0 / 8%);
+        --header-height: 4.75rem;
+        --max-width: 72rem;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--font-sans);
+        font-size: 1rem;
+        line-height: 1.5;
+        color: var(--color-text);
+        background: var(--color-bg);
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+
+      .container {
+        width: min(100% - 2rem, var(--max-width));
+        margin-inline: auto;
+      }
+
+      /* Design mockup chrome */
+      .mockup-bar {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 0.625rem 1rem;
+        border-bottom: 1px solid #44403c;
+        background: #292524;
+        color: #f5f5f4;
+        font-size: 0.8125rem;
+      }
+
+      .mockup-bar strong {
+        font-weight: 600;
+      }
+
+      .mockup-switch {
+        display: inline-flex;
+        padding: 0.1875rem;
+        border-radius: 999px;
+        background: #1c1917;
+      }
+
+      .mockup-switch button {
+        padding: 0.375rem 0.875rem;
+        border: 0;
+        border-radius: 999px;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: #a8a29e;
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .mockup-switch button.is-active {
+        color: #171717;
+        background: #f5f5f4;
+      }
+
+      /* Header (abbreviated) */
+      .site-header {
+        position: sticky;
+        top: 2.375rem;
+        z-index: 30;
+        border-bottom: 1px solid var(--color-header-border);
+        background: rgb(28 25 23 / 96%);
+        backdrop-filter: blur(10px);
+        color: #f5f5f4;
+      }
+
+      .header-inner {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        min-height: var(--header-height);
+      }
+
+      .logo img {
+        height: 3rem;
+        width: auto;
+        transform: translateY(-0.4rem);
+      }
+
+      .header-search {
+        display: none;
+        flex: 1;
+        max-width: 22rem;
+        margin-inline: auto;
+      }
+
+      .search-field {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        width: 100%;
+        padding: 0.625rem 0.875rem;
+        border: 1px solid #44403c;
+        border-radius: 999px;
+        background: #292524;
+      }
+
+      .search-field input {
+        width: 100%;
+        border: 0;
+        outline: none;
+        color: inherit;
+        background: transparent;
+      }
+
+      .search-field input::placeholder {
+        color: #a8a29e;
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        margin-left: auto;
+      }
+
+      .icon-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        border: 0;
+        border-radius: 999px;
+        color: inherit;
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .icon-btn:hover {
+        color: #fdba74;
+      }
+
+      /* Catalog page */
+      .catalog-page {
+        padding: 1.25rem 0 2.5rem;
+      }
+
+      .catalog-page.section--products .chip.is-active {
+        color: white;
+        border-color: var(--color-primary);
+        background: var(--color-primary);
+      }
+
+      .catalog-page.section--products .chip.is-forest.is-active,
+      .catalog-page.section--products .chip.is-forest:hover {
+        color: #ffffff;
+        border-color: var(--color-secondary);
+        background: var(--color-secondary);
+      }
+
+      .catalog-page.section--products .product-card:hover {
+        border-color: #fdba74;
+      }
+
+      .catalog-page.section--products .product-price {
+        color: var(--color-primary-hover);
+      }
+
+      .page-header {
+        margin-bottom: 1.25rem;
+      }
+
+      .breadcrumb {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.375rem;
+        margin: 0 0 0.625rem;
+        padding: 0;
+        list-style: none;
+        font-size: 0.8125rem;
+        color: var(--color-text-muted);
+      }
+
+      .breadcrumb a:hover {
+        color: var(--color-secondary);
+      }
+
+      .breadcrumb [aria-current='page'] {
+        color: var(--color-text);
+        font-weight: 500;
+      }
+
+      .breadcrumb-sep {
+        color: #d4d4d4;
+      }
+
+      .page-header h1 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: clamp(1.625rem, 4vw, 2rem);
+        line-height: 1.12;
+        letter-spacing: -0.02em;
+      }
+
+      .page-header .query-term {
+        color: var(--color-primary-hover);
+      }
+
+      .page-header p {
+        margin: 0.375rem 0 0;
+        font-size: 0.9375rem;
+        color: var(--color-text-muted);
+      }
+
+      /* Filter panel */
+      .catalog-filters {
+        margin-bottom: 1rem;
+        padding: 1rem;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        background: var(--color-surface);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .catalog-filters__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-bottom: 0.875rem;
+      }
+
+      .catalog-filters__head h2 {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 1.0625rem;
+        font-weight: 600;
+      }
+
+      .filter-count {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 1.25rem;
+        height: 1.25rem;
+        padding: 0 0.375rem;
+        border-radius: 999px;
+        font-family: var(--font-sans);
+        font-size: 0.6875rem;
+        font-weight: 600;
+        color: white;
+        background: var(--color-primary);
+      }
+
+      .text-link {
+        padding: 0;
+        border: 0;
+        font-size: 0.8125rem;
+        font-weight: 500;
+        color: var(--color-secondary);
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .text-link:hover {
+        color: var(--color-secondary-hover);
+      }
+
+      .catalog-filters__body {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .filter-group legend {
+        margin-bottom: 0.5rem;
+        padding: 0;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+      }
+
+      .filter-group {
+        margin: 0;
+        padding: 0;
+        border: 0;
+      }
+
+      .chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .chip {
+        padding: 0.5rem 0.875rem;
+        border: 1px solid var(--color-border);
+        border-radius: 999px;
+        font-size: 0.8125rem;
+        font-weight: 500;
+        background: var(--color-surface);
+        cursor: pointer;
+      }
+
+      .chip.is-forest {
+        color: var(--color-secondary);
+        border-color: var(--color-secondary-muted);
+        background: var(--color-secondary-subtle);
+      }
+
+      .price-range {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        gap: 0.5rem;
+        max-width: 20rem;
+      }
+
+      .price-range label {
+        display: grid;
+        gap: 0.25rem;
+        font-size: 0.75rem;
+        color: var(--color-text-muted);
+      }
+
+      .price-range input {
+        width: 100%;
+        padding: 0.5rem 0.625rem;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-sm);
+        background: var(--color-surface-muted);
+      }
+
+      .price-range span {
+        color: var(--color-text-muted);
+        font-size: 0.8125rem;
+      }
+
+      .filter-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75rem;
+        padding-top: 0.25rem;
+        border-top: 1px solid var(--color-border);
+      }
+
+      .sort-select {
+        margin-left: auto;
+        padding: 0.5rem 0.875rem;
+        border: 1px solid var(--color-border);
+        border-radius: 999px;
+        background: var(--color-surface);
+        font-size: 0.8125rem;
+        cursor: pointer;
+      }
+
+      .filters-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        margin-bottom: 0.75rem;
+        padding: 0.5rem 0.875rem;
+        border: 1px solid var(--color-border);
+        border-radius: 999px;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        background: var(--color-surface);
+        cursor: pointer;
+      }
+
+      .catalog-results-bar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        margin-bottom: 0.875rem;
+        font-size: 0.875rem;
+        color: var(--color-text-muted);
+      }
+
+      /* Product grid */
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.875rem;
+      }
+
+      .product-card {
+        overflow: hidden;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        background: var(--color-surface);
+        box-shadow: var(--shadow-sm);
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease,
+          border-color 0.15s ease;
+      }
+
+      .product-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+
+      .product-media {
+        aspect-ratio: 1;
+        padding: 1rem;
+        background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
+      }
+
+      .product-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .product-body {
+        padding: 0.875rem;
+      }
+
+      .product-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        margin-bottom: 0.375rem;
+        font-size: 0.75rem;
+        color: var(--color-text-muted);
+      }
+
+      .badge {
+        padding: 0.125rem 0.5rem;
+        border-radius: 999px;
+        font-weight: 600;
+        color: #92400e;
+        background: #fdecc8;
+      }
+
+      .badge--forest {
+        color: #065f46;
+        background: var(--color-secondary-muted);
+      }
+
+      .product-body h3 {
+        margin: 0;
+        font-size: 0.9375rem;
+        font-weight: 600;
+        line-height: 1.35;
+      }
+
+      .product-price {
+        margin: 0.5rem 0 0;
+        font-size: 1.0625rem;
+        font-weight: 600;
+      }
+
+      .product-price small {
+        margin-left: 0.25rem;
+        font-size: 0.8125rem;
+        font-weight: 500;
+        color: var(--color-text-muted);
+      }
+
+      /* Pagination */
+      .pagination {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 0.375rem;
+        margin-top: 1.5rem;
+      }
+
+      .pagination button,
+      .pagination a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 2.25rem;
+        height: 2.25rem;
+        padding: 0 0.5rem;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-sm);
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--color-text);
+        background: var(--color-surface);
+        cursor: pointer;
+      }
+
+      .pagination button:hover,
+      .pagination a:hover {
+        border-color: #d4d4d4;
+        background: var(--color-surface-muted);
+      }
+
+      .pagination .is-active {
+        color: white;
+        border-color: var(--color-primary);
+        background: var(--color-primary);
+      }
+
+      .pagination .is-disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+
+      /* Footer */
+      .site-footer {
+        margin-top: 1rem;
+        padding: 2rem 0;
+        border-top: 1px solid var(--color-border);
+        background: var(--color-footer-bg);
+      }
+
+      .footer-grid {
+        display: grid;
+        gap: 1.5rem;
+      }
+
+      .footer-grid h3 {
+        margin: 0 0 0.75rem;
+        font-family: var(--font-display);
+        font-size: 1rem;
+      }
+
+      .footer-grid ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .footer-grid li + li {
+        margin-top: 0.5rem;
+      }
+
+      .footer-grid a {
+        color: var(--color-text-muted);
+        font-size: 0.9375rem;
+      }
+
+      .footer-grid a:hover {
+        color: var(--color-secondary);
+      }
+
+      .footer-bottom {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-top: 2rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--color-border);
+        color: var(--color-text-muted);
+        font-size: 0.8125rem;
+      }
+
+      .catalog-view[hidden] {
+        display: none !important;
+      }
+
+      @media (max-width: 767px) {
+        .catalog-filters__body {
+          display: none;
+        }
+
+        .catalog-filters.is-open .catalog-filters__body {
+          display: grid;
+        }
+
+        .catalog-filters__head .text-link {
+          display: none;
+        }
+
+        .catalog-filters.is-open .catalog-filters__head .text-link {
+          display: inline;
+        }
+
+        .filter-row .sort-select {
+          width: 100%;
+          margin-left: 0;
+        }
+      }
+
+      @media (min-width: 768px) {
+        .mockup-bar {
+          top: 0;
+        }
+
+        .site-header {
+          top: 2.375rem;
+        }
+
+        .header-search {
+          display: block;
+        }
+
+        .filters-toggle {
+          display: none;
+        }
+
+        .catalog-filters__body {
+          grid-template-columns: 1fr 1fr;
+          align-items: start;
+        }
+
+        .filter-row {
+          grid-column: 1 / -1;
+        }
+
+        .product-grid {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: 1rem;
+        }
+
+        .footer-grid {
+          grid-template-columns: 1.4fr repeat(3, 1fr);
+        }
+
+        .footer-bottom {
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="mockup-bar">
+      <strong>Catalog listing mockup</strong>
+      <span>Category &amp; search share this layout</span>
+      <div class="mockup-switch" role="tablist" aria-label="Preview variant">
+        <button
+          type="button"
+          class="is-active"
+          id="tab-category"
+          role="tab"
+          aria-selected="true"
+          aria-controls="view-category"
+        >
+          Category
+        </button>
+        <button
+          type="button"
+          id="tab-search"
+          role="tab"
+          aria-selected="false"
+          aria-controls="view-search"
+        >
+          Search
+        </button>
+      </div>
+    </div>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="logo" href="homepage.html" aria-label="Campfire Store home">
+          <img
+            src="./public/img/campfire_logo_light.png"
+            alt="Campfire Store"
+          />
+        </a>
+
+        <label class="header-search">
+          <span class="search-field">
+            <i data-lucide="search" size="18"></i>
+            <input
+              id="header-search-input"
+              type="search"
+              value="kayak"
+              placeholder="Search gear, brands, categories…"
+              aria-label="Search"
+            />
+          </span>
+        </label>
+
+        <div class="header-actions">
+          <button class="icon-btn" type="button" aria-label="Account">
+            <i data-lucide="user" size="20"></i>
+          </button>
+          <button class="icon-btn" type="button" aria-label="Cart">
+            <i data-lucide="shopping-cart" size="20"></i>
+          </button>
+          <button class="icon-btn" type="button" aria-label="Menu">
+            <i data-lucide="menu" size="20"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- Category listing -->
+      <div
+        class="catalog-view catalog-page section--products"
+        id="view-category"
+        role="tabpanel"
+        aria-labelledby="tab-category"
+      >
+        <div class="container">
+          <header class="page-header">
+            <ol class="breadcrumb">
+              <li><a href="#">Home</a></li>
+              <li class="breadcrumb-sep" aria-hidden="true">›</li>
+              <li><a href="#">Kayaks</a></li>
+              <li class="breadcrumb-sep" aria-hidden="true">›</li>
+              <li aria-current="page">Touring kayaks</li>
+            </ol>
+            <h1>Touring kayaks</h1>
+            <p>14 products</p>
+          </header>
+
+          <button class="filters-toggle" type="button" data-filters-toggle>
+            <i data-lucide="sliders-horizontal" size="16"></i>
+            Filters
+            <span class="filter-count">2</span>
+          </button>
+
+          <section class="catalog-filters" aria-label="Product filters">
+            <div class="catalog-filters__head">
+              <h2>
+                <i data-lucide="sliders-horizontal" size="18"></i>
+                Filters
+                <span class="filter-count">2</span>
+              </h2>
+              <button class="text-link" type="button">Clear all</button>
+            </div>
+
+            <div class="catalog-filters__body">
+              <fieldset class="filter-group">
+                <legend>Manufacturer</legend>
+                <div class="chip-row">
+                  <button class="chip is-active" type="button">All</button>
+                  <button class="chip" type="button">Oru Kayak</button>
+                  <button class="chip" type="button">Nordkapp</button>
+                  <button class="chip" type="button">Seaward</button>
+                </div>
+              </fieldset>
+
+              <fieldset class="filter-group">
+                <legend>Price</legend>
+                <div class="price-range">
+                  <label>
+                    Min
+                    <input type="number" min="0" placeholder="0" value="" />
+                  </label>
+                  <span>–</span>
+                  <label>
+                    Max
+                    <input type="number" min="0" placeholder="5000" value="" />
+                  </label>
+                </div>
+                <div class="chip-row" style="margin-top: 0.625rem">
+                  <button class="chip is-forest" type="button">Under $500</button>
+                  <button class="chip is-forest is-active" type="button">
+                    Under $1,500
+                  </button>
+                </div>
+              </fieldset>
+
+              <div class="filter-row">
+                <span style="font-size: 0.8125rem; color: var(--color-text-muted)">
+                  Active: Under $1,500
+                </span>
+                <select class="sort-select" aria-label="Sort products">
+                  <option>Sort: Featured</option>
+                  <option selected>Sort: Price low–high</option>
+                  <option>Sort: Price high–low</option>
+                  <option>Sort: Newest</option>
+                </select>
+              </div>
+            </div>
+          </section>
+
+          <div class="catalog-results-bar">
+            <span>Showing 1–8 of 14 products</span>
+          </div>
+
+          <div class="product-grid">
+            <article class="product-card">
+              <a href="#">
+                <div class="product-media">
+                  <img
+                    src="./public/img/products/small/product-5c88fa8cf4afda39709c2955-1714287500165-1_500.jpg"
+                    alt="Oru Coast XT"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="product-body">
+                  <div class="product-meta">
+                    <span>Oru Kayak</span>
+                    <span class="badge">Bestseller</span>
+                  </div>
+                  <h3>Coast XT</h3>
+                  <p class="product-price">$1,299</p>
+                </div>
+              </a>
+            </article>
+
+            <article class="product-card">
+              <a href="#">
+                <div class="product-media">
+                  <img
+                    src="./public/img/products/small/product-5c8a34ed14eb5c17645c9108-1714292832655-1_500.jpg"
+                    alt="Seaward Passat G3"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="product-body">
+                  <div class="product-meta">
+                    <span>Seaward</span>
+                    <span class="badge badge--forest">New</span>
+                  </div>
+                  <h3>Passat G3</h3>
+                  <p class="product-price">$3,450</p>
+                </div>
+              </a>
+            </article>
+
+            <article class="product-card">
+              <a href="#">
+                <div class="product-media">
+                  <img
+                    src="./public/img/products/small/product-5c8a1dfa2f8fb814b56fa181-1714292544365-1_500.jpg"
+                    alt="Nordkapp Scorpio MV"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="product-body">
+                  <div class="product-meta">
+                    <span>Nordkapp</span>
+                  </div>
+                  <h3>Scorpio MV</h3>
+                  <p class="product-price">$1,890</p>
+                </div>
+              </a>
+            </article>
+
+            <article class="product-card">
+              <a href="#">
+                <div class="product-media">
+                  <img
+                    src="./public/img/products/small/product-5c8a21d02f8fb814b56fa189-171429435467-1_500.jpg"
+                    alt="Oru Bay ST"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="product-body">
+                  <div class="product-meta">
+                    <span>Oru Kayak</span>
+                  </div>
+                  <h3>Bay ST</h3>
+                  <p class="product-price">$1,149</p>
+                </div>
+              </a>
+            </article>
+
+            <article class="product-card">
+              <a href="#">
+                <div class="product-media">
+                  <img
+                    src="./public/img/products/small/product-5c88fa8cf4afda39709c2955-1714287500165-1_500.jpg"
+                    alt="Seaward Kayak"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="product-body">
+                  <div class="product-meta">
+                    <span>Seaward</span>
+                  </div>
+                  <h3>Excursion T</h3>
+                  <p class="product-price">$2,199</p>
+                </div>
+              </a>
+            </article>
+
+            <article class="product-card">
+              <a href="#">
+                <div class="product-media">
+                  <img
+                    src="./public/img/products/small/product-5c8a34ed14eb5c17645c9108-1714292832655-1_500.jpg"
+                    alt="Nordkapp kayak"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="product-body">
+                  <div class="product-meta">
+                    <span>Nordkapp</span>
+                  </div>
+                  <h3>Halo MV</h3>
+                  <p class="product-price">$2,650</p>
+                </div>
+              </a>
+            </article>
+
+            <article class="product-card">
+              <a href="#">
+                <div class="product-media">
+                  <img
+                    src="./public/img/products/small/product-5c8a1dfa2f8fb814b56fa181-1714292544365-1_500.jpg"
+                    alt="Oru Haven"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="product-body">
+                  <div class="product-meta">
+                    <span>Oru Kayak</span>
+                  </div>
+                  <h3>Haven Tandem</h3>
+                  <p class="product-price">$1,699</p>
+                </div>
+              </a>
+            </article>
+
+            <article class="product-card">
+              <a href="#">
+                <div class="product-media">
+                  <img
+                    src="./public/img/products/small/product-5c8a21d02f8fb814b56fa189-171429435467-1_500.jpg"
+                    alt="Seaward kayak"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="product-body">
+                  <div class="product-meta">
+                    <span>Seaward</span>
+                  </div>
+                  <h3>Passat G3X</h3>
+                  <p class="product-price">$3,150</p>
+                </div>
+              </a>
+            </article>
+          </div>
+
+          <nav class="pagination" aria-label="Product pages">
+            <button type="button" class="is-disabled" aria-disabled="true">
+              <i data-lucide="chevron-left" size="16"></i>
+            </button>
+            <button type="button" class="is-active" aria-current="page">1</button>
+            <button type="button">2</button>
+            <button type="button">
+              <i data-lucide="chevron-right" size="16"></i>
+            </button>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Search results -->
+      <div
+        class="catalog-view catalog-page section--products"
+        id="view-search"
+        role="tabpanel"
+        aria-labelledby="tab-search"
+        hidden
+      >
+        <div class="container">
+          <header class="page-header">
+            <h1>
+              Search results for
+              <span class="query-term">“kayak”</span>
+            </h1>
+            <p>8 products matched across name, brand, description, and categories</p>
+          </header>
+
+          <button class="filters-toggle" type="button" data-filters-toggle>
+            <i data-lucide="sliders-horizontal" size="16"></i>
+            Filters
+            <span class="filter-count">1</span>
+          </button>
+
+          <section class="catalog-filters" aria-label="Product filters">
+            <div class="catalog-filters__head">
+              <h2>
+                <i data-lucide="sliders-horizontal" size="18"></i>
+                Refine results
+                <span class="filter-count">1</span>
+              </h2>
+              <button class="text-link" type="button">Clear all</button>
+            </div>
+
+            <div class="catalog-filters__body">
+              <fieldset class="filter-group">
+                <legend>Manufacturer</legend>
+                <div class="chip-row">
+                  <button class="chip is-active" type="button">All</button>
+                  <button class="chip" type="button">Oru Kayak</button>
+                  <button class="chip" type="button">Canyon</button>
+                  <button class="chip" type="button">Mammut</button>
+                </div>
+              </fieldset>
+
+              <fieldset class="filter-group">
+                <legend>Price</legend>
+                <div class="price-range">
+                  <label>
+                    Min
+                    <input type="number" min="0" placeholder="0" value="" />
+                  </label>
+                  <span>–</span>
+                  <label>
+                    Max
+                    <input type="number" min="0" placeholder="5000" value="" />
+                  </label>
+                </div>
+                <div class="chip-row" style="margin-top: 0.625rem">
+                  <button class="chip is-forest is-active" type="button">
+                    Under $500
+                  </button>
+                </div>
+              </fieldset>
+
+              <div class="filter-row">
+                <span style="font-size: 0.8125rem; color: var(--color-text-muted)">
+                  Query: kayak · Active: Under $500
+                </span>
+                <select class="sort-select" aria-label="Sort products">
+                  <option selected>Sort: Relevance</option>
+                  <option>Sort: Price low–high</option>
+                  <option>Sort: Price high–low</option>
+                  <option>Sort: Newest</option>
+                </select>
+              </div>
+            </div>
+          </section>
+
+          <div class="catalog-results-bar">
+            <span>Showing 1–8 of 8 results</span>
+          </div>
+
+          <div class="product-grid">
+            <article class="product-card">
+              <a href="#">
+                <div class="product-media">
+                  <img
+                    src="./public/img/products/small/product-5c88fa8cf4afda39709c2955-1714287500165-1_500.jpg"
+                    alt="Oru Coast XT"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="product-body">
+                  <div class="product-meta">
+                    <span>Oru Kayak</span>
+                    <span class="badge">Bestseller</span>
+                  </div>
+                  <h3>Coast XT</h3>
+                  <p class="product-price">$1,299</p>
+                </div>
+              </a>
+            </article>
+
+            <article class="product-card">
+              <a href="#">
+                <div class="product-media">
+                  <img
+                    src="./public/img/products/small/product-5c8a21d02f8fb814b56fa189-171429435467-1_500.jpg"
+                    alt="Oru Bay ST"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="product-body">
+                  <div class="product-meta">
+                    <span>Oru Kayak</span>
+                  </div>
+                  <h3>Bay ST</h3>
+                  <p class="product-price">$1,149</p>
+                </div>
+              </a>
+            </article>
+
+            <article class="product-card">
+              <a href="#">
+                <div class="product-media">
+                  <img
+                    src="./public/img/products/small/product-5c8a1dfa2f8fb814b56fa181-1714292544365-1_500.jpg"
+                    alt="Inflatable kayak"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="product-body">
+                  <div class="product-meta">
+                    <span>Advanced Elements</span>
+                  </div>
+                  <h3>AdvancedFrame Convertible</h3>
+                  <p class="product-price">$649</p>
+                </div>
+              </a>
+            </article>
+
+            <article class="product-card">
+              <a href="#">
+                <div class="product-media">
+                  <img
+                    src="./public/img/products/small/product-5c8a34ed14eb5c17645c9108-1714292832655-1_500.jpg"
+                    alt="Kayak paddle bundle"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="product-body">
+                  <div class="product-meta">
+                    <span>Nordkapp</span>
+                  </div>
+                  <h3>Scorpio MV</h3>
+                  <p class="product-price">$1,890</p>
+                </div>
+              </a>
+            </article>
+          </div>
+
+          <nav class="pagination" aria-label="Search result pages">
+            <button type="button" class="is-disabled" aria-disabled="true">
+              <i data-lucide="chevron-left" size="16"></i>
+            </button>
+            <button type="button" class="is-active" aria-current="page">1</button>
+            <button type="button" class="is-disabled" aria-disabled="true">
+              <i data-lucide="chevron-right" size="16"></i>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <img
+              src="./public/img/campfire_logo_dark.png"
+              alt="Campfire Store"
+              style="height: 1.75rem"
+            />
+            <p
+              style="
+                margin: 0.75rem 0 0;
+                max-width: 20rem;
+                color: var(--color-text-muted);
+                font-size: 0.9375rem;
+              "
+            >
+              Gear up for the trail, water, and road — kayaks, bikes, camping
+              essentials, and more for your next adventure.
+            </p>
+          </div>
+          <div>
+            <h3>Shop</h3>
+            <ul>
+              <li><a href="#">All products</a></li>
+              <li><a href="#">Bicycles</a></li>
+              <li><a href="#">Camping</a></li>
+              <li><a href="#">Kayaks</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Account</h3>
+            <ul>
+              <li><a href="#">Sign in</a></li>
+              <li><a href="#">Cart</a></li>
+              <li><a href="#">Orders</a></li>
+              <li><a href="#">Profile</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3>API</h3>
+            <ul>
+              <li>
+                <a
+                  href="https://campfire-store-api.onrender.com/api/v1/api-docs/"
+                  target="_blank"
+                  rel="noreferrer"
+                  >Swagger docs</a
+                >
+              </li>
+              <li><a href="#">GitHub</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <span>© 2026 Campfire Store</span>
+          <span>Catalog listing mockup</span>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      lucide.createIcons();
+
+      const tabCategory = document.getElementById('tab-category');
+      const tabSearch = document.getElementById('tab-search');
+      const viewCategory = document.getElementById('view-category');
+      const viewSearch = document.getElementById('view-search');
+      const headerSearchInput = document.getElementById('header-search-input');
+
+      function showView(view) {
+        const isCategory = view === 'category';
+        tabCategory.classList.toggle('is-active', isCategory);
+        tabSearch.classList.toggle('is-active', !isCategory);
+        tabCategory.setAttribute('aria-selected', String(isCategory));
+        tabSearch.setAttribute('aria-selected', String(!isCategory));
+        viewCategory.hidden = !isCategory;
+        viewSearch.hidden = isCategory;
+        headerSearchInput.value = isCategory ? '' : 'kayak';
+      }
+
+      tabCategory.addEventListener('click', () => showView('category'));
+      tabSearch.addEventListener('click', () => showView('search'));
+
+      document.querySelectorAll('[data-filters-toggle]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const panel = button.nextElementSibling;
+          if (panel?.classList.contains('catalog-filters')) {
+            panel.classList.toggle('is-open');
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

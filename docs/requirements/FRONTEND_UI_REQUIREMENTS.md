@@ -1,7 +1,7 @@
 # Campfire Store — Frontend UI Requirements
 
 **Audience:** AI coding agent scaffolding a new, deployable storefront SPA.  
-**Companion asset:** `docs/mockups/homepage.html` in this repository — visual and interaction reference for layout, spacing, colors, and component styling. Treat it as the design source of truth; translate its CSS tokens and patterns into the React app.
+**Companion assets:** `docs/mockups/homepage.html` and `docs/mockups/catalog-listing.html` — visual references for layout, spacing, colors, and component styling. Translate their CSS tokens and patterns into the React app.
 
 **Backend:** [Campfire Store API](https://campfire-store-api.onrender.com) (separate repo/service). Swagger: https://campfire-store-api.onrender.com/api/v1/api-docs/
 
@@ -258,7 +258,7 @@ All wishlist routes require JWT (`Authorization: Bearer <token>`). Use TanStack 
 3. **One active cart** per session is enforced server-side; create cart with `{ "currency": "USD" }` when user first adds to cart.
 4. **Cold starts:** Render free tier may take 30–60s on first request after idle — show loading state; optional retry.
 5. **CORS** is enabled on the API for browser clients.
-6. **`GET /search` and wishlist routes** are API extensions — they may not be live on production yet. Stub types from Swagger when available; gate UI behind feature flags or graceful “unavailable” states only during early development if needed.
+6. **`GET /search`** is available on the API — use the dedicated endpoint (not client-side product filtering). Wishlist routes may still be pending.
 
 ### 6.6 Category tree
 
@@ -324,18 +324,23 @@ Match `docs/mockups/homepage.html` footer grid. Background: `var(--color-footer-
 
 Sections (in order):
 
-1. **Hero** — orange card, eyebrow, headline, subcopy, primary CTA (“Shop bestsellers” → `/products` or featured), secondary CTA (“Browse categories” → `/categories`), stat tiles (can show live counts from API).
+1. **Hero** — gradient section, eyebrow, headline, subcopy, primary/secondary CTAs, category highlights line.
 2. **Shop by category** — horizontal scroll cards, emerald icons, “View all” → `/categories`.
 3. **Featured products** — toolbar chips (manufacturer filters from API data, “Under $500” emerald chip), sort select, product card grid.
-4. **Promo strip** — emerald gradient; mention demo checkout with test account.
+4. **Promo strip** — emerald gradient with demo checkout panel.
 
-Product card: image, manufacturer, optional badge, name, price + currency.
+Product card: image, manufacturer, optional badges, name, formatted price (no separate currency code label).
 
 ### 8.4 Category listing (`/categories`, `/categories/:id`)
 
-- `/categories`: grid of root + subcategories
-- `/categories/:id`: breadcrumb, category title, same toolbar/grid as home products, pagination
+**Design reference:** `docs/mockups/catalog-listing.html` (Category tab).
+
+- `/categories`: grouped grid of root categories with subcategory cards (emerald accents)
+- `/categories/:id`: breadcrumb, category title, product count, **filter panel**, product grid, pagination
+- Filter panel: manufacturer chips, min/max price inputs, “Under $500/€500” emerald chip, sort select, clear-all; collapsible on mobile
+- Product listing uses **orange** active chips / accents (`section--products` pattern)
 - Root category id returns products from all child leaf categories (API behavior)
+- Filters map to API `filter` JSON (manufacturer, `priceI18n.{currency}`)
 
 ### 8.5 Product detail (`/products/:id`)
 
@@ -375,10 +380,13 @@ Product card: image, manufacturer, optional badge, name, price + currency.
 
 ### 8.10 Search (`/search`)
 
+**Design reference:** `docs/mockups/catalog-listing.html` (Search tab). Shares the category listing layout.
+
 - Driven by `q` query param from the URL (e.g. `/search?q=kayak`)
-- Call `GET /search` with `q`, `language`, `currency`, pagination, and optional `sort`
-- Product grid matching category/listing pages; empty state when no results
-- Show the query in the page heading; preserve `q` in the header search input
+- Call `GET /search` with `q`, `language`, `currency`, pagination, optional `sort`, and optional `filter`
+- Same filter panel + product grid + pagination as category listing
+- Page heading highlights the query; header search input stays in sync with `q`
+- Default sort: **Relevance** (API default order); empty `q` shows prompt state (no grid)
 
 ### 8.11 Wishlist (`/wishlist`)
 
@@ -405,6 +413,7 @@ campfire-store-ui/
 │   ├── api/                 # client, endpoints, types
 │   ├── components/
 │   │   ├── layout/          # Header, Footer, Container, MegaMenu
+│   │   ├── catalog/         # CatalogFilters, ProductCatalogView, pagination
 │   │   ├── product/         # ProductCard, ProductGrid, Price
 │   │   └── ui/              # Button, Chip, Badge, Input
 │   ├── hooks/
@@ -430,12 +439,12 @@ Build incrementally; each phase should compile and be deployable.
 | **0** | Scaffold Vite+React+TS+Tailwind, tokens, Netlify config, API client             | `npm run build` succeeds                   |
 | **1** | AppLayout: **Header + Footer** (static structure matching mockup)               | Navigable shell on all routes              |
 | **2** | **Home** body: hero, categories row, featured products, promo (wired to API)    | `/` loads live data                        |
-| **3** | Category pages + mega-menu from API                                             | `/categories/*` works                      |
+| **3** | **Categories** (`/categories`, `/categories/:id`) + **Search** (`/search`) — shared catalog listing UI per `catalog-listing.html` mockup | Category browse, filtered product grids, pagination, live search |
 | **4** | **Product detail** page                                                         | `/products/:id` full description + gallery |
 | **5** | **Auth** (login/signup/logout) + **Account** page                               | JWT flow works with demo user              |
 | **6** | **Cart** page + add-to-cart                                                     | Cart CRUD against API                      |
 | **7** | **Checkout** + **Orders** list/detail                                           | End-to-end purchase                        |
-| **8** | **Search** (`GET /search`) + **Wishlist** (API) + polish (loading, errors, 404) | Feature-complete demo                      |
+| **8** | **Wishlist** (API) + polish (loading, errors, 404)                              | Server-backed wishlist demo                |
 
 ---
 

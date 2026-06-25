@@ -1,6 +1,6 @@
-import { Search } from 'lucide-react'
 import { useSearchParams } from 'react-router-dom'
-import { PagePlaceholder } from '@/components/ui/PagePlaceholder'
+import { Container } from '@/components/layout/Container'
+import { ProductCatalogView } from '@/components/catalog/ProductCatalogView'
 import { useTranslation } from '@/i18n'
 
 export function SearchPage() {
@@ -8,15 +8,32 @@ export function SearchPage() {
   const [searchParams] = useSearchParams()
   const query = searchParams.get('q')?.trim() ?? ''
 
+  if (!query) {
+    return (
+      <section className="catalog-page">
+        <Container>
+          <header className="catalog-page-header">
+            <h1>{t('search.title')}</h1>
+            <p>{t('search.emptyHint')}</p>
+          </header>
+        </Container>
+      </section>
+    )
+  }
+
+  const activeSummary = t('catalog.searchActiveSummary', { query })
+
   return (
-    <PagePlaceholder
-      title={query ? t('search.titleWithQuery', { query }) : t('search.title')}
-      description={query ? t('search.unavailable') : t('search.emptyHint')}
-    >
-      <div className="flex max-w-lg items-start gap-3 rounded-lg border border-border bg-surface-muted p-4 text-sm text-text-muted">
-        <Search size={18} className="mt-0.5 shrink-0 text-secondary" aria-hidden />
-        <p className="m-0">{t('search.deferred')}</p>
-      </div>
-    </PagePlaceholder>
+    <ProductCatalogView
+      variant="search"
+      query={query}
+      title={
+        <>
+          {t('search.resultsFor')}{' '}
+          <span className="catalog-query-term">“{query}”</span>
+        </>
+      }
+      activeSummary={activeSummary}
+    />
   )
 }

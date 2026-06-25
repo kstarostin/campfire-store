@@ -4,6 +4,7 @@ import { Container } from '@/components/layout/Container'
 import { LoadingState } from '@/components/ui/LoadingState'
 import { useTranslation } from '@/i18n'
 import { useCategories } from '@/hooks/useCategories'
+import { categoryPath } from '@/lib/categoryPath'
 
 const footerLinkClass = 'footer-link cursor-pointer text-[0.9375rem]'
 
@@ -16,7 +17,7 @@ export function Footer() {
     { label: t('footer.allProducts'), to: '/products' },
     ...(categories.data?.slice(0, 3).map((category) => ({
       label: category.name,
-      to: `/categories/${category._id}`,
+      to: categoryPath(category),
     })) ?? []),
   ]
 

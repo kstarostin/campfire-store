@@ -1,5 +1,5 @@
 import { Search } from 'lucide-react'
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useLocaleNavigate } from '@/hooks/useLocaleNavigate'
 import { useTranslation } from '@/i18n'
@@ -14,6 +14,10 @@ export function SearchField({ className = '', id = 'header-search' }: SearchFiel
   const navigate = useLocaleNavigate()
   const [searchParams] = useSearchParams()
   const [query, setQuery] = useState(() => searchParams.get('q') ?? '')
+
+  useEffect(() => {
+    setQuery(searchParams.get('q') ?? '')
+  }, [searchParams])
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()

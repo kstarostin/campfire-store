@@ -37,7 +37,7 @@ export function AppRouter() {
         <Route element={<AppLayout />}>
           <Route index element={<HomePage />} />
           <Route path="categories" element={<CategoriesPage />} />
-          <Route path="categories/:id" element={<CategoryDetailPage />} />
+          <Route path="categories/:categoryCode" element={<CategoryDetailPage />} />
           <Route path="products" element={<ProductsPage />} />
           <Route path="products/:id" element={<ProductDetailPage />} />
           <Route path="search" element={<SearchPage />} />

@@ -5,6 +5,7 @@ import { LocaleLink } from '@/components/ui/LocaleLink'
 import { LoadingState } from '@/components/ui/LoadingState'
 import { useTranslation } from '@/i18n'
 import { useCategories } from '@/hooks/useCategories'
+import { categoryPath } from '@/lib/categoryPath'
 import { useIsAuthenticated } from '@/store/authStore'
 
 interface MobileNavProps {
@@ -77,7 +78,7 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
                   <li key={category._id}>
                     <div className="flex items-stretch gap-0.5">
                       <MegaMenuLink
-                        to={`/categories/${category._id}`}
+                        to={categoryPath(category)}
                         className="mega-menu-link--title min-w-0 flex-1 rounded-md py-2 font-medium"
                         onClick={onClose}
                       >
@@ -118,7 +119,7 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
                         {subcategories.map((sub) => (
                           <li key={sub._id}>
                             <MegaMenuLink
-                              to={`/categories/${sub._id}`}
+                              to={categoryPath(sub)}
                               className="w-full rounded-md py-1.5 text-sm"
                               onClick={onClose}
                             >

@@ -64,6 +64,7 @@ export const de: Messages = {
     sortPriceDesc: 'Preis: absteigend',
     underBudgetUsd: 'Unter $500',
     underBudgetEur: 'Unter 500 €',
+    underPrice: 'Unter {price}',
     productsLoading: 'Produkte werden geladen…',
     productsError:
       'Produkte konnten nicht geladen werden. Die API startet möglicherweise gerade — bitte kurz warten und erneut versuchen.',
@@ -102,12 +103,49 @@ export const de: Messages = {
   search: {
     title: 'Suche',
     titleWithQuery: 'Suche: „{query}"',
+    resultsFor: 'Suchergebnisse für',
     emptyHint:
       'Gib einen Suchbegriff in der Kopfzeile ein, um Ausrüstung, Marken und Kategorien zu finden.',
-    unavailable:
-      'Die dedizierte Such-API ist noch nicht verfügbar. Ergebnisse erscheinen hier, sobald GET /search live ist.',
-    deferred:
-      'Die Suchoberfläche ist bereit und leitet auf diese Seite weiter, aber Produktergebnisse folgen erst, wenn der GET /search-Endpunkt live ist.',
+  },
+  catalog: {
+    allCategoriesDescription: 'Vom Kajak bis zum Ski — wähl deine Abteilung und leg los.',
+    shopCategory: 'Diese Kategorie shoppen',
+    browseSubcategories: 'Unterkategorien durchsuchen',
+    categoryLoading: 'Kategorie wird geladen…',
+    categoryError: 'Diese Kategorie konnte nicht geladen werden. Bitte erneut versuchen.',
+    productCount: '{count} Produkte',
+    searchMatches:
+      '{count} Produkte passen zu Name, Marke, Beschreibung und Kategorien',
+    filters: 'Filter',
+    showFilters: 'Filter anzeigen',
+    hideFilters: 'Filter ausblenden',
+    refineResults: 'Ergebnisse eingrenzen',
+    clearAll: 'Alle zurücksetzen',
+    manufacturer: 'Hersteller',
+    price: 'Preis',
+    priceMin: 'Min',
+    priceMax: 'Max',
+    underBudgetUsd: 'Unter $500',
+    underBudgetEur: 'Unter 500 €',
+    underPrice: 'Unter {price}',
+    sortAria: 'Produkte sortieren',
+    sortNewest: 'Sortierung: Neueste',
+    sortPriceAsc: 'Sortierung: Preis aufsteigend',
+    sortPriceDesc: 'Sortierung: Preis absteigend',
+    sortRelevance: 'Sortierung: Relevanz',
+    productsLoading: 'Produkte werden geladen…',
+    productsError:
+      'Produkte konnten nicht geladen werden. Die API startet möglicherweise gerade — bitte kurz warten und erneut versuchen.',
+    noFilterMatch:
+      'Keine Produkte entsprechen diesen Filtern. Wähle eine andere Marke oder passe den Preisbereich an.',
+    noProducts: 'In dieser Kategorie sind noch keine Produkte.',
+    noSearchResults: 'Keine Produkte entsprechen deiner Suche.',
+    showingProducts: '{start}–{end} von {total} Produkten',
+    showingSearchResults: '{start}–{end} von {total} Ergebnissen',
+    searchActiveSummary: 'Suchbegriff: {query}',
+    pagination: 'Produktseiten',
+    previousPage: 'Vorherige Seite',
+    nextPage: 'Nächste Seite',
   },
   auth: {
     signInTitle: 'Anmelden',
@@ -123,9 +161,8 @@ export const de: Messages = {
     homeHint:
       'Phase 2 ergänzt Hero, Kategorien, empfohlene Produkte und Promo-Banner.',
     allCategories: 'Alle Kategorien',
-    allCategoriesHint: 'Das Kategorienraster wird in Phase 3 an die API angebunden.',
+    allCategoriesHint: 'Durchstöbere den gesamten Kategoriebaum.',
     category: 'Kategorie',
-    categoryHint: 'Produktliste für Kategorie „{id}" — kommt in Phase 3.',
     allProducts: 'Alle Produkte',
     allProductsHint: 'Der vollständige Produktkatalog folgt in einer späteren Phase.',
     productDetail: 'Produktdetails',

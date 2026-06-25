@@ -2,6 +2,7 @@ import { Container } from '@/components/layout/Container'
 import { MegaMenuLink } from '@/components/layout/MegaMenuLink'
 import { LoadingState } from '@/components/ui/LoadingState'
 import { useTranslation } from '@/i18n'
+import { categoryPath } from '@/lib/categoryPath'
 import { useCategories } from '@/hooks/useCategories'
 
 interface MegaMenuProps {
@@ -34,7 +35,7 @@ export function MegaMenu({ open, id }: MegaMenuProps) {
                 <div key={category._id}>
                   <h3 className="m-0 mb-2.5 font-display text-base font-semibold tracking-tight">
                     <MegaMenuLink
-                      to={`/categories/${category._id}`}
+                      to={categoryPath(category)}
                       className="mega-menu-link--title cursor-pointer text-base font-semibold"
                     >
                       {category.name}
@@ -44,7 +45,7 @@ export function MegaMenu({ open, id }: MegaMenuProps) {
                     {category.subCategories?.map((sub) => (
                       <li key={sub._id} className="mt-1.5 first:mt-0">
                         <MegaMenuLink
-                          to={`/categories/${sub._id}`}
+                          to={categoryPath(sub)}
                           className="cursor-pointer text-sm"
                         >
                           {sub.name}

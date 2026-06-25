@@ -70,6 +70,7 @@ export interface Category {
   _id: string
   code?: string
   name: string
+  icon?: string
   parentCategory?: string | null
   subCategories?: Category[]
 }

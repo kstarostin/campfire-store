@@ -6,6 +6,7 @@ import { LoadingState } from '@/components/ui/LoadingState'
 import { useTranslation } from '@/i18n'
 import { useCategories } from '@/hooks/useCategories'
 import { getCategoryIcon } from '@/lib/categoryIcons'
+import { categoryPath } from '@/lib/categoryPath'
 
 export function CategoryRow() {
   const { t } = useTranslation()
@@ -34,7 +35,7 @@ export function CategoryRow() {
         {categories.data ? (
           <div className="category-row">
             {categories.data.map((category) => {
-              const Icon = getCategoryIcon(category.code)
+              const Icon = getCategoryIcon(category.icon)
               const subCount = category.subCategories?.length ?? 0
               const meta =
                 subCount > 0
@@ -46,7 +47,7 @@ export function CategoryRow() {
               return (
                 <LocaleLink
                   key={category._id}
-                  to={`/categories/${category._id}`}
+                  to={categoryPath(category)}
                   className="category-card text-inherit"
                 >
                   <span className="category-icon category-icon--forest">

@@ -28,18 +28,21 @@ export const endpoints = {
       params: withLocale(language, currency),
     }),
 
-  category: (id: string, language: Language, currency: Currency) =>
-    api.get<{ data: Category }>(`/categories/${id}`, {
+  category: (code: string, language: Language, currency: Currency) =>
+    api.get<{ data: { document: Category } }>(`/categories/${encodeURIComponent(code)}`, {
       params: withLocale(language, currency),
     }),
 
   categoryProducts: (
-    id: string,
+    code: string,
     language: Language,
     currency: Currency,
-    pagination?: PaginationParams,
+    pagination?: PaginationParams & {
+      filter?: Record<string, unknown> | string
+      fields?: string
+    },
   ) =>
-    api.get<PaginatedResponse<Product>>(`/categories/${id}/products`, {
+    api.get<ApiListEnvelope<Product>>(`/categories/${encodeURIComponent(code)}/products`, {
       params: listQueryParams({ language, currency }, pagination),
     }),
 
@@ -61,9 +64,12 @@ export const endpoints = {
     q: string,
     language: Language,
     currency: Currency,
-    pagination?: PaginationParams,
+    pagination?: PaginationParams & {
+      filter?: Record<string, unknown> | string
+      fields?: string
+    },
   ) =>
-    api.get<PaginatedResponse<Product>>('/search', {
+    api.get<ApiListEnvelope<Product> & { query?: string }>('/search', {
       params: {
         q,
         ...listQueryParams({ language, currency }, pagination),
