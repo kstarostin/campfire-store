@@ -57,7 +57,7 @@ export function Header() {
               <img
                 src="/img/campfire_logo_light.png"
                 alt={t('common.storeName')}
-                className="block h-12 w-auto -translate-y-[0.4rem]"
+                className="block h-9 w-auto -translate-y-[0.3rem] md:h-12 md:-translate-y-[0.4rem]"
               />
             </LocaleLink>
 
