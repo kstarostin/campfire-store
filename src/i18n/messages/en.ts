@@ -60,7 +60,7 @@ export const en = {
     featuredDescription:
       'Fresh picks from our catalog — filter by brand or keep it under budget.',
     sortAria: 'Sort products',
-    sortNewest: 'Newest',
+    sortFeatured: 'Featured',
     sortPriceAsc: 'Price: low to high',
     sortPriceDesc: 'Price: high to low',
     underBudgetUsd: 'Under $500',

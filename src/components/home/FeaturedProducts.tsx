@@ -10,7 +10,7 @@ import type { Currency } from '@/api/types'
 import { useTranslation, type TranslationKey } from '@/i18n'
 import { getManufacturerFilterValues } from '@/api/normalizers'
 import { useLocale } from '@/hooks/useLocale'
-import { useProducts } from '@/hooks/useProducts'
+import { useFeaturedProducts } from '@/hooks/useProducts'
 
 function priceForCurrency(
   priceI18n: { USD?: number; EUR?: number } | undefined,
@@ -24,14 +24,14 @@ export function FeaturedProducts() {
   const { currency } = useLocale()
   const [manufacturer, setManufacturer] = useState<string | null>(null)
   const [underBudget, setUnderBudget] = useState(false)
-  const [sort, setSort] = useState('-createdAt')
+  const [sort, setSort] = useState('featureOrder')
 
   const sortField = sort.includes('priceI18n')
     ? sort.replace('priceI18n.USD', `priceI18n.${currency}`)
     : sort
 
   const sortOptions: { labelKey: TranslationKey; value: string }[] = [
-    { labelKey: 'home.sortNewest', value: '-createdAt' },
+    { labelKey: 'home.sortFeatured', value: 'featureOrder' },
     { labelKey: 'home.sortPriceAsc', value: 'priceI18n.USD' },
     { labelKey: 'home.sortPriceDesc', value: '-priceI18n.USD' },
   ]
@@ -39,7 +39,7 @@ export function FeaturedProducts() {
   const underBudgetLabel =
     currency === 'EUR' ? t('home.underBudgetEur') : t('home.underBudgetUsd')
 
-  const productsQuery = useProducts({
+  const productsQuery = useFeaturedProducts({
     limit: 24,
     sort: sortField,
   })
@@ -148,12 +148,11 @@ export function FeaturedProducts() {
 
         {filteredProducts.length > 0 ? (
           <ProductGrid>
-            {filteredProducts.map((product, index) => (
+            {filteredProducts.map((product) => (
               <ProductCard
                 key={product._id}
                 product={product}
                 currency={currency}
-                badge={index === 0 ? t('common.bestseller') : undefined}
               />
             ))}
           </ProductGrid>

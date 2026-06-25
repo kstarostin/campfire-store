@@ -64,7 +64,7 @@ export const de: Messages = {
     featuredDescription:
       'Frische Highlights aus unserem Katalog — filtere nach Marke oder Budget.',
     sortAria: 'Produkte sortieren',
-    sortNewest: 'Neueste',
+    sortFeatured: 'Empfohlen',
     sortPriceAsc: 'Preis: aufsteigend',
     sortPriceDesc: 'Preis: absteigend',
     underBudgetUsd: 'Unter $500',

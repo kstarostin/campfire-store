@@ -47,6 +47,8 @@ export interface Product {
   images?: ProductImage[]
   category?: string | Category
   createdAt?: string
+  isFeatured?: boolean
+  featureOrder?: number
 }
 
 export interface Category {
