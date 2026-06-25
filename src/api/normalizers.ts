@@ -1,4 +1,11 @@
-import type { Category, Language, Product } from '@/api/types'
+import type {
+  BadgeStyle,
+  Category,
+  Language,
+  Product,
+  ProductBadge,
+  ProductBadgeAssignment,
+} from '@/api/types'
 
 export interface ApiListEnvelope<TDocument> {
   status?: string
@@ -32,6 +39,22 @@ interface ApiCategoryDocument {
   parentCategory?: string | null
   root?: boolean
   subCategories?: Category[]
+}
+
+interface ApiBadgeDocument {
+  _id: string
+  code: string
+  nameI18n?: Partial<Record<Language, string>>
+  style?: BadgeStyle
+}
+
+interface ApiProductBadgeAssignment {
+  priority: number
+  badge: ApiBadgeDocument
+}
+
+interface ApiProductDocument extends Omit<Product, 'badges'> {
+  badges?: ApiProductBadgeAssignment[]
 }
 
 export interface ParsedProductList {
@@ -70,15 +93,51 @@ export function parseCategoryList(
   return documents.map((document) => normalizeCategory(document, language))
 }
 
+function normalizeBadge(
+  document: ApiBadgeDocument,
+  language: Language,
+): ProductBadge {
+  return {
+    _id: document._id,
+    code: document.code,
+    name: localizedName(document.nameI18n, language),
+    style: document.style ?? 'primary',
+  }
+}
+
+function normalizeProductBadges(
+  assignments: ApiProductBadgeAssignment[] | undefined,
+  language: Language,
+): ProductBadgeAssignment[] {
+  if (!assignments?.length) return []
+
+  return assignments
+    .filter((assignment) => assignment.badge)
+    .map((assignment) => ({
+      priority: assignment.priority,
+      badge: normalizeBadge(assignment.badge, language),
+    }))
+    .sort((left, right) => left.priority - right.priority)
+}
+
+function normalizeProduct(document: ApiProductDocument, language: Language): Product {
+  const { badges, ...product } = document
+  return {
+    ...product,
+    badges: normalizeProductBadges(badges, language),
+  }
+}
+
 export function parseProductList(
-  response: ApiListEnvelope<Product>,
+  response: ApiListEnvelope<ApiProductDocument>,
+  language: Language,
 ): ParsedProductList {
   const payload = response.data
   const documents = Array.isArray(payload) ? payload : (payload?.documents ?? [])
   const filters = Array.isArray(payload) ? [] : (payload?.filters ?? [])
 
   return {
-    products: documents,
+    products: documents.map((document) => normalizeProduct(document, language)),
     filters,
     total:
       response.resultsTotal ??

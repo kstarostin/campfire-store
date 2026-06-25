@@ -1,5 +1,6 @@
 import { LocaleLink } from '@/components/ui/LocaleLink'
 import type { Currency, Product } from '@/api/types'
+import { ProductBadges } from '@/components/product/ProductBadges'
 import { Price } from '@/components/product/Price'
 import { useTranslation } from '@/i18n'
 import { productImageUrl } from '@/lib/imageUrl'
@@ -7,10 +8,9 @@ import { productImageUrl } from '@/lib/imageUrl'
 interface ProductCardProps {
   product: Product
   currency: Currency
-  badge?: string
 }
 
-export function ProductCard({ product, currency, badge }: ProductCardProps) {
+export function ProductCard({ product, currency }: ProductCardProps) {
   const { t } = useTranslation()
   const imageSrc = productImageUrl(product)
 
@@ -29,7 +29,7 @@ export function ProductCard({ product, currency, badge }: ProductCardProps) {
         <div className="product-body">
           <div className="product-meta">
             <span>{product.manufacturer ?? '—'}</span>
-            {badge ? <span className="badge">{badge}</span> : null}
+            <ProductBadges badges={product.badges} />
           </div>
           <h3>{product.name}</h3>
           <Price priceI18n={product.priceI18n} currency={currency} />

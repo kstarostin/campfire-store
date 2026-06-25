@@ -583,12 +583,29 @@
     color: var(--color-text-muted);
   }
 
+  .product-badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.25rem;
+  }
+
   .badge {
     padding: 0.125rem 0.5rem;
     border-radius: 999px;
     font-weight: 600;
     color: #92400e;
     background: #fdecc8;
+  }
+
+  .badge--forest {
+    color: #065f46;
+    background: var(--color-secondary-muted);
+  }
+
+  .badge--neutral {
+    color: var(--color-text-muted);
+    background: var(--color-surface-muted);
   }
 
   .product-body h3 {

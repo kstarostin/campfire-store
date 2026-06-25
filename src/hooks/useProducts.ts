@@ -18,7 +18,7 @@ export function useProducts(options: UseProductsOptions = {}) {
     queryFn: () =>
       endpoints.products(language, currency, { page, limit, sort, filter }),
     enabled,
-    select: (response) => parseProductList(response),
+    select: (response) => parseProductList(response, language),
   })
 }
 
@@ -36,7 +36,7 @@ export function useFeaturedProducts(options: Omit<UseProductsOptions, 'filter'> 
         filter: { isFeatured: true },
       }),
     enabled,
-    select: (response) => parseProductList(response),
+    select: (response) => parseProductList(response, language),
   })
 }
 
@@ -46,6 +46,6 @@ export function useProductCount() {
   return useQuery({
     queryKey: ['products', 'count', language, currency],
     queryFn: () => endpoints.products(language, currency, { limit: 1 }),
-    select: (response) => parseProductList(response).total,
+    select: (response) => parseProductList(response, language).total,
   })
 }

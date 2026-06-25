@@ -38,6 +38,20 @@ export interface ProductImage {
   large?: { url: string }
 }
 
+export type BadgeStyle = 'primary' | 'forest' | 'neutral'
+
+export interface ProductBadge {
+  _id: string
+  code: string
+  name: string
+  style: BadgeStyle
+}
+
+export interface ProductBadgeAssignment {
+  priority: number
+  badge: ProductBadge
+}
+
 export interface Product {
   _id: string
   name: string
@@ -49,6 +63,7 @@ export interface Product {
   createdAt?: string
   isFeatured?: boolean
   featureOrder?: number
+  badges?: ProductBadgeAssignment[]
 }
 
 export interface Category {
