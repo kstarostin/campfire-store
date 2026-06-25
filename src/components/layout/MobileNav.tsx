@@ -1,5 +1,6 @@
 import { ChevronDown, X } from 'lucide-react'
 import { useEffect, useId, useState } from 'react'
+import { MegaMenuLink } from '@/components/layout/MegaMenuLink'
 import { LocaleLink } from '@/components/ui/LocaleLink'
 import { LoadingState } from '@/components/ui/LoadingState'
 import { useTranslation } from '@/i18n'
@@ -55,7 +56,7 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
           </button>
         </div>
 
-        <div className="min-h-0 flex-1 overflow-y-auto overscroll-y-contain px-4 py-4">
+        <div className="mobile-nav-body min-h-0 flex-1 overflow-y-auto overscroll-y-contain px-4 py-4">
           <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-[#a8a29e]">
             {t('nav.categories')}
           </p>
@@ -75,13 +76,13 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
                 return (
                   <li key={category._id}>
                     <div className="flex items-stretch gap-0.5">
-                      <LocaleLink
+                      <MegaMenuLink
                         to={`/categories/${category._id}`}
-                        className="mega-menu-link mega-menu-link--title min-w-0 flex-1 rounded-md px-2 py-2 font-medium"
+                        className="mega-menu-link--title min-w-0 flex-1 rounded-md py-2 font-medium"
                         onClick={onClose}
                       >
                         {category.name}
-                      </LocaleLink>
+                      </MegaMenuLink>
 
                       {hasSubcategories ? (
                         <button
@@ -116,13 +117,13 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
                       >
                         {subcategories.map((sub) => (
                           <li key={sub._id}>
-                            <LocaleLink
+                            <MegaMenuLink
                               to={`/categories/${sub._id}`}
-                              className="mega-menu-link block rounded-md px-2 py-1.5 text-sm"
+                              className="w-full rounded-md py-1.5 text-sm"
                               onClick={onClose}
                             >
                               {sub.name}
-                            </LocaleLink>
+                            </MegaMenuLink>
                           </li>
                         ))}
                       </ul>
@@ -132,13 +133,14 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
               })}
 
               <li className="pt-1">
-                <LocaleLink
+                <MegaMenuLink
                   to="/categories"
-                  className="mega-menu-link mega-menu-link--view-all block rounded-md px-2 py-2 text-sm font-semibold"
+                  showFire={false}
+                  className="mega-menu-link--view-all w-full rounded-md py-2 text-sm font-semibold"
                   onClick={onClose}
                 >
                   {t('nav.viewAllCategories')}
-                </LocaleLink>
+                </MegaMenuLink>
               </li>
             </ul>
           ) : null}

@@ -1,5 +1,5 @@
-import { LocaleLink } from '@/components/ui/LocaleLink'
 import { Container } from '@/components/layout/Container'
+import { MegaMenuLink } from '@/components/layout/MegaMenuLink'
 import { LoadingState } from '@/components/ui/LoadingState'
 import { useTranslation } from '@/i18n'
 import { useCategories } from '@/hooks/useCategories'
@@ -33,22 +33,22 @@ export function MegaMenu({ open, id }: MegaMenuProps) {
               {categories.data.map((category) => (
                 <div key={category._id}>
                   <h3 className="m-0 mb-2.5 font-display text-base font-semibold tracking-tight">
-                    <LocaleLink
+                    <MegaMenuLink
                       to={`/categories/${category._id}`}
-                      className="mega-menu-link mega-menu-link--title cursor-pointer text-base font-semibold"
+                      className="mega-menu-link--title cursor-pointer text-base font-semibold"
                     >
                       {category.name}
-                    </LocaleLink>
+                    </MegaMenuLink>
                   </h3>
                   <ul className="m-0 list-none p-0">
                     {category.subCategories?.map((sub) => (
                       <li key={sub._id} className="mt-1.5 first:mt-0">
-                        <LocaleLink
+                        <MegaMenuLink
                           to={`/categories/${sub._id}`}
-                          className="mega-menu-link cursor-pointer text-sm"
+                          className="cursor-pointer text-sm"
                         >
                           {sub.name}
-                        </LocaleLink>
+                        </MegaMenuLink>
                       </li>
                     ))}
                   </ul>
@@ -57,12 +57,13 @@ export function MegaMenu({ open, id }: MegaMenuProps) {
             </div>
 
             <div className="mt-4 border-t border-header-border pt-3.5">
-              <LocaleLink
+              <MegaMenuLink
                 to="/categories"
-                className="mega-menu-link mega-menu-link--view-all cursor-pointer text-sm font-semibold"
+                showFire={false}
+                className="mega-menu-link--view-all cursor-pointer text-sm font-semibold"
               >
                 {t('nav.viewAllCategories')}
-              </LocaleLink>
+              </MegaMenuLink>
             </div>
           </>
         ) : null}
