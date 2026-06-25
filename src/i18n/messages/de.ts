@@ -37,18 +37,13 @@ export const de: Messages = {
     eur: 'Euro',
   },
   hero: {
-    eyebrow: 'Für die Natur gemacht',
+    eyebrow: 'Campfire Outdoors',
     title: 'Rüste dich aus für Trail, Wasser und Straße.',
     description:
-      'Entdecke Kajaks, Fahrräder, Zelte und Trail-Equipment aus einem kuratierten Katalog — mit Live-Preisen in deiner Sprache und Währung, bereit für dein nächstes Abenteuer.',
+      'Kajaks, Fahrräder, Zelte und Trail-Ausrüstung von Marken, die wir führen — mit Preisen in deiner Sprache und Währung. Finde, was du brauchst, und raus in die Natur.',
+    highlights: 'Kajaks · Mountainbikes · Camping · Wandern',
     shopBestsellers: 'Bestseller shoppen',
     browseCategories: 'Kategorien durchstöbern',
-    productsInCatalog: 'Produkte im Katalog',
-    localizedCatalog: 'Lokalisierter Katalog',
-    yourLocale: 'Deine Shop-Sprache',
-    statsError:
-      'Katalogstatistiken konnten nicht geladen werden. Der restliche Shop funktioniert weiterhin.',
-    statsLoading: 'Katalogstatistiken werden geladen',
   },
   home: {
     shopByCategory: 'Nach Kategorie shoppen',
@@ -74,11 +69,21 @@ export const de: Messages = {
       'Produkte konnten nicht geladen werden. Die API startet möglicherweise gerade — bitte kurz warten und erneut versuchen.',
     noFilterMatch:
       'Keine Produkte entsprechen diesen Filtern. Wähle eine andere Marke oder hebe den Budgetfilter auf.',
-    promoTitle: 'Teste den kompletten Checkout',
-    promoIntro: 'Melde dich mit',
-    promoMiddle: 'und dem Passwort',
-    promoOutro:
-      ' an, fülle einen Warenkorb und gib eine Demo-Bestellung über die Live-API auf.',
+    promoEyebrow: 'Vor dem Wochenende',
+    promoTitle: 'Pack nur Ausrüstung ein, die ihren Platz im Rucksack verdient.',
+    promoLead:
+      'Vom Tourenkajak bis zum Kocher — finde Ausrüstung für Trail, Wasser und Straße.',
+    promoPointWater: 'Touren-, Wildwasser- und Aufblas-Kajaks für Seen und Flüsse',
+    promoPointBikes: 'Renn-, Gravel- und Mountainbikes von Marken, die wir führen',
+    promoPointCamp: 'Zelte, Rucksäcke und Wanderbekleidung für Nächte unter freiem Himmel',
+    promoBrowseGear: 'Gesamtes Sortiment',
+    promoExploreCategories: 'Kategorien entdecken',
+    promoDemoLabel: 'Demo-Konto',
+    promoDemoHint:
+      'Melde dich mit diesem Testnutzer an, um Warenkorb, Checkout und Bestellhistorie auszuprobieren.',
+    promoDemoEmail: 'E-Mail',
+    promoDemoPassword: 'Passwort',
+    promoSignIn: 'Anmelden und testen',
   },
   footer: {
     blurb:

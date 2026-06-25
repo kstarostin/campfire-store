@@ -35,17 +35,13 @@ export const en = {
     eur: 'Euro',
   },
   hero: {
-    eyebrow: 'Built for the outdoors',
+    eyebrow: 'Campfire Outdoors',
     title: 'Gear up for the trail, water, and road.',
     description:
-      'Shop kayaks, bikes, tents, and trail essentials from a curated catalog — with live prices in your language and currency, ready for your next trip off the grid.',
+      'Kayaks, bikes, tents, and trail gear from brands we stock — priced in your language and currency. Find what you need, then get outside.',
+    highlights: 'Kayaks · Mountain bikes · Camping · Hiking',
     shopBestsellers: 'Shop bestsellers',
     browseCategories: 'Browse categories',
-    productsInCatalog: 'Products in catalog',
-    localizedCatalog: 'Localized catalog',
-    yourLocale: 'Your storefront locale',
-    statsError: 'Could not load catalog stats. The rest of the shop still works.',
-    statsLoading: 'Loading catalog stats',
   },
   home: {
     shopByCategory: 'Shop by category',
@@ -70,11 +66,21 @@ export const en = {
       'Products could not be loaded. The API may be waking up — try again shortly.',
     noFilterMatch:
       'No products match these filters. Try another brand or clear the budget filter.',
-    promoTitle: 'Try the full checkout flow',
-    promoIntro: 'Sign in as',
-    promoMiddle: 'with password',
-    promoOutro:
-      ', build a cart, and place a demo order against the live API.',
+    promoEyebrow: 'Before the weekend',
+    promoTitle: 'Pack gear that earns its place in the bag.',
+    promoLead:
+      'From touring kayaks to camp stoves — find gear for the trail, the water, and the road.',
+    promoPointWater: 'Touring, whitewater, and inflatable kayaks for lakes and rivers',
+    promoPointBikes: 'Road, gravel, and mountain bikes from brands we stock',
+    promoPointCamp: 'Tents, backpacks, and hiking layers for nights off the grid',
+    promoBrowseGear: 'Browse all gear',
+    promoExploreCategories: 'Explore categories',
+    promoDemoLabel: 'Demo account',
+    promoDemoHint:
+      'Sign in with this test user to try cart, checkout, and order history end to end.',
+    promoDemoEmail: 'Email',
+    promoDemoPassword: 'Password',
+    promoSignIn: 'Sign in to try',
   },
   footer: {
     blurb:
