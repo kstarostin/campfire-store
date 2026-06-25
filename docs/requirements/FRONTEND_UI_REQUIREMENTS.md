@@ -262,14 +262,15 @@ All wishlist routes require JWT (`Authorization: Bearer <token>`). Use TanStack 
 
 ### 6.6 Category tree
 
-Seed data has **6 root categories** with subcategories (see mega-menu in `docs/mockups/homepage.html`):
+Seed data has **7 root categories** with subcategories (see mega-menu in `docs/mockups/homepage.html`):
 
-- Kayaks → Touring, Whitewater, Inflatable
-- Bicycles → Road, Gravel, Mountain
-- Camping → Tents
-- Accessories → Backpacks
-- Clothing → Hiking pants
-- Ski → All mountain
+- Kayaks → Touring, Whitewater, Inflatable, Kayak accessories
+- Bicycles → Road, Gravel, Mountain, Cycling accessories
+- Camping → Tents, Sleeping bags, Sleeping pads, Camp kitchen, Camping accessories
+- Bags & gear (`bags-and-gear`) → Backpacks, Lighting & tools
+- Clothing → Hiking pants, Jackets & shells, Midlayers & fleece, Shorts & tights
+- Footwear → Hiking boots, Trail runners
+- Ski → All mountain, Piste & freeride skis, Ski boots, Ski accessories
 
 Build mega-menu and category pages from `GET /categories` (use `parentCategory` / `subCategories` virtual).
 

@@ -5,6 +5,7 @@ import {
   Package,
   Sailboat,
   Shirt,
+  SportShoe,
   Tent,
   type LucideIcon,
 } from 'lucide-react'
@@ -21,6 +22,7 @@ const CATEGORY_ICON_MAP: Record<string, LucideIcon> = {
   shirt: Shirt,
   mountain: Mountain,
   package: Package,
+  'sport-shoe': SportShoe,
 }
 
 const FALLBACK_ICON = Package

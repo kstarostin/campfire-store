@@ -25,7 +25,7 @@ export const endpoints = {
 
   categories: (language: Language, currency: Currency) =>
     api.get<ApiListEnvelope<Category>>('/categories', {
-      params: withLocale(language, currency),
+      params: { ...withLocale(language, currency), limit: 100 },
     }),
 
   category: (code: string, language: Language, currency: Currency) =>

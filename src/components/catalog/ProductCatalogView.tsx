@@ -184,6 +184,11 @@ export function ProductCatalogView(props: ProductCatalogViewProps) {
     [productsQuery.data?.filters],
   )
 
+  const catalogData = productsQuery.data
+  const hasActiveFilters = countActiveCatalogFilters(filters) > 0
+  const showFilters =
+    Boolean(catalogData) && ((catalogData?.total ?? 0) > 0 || hasActiveFilters)
+
   return (
     <section className="catalog-page section--products">
       <Container>
@@ -197,19 +202,21 @@ export function ProductCatalogView(props: ProductCatalogViewProps) {
           <CategorySubcategoryStrip subcategories={subcategories} />
         ) : null}
 
-        <CatalogFilters
-          manufacturers={manufacturers}
-          priceQuickFilters={priceQuickFilters}
-          filters={filters}
-          sort={sort}
-          currency={currency}
-          variant={variant}
-          activeSummary={activeSummary}
-          defaultOpen={filtersOpenByDefault}
-          onFiltersChange={setFilters}
-          onSortChange={setSort}
-          onClear={clearFilters}
-        />
+        {showFilters ? (
+          <CatalogFilters
+            manufacturers={manufacturers}
+            priceQuickFilters={priceQuickFilters}
+            filters={filters}
+            sort={sort}
+            currency={currency}
+            variant={variant}
+            activeSummary={activeSummary}
+            defaultOpen={filtersOpenByDefault}
+            onFiltersChange={setFilters}
+            onSortChange={setSort}
+            onClear={clearFilters}
+          />
+        ) : null}
 
         {productsQuery.isLoading ? (
           <LoadingState label={t('catalog.productsLoading')} />
@@ -237,9 +244,9 @@ export function ProductCatalogView(props: ProductCatalogViewProps) {
                   <ProductCard key={product._id} product={product} currency={currency} />
                 ))}
               </ProductGrid>
-            ) : (
+            ) : hasActiveFilters ? (
               <p className="catalog-empty">{t('catalog.noFilterMatch')}</p>
-            )}
+            ) : null}
 
             <Pagination
               page={productsQuery.data.page}
