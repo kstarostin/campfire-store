@@ -530,19 +530,21 @@
       }
 
       .pdp-story p {
-        --story-line: calc(1.0625rem * 1.65);
+        --story-font-size: 1.0625rem;
+        --story-leading: 1.65;
+        --story-line: calc(var(--story-font-size) * var(--story-leading));
         margin: 0 0 1rem;
-        font-size: 1.0625rem;
-        line-height: 1.65;
+        font-size: var(--story-font-size);
+        line-height: var(--story-leading);
         color: #404040;
       }
 
-      .pdp-story p:first-of-type::first-letter {
+      .pdp-story__dropcap {
         float: left;
-        margin: 0.08em 0.14em 0 0;
+        margin: calc(var(--story-line) * -0.06) 0.35rem 0 0;
         font-family: var(--font-display);
-        font-size: calc(var(--story-line) * 2.2);
-        line-height: 0.92;
+        font-size: calc(var(--story-line) * 2);
+        line-height: 1;
         font-weight: 700;
         color: var(--color-primary-hover);
       }
@@ -838,7 +840,7 @@
         <section class="pdp-story" aria-labelledby="story-heading">
           <h2 id="story-heading">On the road</h2>
           <p>
-            Fast, composed, and ready for long days on mixed terrain — the Grail CF SL 7 is
+            <span class="pdp-story__dropcap">F</span>ast, composed, and ready for long days on mixed terrain — the Grail CF SL 7 is
             Canyon’s carbon gravel benchmark with precise handling, a stable ride, and
             dependable Shimano 105 shifting. DT Swiss aluminium wheels keep it tough without
             feeling sluggish when the pavement turns to chip seal.

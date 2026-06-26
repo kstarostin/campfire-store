@@ -12,10 +12,17 @@ export function ProductDescription({ product }: ProductDescriptionProps) {
 
   if (!description) return null
 
+  const trimmed = description.trimStart()
+  const firstCharacter = trimmed[0]
+  const remainingText = trimmed.slice(1)
+
   return (
     <section className="pdp-story" aria-labelledby="pdp-story-heading">
       <h2 id="pdp-story-heading">{t('product.onTheTrail')}</h2>
-      <p>{description}</p>
+      <p>
+        <span className="pdp-story__dropcap">{firstCharacter}</span>
+        {remainingText}
+      </p>
     </section>
   )
 }
