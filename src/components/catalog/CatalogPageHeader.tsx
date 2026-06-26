@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import { LocaleLink } from '@/components/ui/LocaleLink'
 import { useTranslation } from '@/i18n'
 
-interface CatalogBreadcrumbItem {
+export interface CatalogBreadcrumbItem {
   label: string
   to?: string
 }

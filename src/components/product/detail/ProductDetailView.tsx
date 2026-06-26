@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import type { Category, Product } from '@/api/types'
-import { CatalogBreadcrumb } from '@/components/catalog/CatalogPageHeader'
+import { CatalogBreadcrumb, type CatalogBreadcrumbItem } from '@/components/catalog/CatalogPageHeader'
 import { ProductBuyPanel } from '@/components/product/detail/ProductBuyPanel'
 import { ProductDescription } from '@/components/product/detail/ProductDescription'
 import { ProductFieldNotes } from '@/components/product/detail/ProductFieldNotes'
@@ -28,8 +28,8 @@ export function ProductDetailView({
   const category =
     product.category && typeof product.category === 'object' ? product.category : undefined
 
-  const breadcrumbItems = useMemo(() => {
-    const items = ancestors.map((ancestor) => ({
+  const breadcrumbItems = useMemo((): CatalogBreadcrumbItem[] => {
+    const items: CatalogBreadcrumbItem[] = ancestors.map((ancestor) => ({
       label: ancestor.name,
       to: categoryPath(ancestor),
     }))
