@@ -32,10 +32,16 @@ export interface I18nPrice {
   EUR?: number
 }
 
+export interface ProductImageSize {
+  url: string
+  altText?: string
+}
+
 export interface ProductImage {
-  small?: { url: string }
-  medium?: { url: string }
-  large?: { url: string }
+  small?: ProductImageSize
+  medium?: ProductImageSize
+  large?: ProductImageSize
+  thumbnail?: ProductImageSize
 }
 
 export type BadgeStyle = 'primary' | 'forest' | 'neutral'
@@ -52,10 +58,18 @@ export interface ProductBadgeAssignment {
   badge: ProductBadge
 }
 
+export interface ProductHighlight {
+  code: string
+  valueI18n?: I18nString
+}
+
 export interface Product {
   _id: string
   name: string
   manufacturer?: string
+  manufacturerUrl?: string
+  taglineI18n?: I18nString
+  highlights?: ProductHighlight[]
   descriptionI18n?: I18nString
   priceI18n?: I18nPrice
   images?: ProductImage[]

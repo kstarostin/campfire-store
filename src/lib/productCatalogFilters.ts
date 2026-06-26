@@ -16,7 +16,7 @@ export const DEFAULT_CATALOG_FILTERS: CatalogFilterState = {
   priceQuickMax: null,
 }
 
-export const CATALOG_PAGE_SIZE = 8
+export const CATALOG_PAGE_SIZE = 16
 
 export function catalogSortToApi(
   sort: CatalogSort,

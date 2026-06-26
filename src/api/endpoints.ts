@@ -56,8 +56,18 @@ export const endpoints = {
     }),
 
   product: (id: string, language: Language, currency: Currency) =>
-    api.get<{ data: Product }>(`/products/${id}`, {
+    api.get<{ data: { document: Product } }>(`/products/${id}`, {
       params: withLocale(language, currency),
+    }),
+
+  relatedProducts: (
+    id: string,
+    language: Language,
+    currency: Currency,
+    limit = 8,
+  ) =>
+    api.get<ApiListEnvelope<Product>>(`/products/${id}/related`, {
+      params: { ...withLocale(language, currency), limit },
     }),
 
   search: (

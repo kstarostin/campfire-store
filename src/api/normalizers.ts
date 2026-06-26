@@ -135,11 +135,22 @@ function normalizeProductBadges(
 }
 
 function normalizeProduct(document: ApiProductDocument, language: Language): Product {
-  const { badges, ...product } = document
+  const { badges, category, ...product } = document
   return {
     ...product,
+    category:
+      category && typeof category === 'object'
+        ? normalizeCategory(category, language)
+        : category,
     badges: normalizeProductBadges(badges, language),
   }
+}
+
+export function parseProduct(
+  response: { data: { document: ApiProductDocument } },
+  language: Language,
+): Product {
+  return normalizeProduct(response.data.document, language)
 }
 
 export function parseProductList(

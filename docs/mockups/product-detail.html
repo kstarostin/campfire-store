@@ -1,0 +1,1232 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Campfire Store — Product detail mockup (Trailhead sheet)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      :root {
+        --font-sans: 'Inter', system-ui, sans-serif;
+        --font-display: 'Fraunces', Georgia, serif;
+
+        --color-bg: #fafafa;
+        --color-header-bg: #1c1917;
+        --color-header-border: #292524;
+        --color-footer-bg: #f0f0f0;
+        --color-surface: #ffffff;
+        --color-surface-muted: #f5f5f5;
+        --color-border: #e5e5e5;
+        --color-text: #171717;
+        --color-text-muted: #737373;
+        --color-primary: #ea580c;
+        --color-primary-hover: #c2410c;
+        --color-primary-subtle: #fff7ed;
+        --color-secondary: #047857;
+        --color-secondary-hover: #065f46;
+        --color-secondary-subtle: #e8f7f0;
+
+        --radius-sm: 0.5rem;
+        --radius-md: 0.75rem;
+        --radius-lg: 1rem;
+        --shadow-sm: 0 1px 2px rgb(0 0 0 / 6%);
+        --shadow-md: 0 10px 28px rgb(0 0 0 / 8%);
+        --header-height: 4.75rem;
+        --max-width: 72rem;
+        --api-origin: https://campfire-store-api.onrender.com;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--font-sans);
+        font-size: 1rem;
+        line-height: 1.5;
+        color: var(--color-text);
+        background: var(--color-bg);
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      .container {
+        width: min(100% - 2rem, var(--max-width));
+        margin-inline: auto;
+      }
+
+      /* Mockup chrome */
+      .mockup-bar {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 0.625rem 1rem;
+        border-bottom: 1px solid #44403c;
+        background: #292524;
+        color: #f5f5f4;
+        font-size: 0.8125rem;
+      }
+
+      .mockup-bar strong {
+        font-weight: 600;
+      }
+
+      .mockup-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .mockup-nav a {
+        padding: 0.375rem 0.75rem;
+        border-radius: 999px;
+        color: #a8a29e;
+      }
+
+      .mockup-nav a:hover {
+        color: #f5f5f4;
+      }
+
+      .mockup-nav a.is-active {
+        color: #171717;
+        background: #f5f5f4;
+        font-weight: 600;
+      }
+
+      /* Header */
+      .site-header {
+        position: sticky;
+        top: 2.375rem;
+        z-index: 30;
+        border-bottom: 1px solid var(--color-header-border);
+        background: rgb(28 25 23 / 96%);
+        backdrop-filter: blur(10px);
+        color: #f5f5f4;
+      }
+
+      .header-inner {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        min-height: var(--header-height);
+      }
+
+      .logo img {
+        height: 3rem;
+        width: auto;
+        transform: translateY(-0.4rem);
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        margin-left: auto;
+      }
+
+      .icon-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        border: 0;
+        border-radius: 999px;
+        color: inherit;
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .icon-btn:hover {
+        color: #fdba74;
+      }
+
+      .icon-btn.is-active {
+        color: #fb7185;
+      }
+
+      /* PDP — Trailhead sheet */
+      .pdp-page {
+        padding: 1rem 0 5.5rem;
+      }
+
+      .breadcrumb {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.375rem;
+        margin: 0 0 1.25rem;
+        padding: 0;
+        list-style: none;
+        font-size: 0.8125rem;
+        color: var(--color-text-muted);
+      }
+
+      .breadcrumb a:hover {
+        color: var(--color-secondary);
+      }
+
+      .breadcrumb [aria-current='page'] {
+        color: var(--color-text);
+        font-weight: 500;
+      }
+
+      .breadcrumb-sep {
+        color: #d4d4d4;
+      }
+
+      .trailhead-hero {
+        display: grid;
+        gap: 1.5rem;
+        margin-bottom: 1.25rem;
+      }
+
+      @media (min-width: 900px) {
+        .trailhead-hero {
+          grid-template-columns: minmax(0, 1fr) minmax(15rem, 17.5rem);
+          gap: 2rem 2.5rem;
+          align-items: stretch;
+        }
+      }
+
+      .trailhead-media-col {
+        min-width: 0;
+      }
+
+      .hero-stage {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: min(58vw, 22rem);
+        padding: clamp(1rem, 3vw, 2rem);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        background: linear-gradient(165deg, #ffffff 0%, #f3f3f3 100%);
+        box-shadow: var(--shadow-sm);
+        cursor: grab;
+        touch-action: pan-y;
+        user-select: none;
+      }
+
+      .hero-stage.is-dragging {
+        cursor: grabbing;
+      }
+
+      @media (min-width: 900px) {
+        .hero-stage {
+          min-height: min(52vh, 36rem);
+          aspect-ratio: auto;
+        }
+      }
+
+      .hero-stage img {
+        width: 100%;
+        max-height: min(52vh, 34rem);
+        object-fit: contain;
+      }
+
+      .filmstrip {
+        display: flex;
+        gap: 0.625rem;
+        margin-top: 0.75rem;
+        padding-bottom: 0.25rem;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+      }
+
+      .filmstrip button {
+        flex: 0 0 4.5rem;
+        height: 4.5rem;
+        padding: 0.375rem;
+        border: 2px solid var(--color-border);
+        border-radius: var(--radius-sm);
+        background: var(--color-surface);
+        cursor: pointer;
+        scroll-snap-align: start;
+      }
+
+      .filmstrip button.is-active {
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 1px var(--color-primary);
+      }
+
+      .filmstrip button img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .trailhead-buy {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 1rem;
+        padding: 0.25rem 0;
+      }
+
+      @media (min-width: 900px) {
+        .trailhead-buy {
+          position: sticky;
+          top: calc(2.375rem + var(--header-height) + 1rem);
+          align-self: start;
+        }
+      }
+
+      .product-eyebrow {
+        margin: 0;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+      }
+
+      .product-title {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: clamp(1.625rem, 3.5vw, 2.125rem);
+        line-height: 1.1;
+        letter-spacing: -0.025em;
+      }
+
+      .product-tagline {
+        margin: 0.375rem 0 0;
+        font-size: 0.9375rem;
+        line-height: 1.45;
+        color: var(--color-text-muted);
+      }
+
+      .product-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .badge {
+        padding: 0.25rem 0.625rem;
+        border-radius: 999px;
+        font-size: 0.6875rem;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        color: white;
+        background: var(--color-primary);
+      }
+
+      .badge--forest {
+        background: var(--color-secondary);
+      }
+
+      .product-price {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: clamp(1.75rem, 4vw, 2.25rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--color-primary-hover);
+      }
+
+      .buy-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-top: 0.25rem;
+      }
+
+      .buy-actions__row {
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+      }
+
+      .qty-stepper {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-sm);
+        background: var(--color-surface);
+        overflow: hidden;
+      }
+
+      .qty-stepper button {
+        width: 2.5rem;
+        height: 2.5rem;
+        border: 0;
+        color: var(--color-text);
+        background: var(--color-surface-muted);
+        cursor: pointer;
+      }
+
+      .qty-stepper button:hover {
+        background: var(--color-border);
+      }
+
+      .qty-stepper input {
+        width: 2.5rem;
+        border: 0;
+        text-align: center;
+        color: var(--color-text);
+        background: transparent;
+      }
+
+      .btn-primary {
+        width: 100%;
+        padding: 0.8125rem 1.25rem;
+        border: 0;
+        border-radius: var(--radius-sm);
+        font-weight: 600;
+        color: white;
+        background: var(--color-primary);
+        cursor: pointer;
+      }
+
+      .btn-primary:hover {
+        background: var(--color-primary-hover);
+      }
+
+      .btn-wishlist {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.75rem;
+        height: 2.75rem;
+        flex-shrink: 0;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-sm);
+        color: var(--color-text-muted);
+        background: var(--color-surface);
+        cursor: pointer;
+      }
+
+      .btn-wishlist:hover {
+        border-color: #fdba74;
+        color: var(--color-primary);
+      }
+
+      .btn-wishlist.is-active {
+        color: #e11d48;
+        border-color: #fda4af;
+        background: #fff1f2;
+      }
+
+      .manufacturer-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        font-size: 0.8125rem;
+        font-weight: 500;
+        color: var(--color-secondary);
+      }
+
+      .manufacturer-link:hover {
+        color: var(--color-secondary-hover);
+      }
+
+      /* Field notes */
+      .field-notes {
+        margin-bottom: 2.5rem;
+        padding: 1.25rem 1.25rem 0.25rem;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        background: var(--color-surface);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .field-notes h2 {
+        margin: 0 0 1rem;
+        font-family: var(--font-display);
+        font-size: 1.125rem;
+        font-weight: 600;
+      }
+
+      .field-notes__grid {
+        display: grid;
+        gap: 1rem;
+      }
+
+      @media (min-width: 640px) {
+        .field-notes__grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (min-width: 900px) {
+        .field-notes__grid {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+      }
+
+      .field-note {
+        display: flex;
+        gap: 0.75rem;
+        padding-bottom: 1rem;
+      }
+
+      .field-note__icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        flex-shrink: 0;
+        border-radius: var(--radius-sm);
+        color: var(--color-primary-hover);
+        background: var(--color-primary-subtle);
+      }
+
+      .field-note strong {
+        display: block;
+        font-size: 0.6875rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+      }
+
+      .field-note span {
+        display: block;
+        margin-top: 0.125rem;
+        font-size: 0.9375rem;
+        font-weight: 500;
+      }
+
+      /* Description */
+      .pdp-story {
+        margin-bottom: 2.5rem;
+      }
+
+      .pdp-story h2 {
+        margin: 0 0 0.75rem;
+        font-family: var(--font-display);
+        font-size: 1.375rem;
+        font-weight: 600;
+      }
+
+      .pdp-story p {
+        --story-line: calc(1.0625rem * 1.65);
+        margin: 0 0 1rem;
+        font-size: 1.0625rem;
+        line-height: 1.65;
+        color: #404040;
+      }
+
+      .pdp-story p:first-of-type::first-letter {
+        float: left;
+        margin: 0.08em 0.14em 0 0;
+        font-family: var(--font-display);
+        font-size: calc(var(--story-line) * 2.2);
+        line-height: 0.92;
+        font-weight: 700;
+        color: var(--color-primary-hover);
+      }
+
+      /* Related */
+      .related-rail h2 {
+        margin: 0 0 1rem;
+        font-family: var(--font-display);
+        font-size: 1.25rem;
+        font-weight: 600;
+      }
+
+      .related-scroll {
+        display: flex;
+        gap: 1rem;
+        padding-bottom: 0.5rem;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+      }
+
+      .product-card {
+        flex: 0 0 min(72vw, 14rem);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        background: var(--color-surface);
+        box-shadow: var(--shadow-sm);
+        scroll-snap-align: start;
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease,
+          border-color 0.15s ease;
+      }
+
+      .product-card:hover {
+        transform: translateY(-2px);
+        border-color: #fdba74;
+        box-shadow: var(--shadow-md);
+      }
+
+      .product-media {
+        aspect-ratio: 1;
+        padding: 0.75rem;
+        background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
+      }
+
+      .product-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .product-body {
+        padding: 0.75rem;
+      }
+
+      .product-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        margin-bottom: 0.25rem;
+        font-size: 0.75rem;
+        color: var(--color-text-muted);
+      }
+
+      .product-body h3 {
+        margin: 0;
+        font-size: 0.9375rem;
+        font-weight: 600;
+        line-height: 1.3;
+      }
+
+      .product-card .product-price {
+        margin: 0.375rem 0 0;
+        font-family: var(--font-sans);
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--color-primary-hover);
+      }
+
+      /* Mobile buy bar */
+      .mobile-buy-bar {
+        position: fixed;
+        inset-inline: 0;
+        bottom: 0;
+        z-index: 40;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        border-top: 1px solid var(--color-border);
+        background: rgb(255 255 255 / 96%);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 -4px 20px rgb(0 0 0 / 6%);
+      }
+
+      @media (min-width: 900px) {
+        .mobile-buy-bar {
+          display: none;
+        }
+      }
+
+      .mobile-buy-bar .product-price {
+        font-size: 1.375rem;
+        white-space: nowrap;
+      }
+
+      .mobile-buy-bar .btn-primary {
+        flex: 1;
+        width: auto;
+      }
+
+      /* Footer */
+      .site-footer {
+        margin-top: 2rem;
+        padding: 2rem 0;
+        border-top: 1px solid var(--color-border);
+        background: var(--color-footer-bg);
+        font-size: 0.875rem;
+      }
+
+      .footer-bottom {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 0.5rem;
+        margin-top: 1.5rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--color-border);
+        color: var(--color-text-muted);
+        font-size: 0.8125rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="mockup-bar">
+      <div>
+        <strong>Trailhead sheet</strong> — product detail mockup · Canyon Grail CF SL 7
+      </div>
+      <nav class="mockup-nav" aria-label="Mockup pages">
+        <a href="homepage.html">Home</a>
+        <a href="catalog-listing.html">Catalog</a>
+        <a href="product-detail.html" class="is-active" aria-current="page">Product</a>
+      </nav>
+    </div>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="logo" href="homepage.html" aria-label="Campfire Store home">
+          <img src="../../public/img/campfire_logo_light.png" alt="Campfire Store" />
+        </a>
+        <div class="header-actions">
+          <button class="icon-btn" type="button" aria-label="Account">
+            <i data-lucide="user" size="20"></i>
+          </button>
+          <button class="icon-btn" type="button" aria-label="Cart">
+            <i data-lucide="shopping-cart" size="20"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="pdp-page section--products">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li><a href="homepage.html">Home</a></li>
+          <li class="breadcrumb-sep" aria-hidden="true">›</li>
+          <li><a href="catalog-listing.html">Bicycles</a></li>
+          <li class="breadcrumb-sep" aria-hidden="true">›</li>
+          <li><a href="catalog-listing.html">Gravel bikes</a></li>
+          <li class="breadcrumb-sep" aria-hidden="true">›</li>
+          <li aria-current="page">Grail CF SL 7</li>
+        </ol>
+
+        <div class="trailhead-hero">
+          <div class="trailhead-media-col">
+            <div class="hero-stage" id="hero-stage">
+              <img
+                id="hero-image"
+                src="https://campfire-store-api.onrender.com/img/products/large/product-6635eaef6fbd7b858b6acb86-1714815743602-1_2000.webp"
+                alt="Canyon Grail CF SL 7 — side view"
+                width="1000"
+                height="1000"
+              />
+            </div>
+            <div class="filmstrip" role="tablist" aria-label="Product images">
+              <button
+                type="button"
+                class="is-active"
+                role="tab"
+                aria-selected="true"
+                data-src="https://campfire-store-api.onrender.com/img/products/large/product-6635eaef6fbd7b858b6acb86-1714815743602-1_2000.webp"
+                data-alt="Canyon Grail CF SL 7 — side view"
+              >
+                <img
+                  src="https://campfire-store-api.onrender.com/img/products/thumbnail/product-6635eaef6fbd7b858b6acb86-1714815743602-1_200.jpeg"
+                  alt=""
+                />
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected="false"
+                data-src="https://campfire-store-api.onrender.com/img/products/medium/product-6635eaef6fbd7b858b6acb86-1714815743602-1_1000.jpeg"
+                data-alt="Canyon Grail CF SL 7 — detail"
+              >
+                <img
+                  src="https://campfire-store-api.onrender.com/img/products/thumbnail/product-6635eaef6fbd7b858b6acb86-1714815743602-1_200.jpeg"
+                  alt=""
+                />
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected="false"
+                data-src="https://campfire-store-api.onrender.com/img/products/small/product-6635eaef6fbd7b858b6acb86-1714815743602-1_500.jpeg"
+                data-alt="Canyon Grail CF SL 7 — cockpit"
+              >
+                <img
+                  src="https://campfire-store-api.onrender.com/img/products/thumbnail/product-6635eaef6fbd7b858b6acb86-1714815743602-1_200.jpeg"
+                  alt=""
+                />
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected="false"
+                data-src="https://campfire-store-api.onrender.com/img/products/large/product-6635eaef6fbd7b858b6acb86-1714815743602-1_2000.webp"
+                data-alt="Canyon Grail CF SL 7 — drive side"
+              >
+                <img
+                  src="https://campfire-store-api.onrender.com/img/products/thumbnail/product-6635eaef6fbd7b858b6acb86-1714815743602-1_200.jpeg"
+                  alt=""
+                />
+              </button>
+            </div>
+          </div>
+
+          <aside class="trailhead-buy">
+            <p class="product-eyebrow" id="product-manufacturer">Canyon</p>
+            <h1 class="product-title" id="product-title">Grail CF SL 7</h1>
+            <p class="product-tagline" id="product-tagline"></p>
+            <div class="product-badges" id="product-badges">
+              <span class="badge">Bestseller</span>
+            </div>
+            <p class="product-price">€2,699</p>
+
+            <div class="buy-actions">
+              <div class="buy-actions__row">
+                <div class="qty-stepper" aria-label="Quantity">
+                  <button type="button" id="qty-minus" aria-label="Decrease quantity">−</button>
+                  <input
+                    id="qty-input"
+                    type="text"
+                    inputmode="numeric"
+                    value="1"
+                    aria-label="Quantity"
+                    readonly
+                  />
+                  <button type="button" id="qty-plus" aria-label="Increase quantity">+</button>
+                </div>
+                <button
+                  class="btn-wishlist"
+                  type="button"
+                  id="wishlist-btn"
+                  aria-label="Add to wishlist"
+                  aria-pressed="false"
+                >
+                  <i data-lucide="heart" size="20"></i>
+                </button>
+              </div>
+              <button class="btn-primary" type="button">Add to cart</button>
+            </div>
+
+            <a
+              class="manufacturer-link"
+              id="manufacturer-link"
+              href="https://www.canyon.com/de-de/gravel-bikes/performance/grail/cf-sl/grail-cf-sl-7/3575.html"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View on Canyon
+              <i data-lucide="external-link" size="14"></i>
+            </a>
+          </aside>
+        </div>
+
+        <section class="field-notes" aria-labelledby="field-notes-heading">
+          <h2 id="field-notes-heading">Field notes</h2>
+          <div class="field-notes__grid" id="field-notes-grid"></div>
+        </section>
+
+        <section class="pdp-story" aria-labelledby="story-heading">
+          <h2 id="story-heading">On the road</h2>
+          <p>
+            Fast, composed, and ready for long days on mixed terrain — the Grail CF SL 7 is
+            Canyon’s carbon gravel benchmark with precise handling, a stable ride, and
+            dependable Shimano 105 shifting. DT Swiss aluminium wheels keep it tough without
+            feeling sluggish when the pavement turns to chip seal.
+          </p>
+          <p>
+            The distinctive Grail frame soaks up chatter without isolating you from the road,
+            so you stay fresh on century rides and rough backroads alike. For Campfire’s demo
+            catalog, this is the gravel bike we’d point you at when you want one bike for
+            training loops, light bikepacking, and the occasional fondo.
+          </p>
+        </section>
+
+        <section class="related-rail" aria-labelledby="related-heading">
+          <h2 id="related-heading">Also on the trail</h2>
+          <div class="related-scroll" id="related-scroll"></div>
+        </section>
+      </div>
+    </main>
+
+    <div class="mobile-buy-bar" aria-label="Quick purchase">
+      <p class="product-price">€2,699</p>
+      <button class="btn-primary" type="button">Add to cart</button>
+    </div>
+
+    <footer class="site-footer">
+      <div class="container">
+        <img
+          src="../../public/img/campfire_logo_dark.png"
+          alt="Campfire Store"
+          style="height: 1.75rem"
+        />
+        <div class="footer-bottom">
+          <span>© 2026 Campfire Store</span>
+          <span>Product detail mockup · Trailhead sheet</span>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const API_ORIGIN = 'https://campfire-store-api.onrender.com';
+      const PRODUCT_ID = '6635eaef6fbd7b858b6acb86';
+      const MOCK_LANG = 'en';
+      const MOCK_CURRENCY = 'EUR';
+      const MOCK_CATEGORY_CODE = 'gravel-bikes';
+
+      const FALLBACK_RELATED_PRODUCTS = [
+        {
+          _id: '6635e897a9db5c2e7c062892',
+          name: 'Grizl CF SLX 8 Di2',
+          manufacturer: 'Canyon',
+          priceI18n: { EUR: 3999 },
+          images: [
+            {
+              small: {
+                url: '/img/products/small/product-6635e897a9db5c2e7c062892-1714809279182-1_500.jpeg',
+              },
+            },
+          ],
+        },
+        {
+          _id: '663608a2ec3b85f6fc239331',
+          name: 'Nuroad Race',
+          manufacturer: 'Cube',
+          priceI18n: { EUR: 1699 },
+          images: [
+            {
+              small: {
+                url: '/img/products/small/product-663608a2ec3b85f6fc239331-1714807599284-1_500.jpeg',
+              },
+            },
+          ],
+        },
+        {
+          _id: '663603ab52bc5f09bc0ce046',
+          name: 'Grail CF SLX 8 AXS',
+          manufacturer: 'Canyon',
+          priceI18n: { EUR: 5299 },
+          images: [
+            {
+              small: {
+                url: '/img/products/small/product-663603ab52bc5f09bc0ce046-1714816059268-1_500.jpeg',
+              },
+            },
+          ],
+        },
+        {
+          _id: '663608f0d8ac5672cbba011a',
+          name: 'Contessa Addict Gravel 15 Bike',
+          manufacturer: 'Scott',
+          priceI18n: { EUR: 2599 },
+          images: [
+            {
+              small: {
+                url: '/img/products/small/product-6635e3f06209d2d0edb16d0c-1714809279182-1_500.jpeg',
+              },
+            },
+          ],
+        },
+      ];
+
+      const HIGHLIGHT_LABELS = {
+        frame: 'Frame',
+        wheel: 'Wheels',
+        use: 'Best for',
+        volume: 'Volume',
+        fit: 'Fit',
+        material: 'Material',
+        capacity: 'Capacity',
+        season: 'Season',
+        weight: 'Weight',
+        terrain: 'Terrain',
+        waterproof: 'Waterproof',
+        type: 'Type',
+        length: 'Length',
+        waist: 'Waist',
+        skill: 'Skill level',
+      };
+
+      const HIGHLIGHT_ICONS = {
+        frame: 'layers',
+        wheel: 'circle',
+        use: 'compass',
+        volume: 'backpack',
+        fit: 'user',
+        material: 'shirt',
+        capacity: 'users',
+        season: 'sun',
+        weight: 'feather',
+        terrain: 'mountain',
+        waterproof: 'droplets',
+        type: 'ship',
+        length: 'ruler',
+        waist: 'snowflake',
+        skill: 'trending-up',
+      };
+
+      const localize = (value, lang = MOCK_LANG) =>
+        value && typeof value === 'object' ? value[lang] ?? value.en : value;
+
+      const formatPrice = (product) => {
+        const amount = product.priceI18n?.[MOCK_CURRENCY];
+        if (amount == null) return '';
+        const symbol = MOCK_CURRENCY === 'EUR' ? '€' : '$';
+        return `${symbol}${Number(amount).toLocaleString('en')}`;
+      };
+
+      const resolveImageUrl = (product) => {
+        const imagePath =
+          product.images?.[0]?.small?.url ??
+          product.images?.[0]?.medium?.url ??
+          product.images?.[0]?.thumbnail?.url;
+        if (!imagePath) return null;
+        return imagePath.startsWith('http') ? imagePath : `${API_ORIGIN}${imagePath}`;
+      };
+
+      const renderFieldNote = (icon, label, value) => `
+        <div class="field-note">
+          <div class="field-note__icon"><i data-lucide="${icon}" size="18"></i></div>
+          <div>
+            <strong>${label}</strong>
+            <span>${value}</span>
+          </div>
+        </div>
+      `;
+
+      const renderFieldNotes = (product) => {
+        const notes = [];
+
+        (product.highlights ?? []).forEach((highlight) => {
+          const label = HIGHLIGHT_LABELS[highlight.code] ?? highlight.code;
+          const icon = HIGHLIGHT_ICONS[highlight.code] ?? 'tag';
+          notes.push(renderFieldNote(icon, label, localize(highlight.valueI18n)));
+        });
+
+        if (product.isFeatured) {
+          notes.push(renderFieldNote('flame', 'Featured', 'Campfire pick'));
+        }
+
+        document.getElementById('field-notes-grid').innerHTML = notes.join('');
+      };
+
+      const applyProduct = (product) => {
+        document.getElementById('product-manufacturer').textContent = product.manufacturer;
+        document.getElementById('product-title').textContent = product.name;
+
+        const tagline = localize(product.taglineI18n);
+        const taglineEl = document.getElementById('product-tagline');
+        taglineEl.textContent = tagline ?? '';
+        taglineEl.hidden = !tagline;
+
+        const manufacturerLink = document.getElementById('manufacturer-link');
+        if (product.manufacturerUrl) {
+          manufacturerLink.href = product.manufacturerUrl;
+          manufacturerLink.innerHTML = `View on ${product.manufacturer}<i data-lucide="external-link" size="14"></i>`;
+        } else {
+          manufacturerLink.hidden = true;
+        }
+
+        renderFieldNotes(product);
+        lucide.createIcons();
+      };
+
+      const renderRelatedProducts = (products, categoryName) => {
+        const relatedRail = document.querySelector('.related-rail');
+        if (!products.length) {
+          relatedRail.hidden = true;
+          return;
+        }
+
+        relatedRail.hidden = false;
+        const heading = categoryName
+          ? `More ${categoryName.toLowerCase()}`
+          : 'Also on the trail';
+        document.getElementById('related-heading').textContent = heading;
+
+        document.getElementById('related-scroll').innerHTML = products
+          .map((product) => {
+            const imageUrl = resolveImageUrl(product);
+            const price = formatPrice(product);
+            const imageMarkup = imageUrl
+              ? `<img src="${imageUrl}" alt="${product.name}" loading="lazy" />`
+              : '';
+
+            return `
+              <a class="product-card" href="product-detail.html">
+                <div class="product-media">${imageMarkup}</div>
+                <div class="product-body">
+                  <div class="product-meta"><span>${product.manufacturer ?? ''}</span></div>
+                  <h3>${product.name}</h3>
+                  <p class="product-price">${price}</p>
+                </div>
+              </a>
+            `;
+          })
+          .join('');
+      };
+
+      const loadRelatedProducts = async (categoryName, categoryCode = MOCK_CATEGORY_CODE) => {
+        let products = [];
+
+        try {
+          const response = await fetch(
+            `${API_ORIGIN}/api/v1/products/${PRODUCT_ID}/related?language=${MOCK_LANG}&currency=${MOCK_CURRENCY}&limit=8`,
+          );
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          const payload = await response.json();
+          products = payload.data.documents ?? [];
+        } catch (relatedError) {
+          console.warn('Related endpoint unavailable, falling back to category products:', relatedError);
+
+          try {
+            const response = await fetch(
+              `${API_ORIGIN}/api/v1/categories/${encodeURIComponent(categoryCode)}/products?language=${MOCK_LANG}&currency=${MOCK_CURRENCY}&limit=9&sort=-isFeatured`,
+            );
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const payload = await response.json();
+            products = (payload.data.documents ?? [])
+              .filter((product) => product._id !== PRODUCT_ID)
+              .slice(0, 8);
+          } catch (categoryError) {
+            console.warn('Category products unavailable, using static fallback:', categoryError);
+            products = FALLBACK_RELATED_PRODUCTS;
+          }
+        }
+
+        if (!products.length) {
+          products = FALLBACK_RELATED_PRODUCTS;
+        }
+
+        const resolvedCategoryName =
+          categoryName ??
+          localize(products[0]?.category?.nameI18n) ??
+          products[0]?.category?.name ??
+          'Gravel bikes';
+        renderRelatedProducts(products, resolvedCategoryName);
+      };
+
+      const loadProduct = async () => {
+        try {
+          const response = await fetch(
+            `${API_ORIGIN}/api/v1/products/${PRODUCT_ID}?language=${MOCK_LANG}&currency=${MOCK_CURRENCY}`,
+          );
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          const payload = await response.json();
+          const product = payload.data.document;
+          applyProduct(product);
+          await loadRelatedProducts(
+            localize(product.category?.nameI18n),
+            product.category?.code ?? MOCK_CATEGORY_CODE,
+          );
+        } catch (error) {
+          console.warn('Using fallback product data:', error);
+          applyProduct({
+            name: 'Grail CF SL 7',
+            manufacturer: 'Canyon',
+            manufacturerUrl:
+              'https://www.canyon.com/de-de/gravel-bikes/performance/grail/cf-sl/grail-cf-sl-7/3575.html',
+            taglineI18n: {
+              en: 'Fast, composed gravel for long days on mixed terrain.',
+            },
+            isFeatured: true,
+            highlights: [
+              { code: 'frame', valueI18n: { en: 'Carbon' } },
+              { code: 'wheel', valueI18n: { en: '700c' } },
+              { code: 'use', valueI18n: { en: 'Gravel & bikepacking' } },
+            ],
+          });
+          await loadRelatedProducts('Gravel bikes', MOCK_CATEGORY_CODE);
+        }
+      };
+
+      lucide.createIcons();
+      loadProduct();
+
+      const heroImage = document.getElementById('hero-image');
+      const heroStage = document.getElementById('hero-stage');
+      const filmstripButtons = [...document.querySelectorAll('.filmstrip button')];
+      let currentGalleryIndex = Math.max(
+        0,
+        filmstripButtons.findIndex((btn) => btn.classList.contains('is-active')),
+      );
+
+      function setGalleryIndex(index) {
+        const count = filmstripButtons.length;
+        if (count === 0) return currentGalleryIndex;
+
+        currentGalleryIndex = ((index % count) + count) % count;
+        filmstripButtons.forEach((btn, idx) => {
+          const isActive = idx === currentGalleryIndex;
+          btn.classList.toggle('is-active', isActive);
+          btn.setAttribute('aria-selected', String(isActive));
+        });
+
+        const activeBtn = filmstripButtons[currentGalleryIndex];
+        heroImage.src = activeBtn.dataset.src;
+        heroImage.alt = activeBtn.dataset.alt;
+        activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+        return currentGalleryIndex;
+      }
+
+      filmstripButtons.forEach((btn, idx) => {
+        btn.addEventListener('click', () => setGalleryIndex(idx));
+      });
+
+      const SWIPE_THRESHOLD = 48;
+      let dragStartX = null;
+
+      heroStage.addEventListener('pointerdown', (event) => {
+        dragStartX = event.clientX;
+        heroStage.classList.add('is-dragging');
+        heroStage.setPointerCapture(event.pointerId);
+      });
+
+      heroStage.addEventListener('pointerup', (event) => {
+        if (dragStartX === null) return;
+
+        const deltaX = event.clientX - dragStartX;
+        dragStartX = null;
+        heroStage.classList.remove('is-dragging');
+        heroStage.releasePointerCapture(event.pointerId);
+
+        if (Math.abs(deltaX) < SWIPE_THRESHOLD) return;
+        setGalleryIndex(currentGalleryIndex + (deltaX < 0 ? 1 : -1));
+      });
+
+      heroStage.addEventListener('pointercancel', (event) => {
+        dragStartX = null;
+        heroStage.classList.remove('is-dragging');
+        if (heroStage.hasPointerCapture(event.pointerId)) {
+          heroStage.releasePointerCapture(event.pointerId);
+        }
+      });
+
+      const qtyInput = document.getElementById('qty-input');
+      document.getElementById('qty-minus').addEventListener('click', () => {
+        const n = Math.max(1, Number(qtyInput.value) - 1);
+        qtyInput.value = String(n);
+      });
+      document.getElementById('qty-plus').addEventListener('click', () => {
+        const n = Math.min(99, Number(qtyInput.value) + 1);
+        qtyInput.value = String(n);
+      });
+
+      const wishlistBtn = document.getElementById('wishlist-btn');
+      wishlistBtn.addEventListener('click', () => {
+        const active = wishlistBtn.classList.toggle('is-active');
+        wishlistBtn.setAttribute('aria-pressed', String(active));
+      });
+    </script>
+  </body>
+</html>
