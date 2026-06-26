@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Package } from 'lucide-react'
 import type { Product } from '@/api/types'
+import { ProductMediaPlaceholder } from '@/components/product/ProductMediaPlaceholder'
 import { useTranslation } from '@/i18n'
 import { imageUrl } from '@/lib/imageUrl'
 import { buildProductGallerySlides } from '@/lib/productGallery'
@@ -80,9 +80,7 @@ export function ProductGallery({ product }: ProductGalleryProps) {
             draggable={false}
           />
         ) : (
-          <div className="product-media-placeholder" role="img" aria-label={t('common.noImage')}>
-            <Package strokeWidth={1.25} aria-hidden />
-          </div>
+          <ProductMediaPlaceholder />
         )}
       </div>
 

@@ -1,26 +1,11 @@
-import { Package } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import type { Product } from '@/api/types'
-import { useTranslation } from '@/i18n'
+import { ProductMediaPlaceholder } from '@/components/product/ProductMediaPlaceholder'
 import { productImageUrl } from '@/lib/imageUrl'
 
 interface ProductCardMediaProps {
   product: Pick<Product, '_id' | 'name' | 'images'>
   size?: 'small' | 'medium'
-}
-
-function ProductMediaPlaceholder() {
-  const { t } = useTranslation()
-
-  return (
-    <div
-      className="product-media-placeholder"
-      role="img"
-      aria-label={t('common.noImage')}
-    >
-      <Package strokeWidth={1.25} aria-hidden />
-    </div>
-  )
 }
 
 export function ProductCardMedia({ product, size = 'small' }: ProductCardMediaProps) {
