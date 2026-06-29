@@ -1191,7 +1191,9 @@
 
   /* Product detail (Trailhead sheet) */
   .pdp-page {
-    padding: 1rem 0 5.5rem;
+    --pdp-buy-col: 17.5rem;
+    --pdp-buy-gap: 2.5rem;
+    padding-block: 1rem 5.5rem;
   }
 
   .pdp-hero {
@@ -1201,11 +1203,42 @@
   }
 
   @media (min-width: 900px) {
-    .pdp-hero {
-      grid-template-columns: minmax(0, 1fr) minmax(15rem, 17.5rem);
-      gap: 2rem 2.5rem;
-      align-items: stretch;
+    .pdp-page {
+      padding-bottom: 2.5rem;
     }
+
+    .pdp-hero {
+      grid-template-columns: minmax(0, 1fr) minmax(15rem, var(--pdp-buy-col));
+      gap: 2rem var(--pdp-buy-gap);
+      align-items: start;
+    }
+
+    .pdp-buy-slot {
+      min-width: 0;
+      align-self: start;
+    }
+
+    .pdp-buy:not(.is-pinned) {
+      max-height: calc(100vh - var(--header-height) - 2rem);
+      overflow-y: auto;
+    }
+
+    .pdp-buy.is-pinned {
+      max-height: calc(100vh - var(--header-height) - 2rem);
+      overflow-y: auto;
+    }
+
+    .pdp-below-section {
+      transition: margin-right 0.2s ease;
+    }
+
+    .pdp-below-section.is-squeezed {
+      margin-right: calc(var(--pdp-buy-col) + var(--pdp-buy-gap));
+    }
+  }
+
+  .pdp-below-hero {
+    min-width: 0;
   }
 
   .pdp-media-col {
@@ -1277,17 +1310,9 @@
   .pdp-buy {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 1rem;
     padding: 0.25rem 0;
-  }
-
-  @media (min-width: 900px) {
-    .pdp-buy {
-      position: sticky;
-      top: calc(var(--header-height) + 1rem);
-      align-self: start;
-    }
   }
 
   .pdp-product-eyebrow {
@@ -1371,8 +1396,14 @@
     background: transparent;
   }
 
-  .pdp-buy .btn-primary {
+  .pdp-buy-actions__cart {
     width: 100%;
+  }
+
+  @media (max-width: 899px) {
+    .pdp-buy-actions__cart {
+      display: none;
+    }
   }
 
   .pdp-wishlist-btn {
@@ -1408,6 +1439,14 @@
   }
 
   .pdp-field-notes {
+    --pdp-field-note-label-size: 0.6875rem;
+    --pdp-field-note-value-size: 0.9375rem;
+    --pdp-field-note-line-gap: 0.125rem;
+    --pdp-field-note-line-height: 1.35;
+    --pdp-field-note-icon-size: calc(
+      var(--pdp-field-note-label-size) * var(--pdp-field-note-line-height) + var(--pdp-field-note-line-gap) +
+        var(--pdp-field-note-value-size) * var(--pdp-field-note-line-height)
+    );
     margin-bottom: 2.5rem;
     padding: 1.25rem 1.25rem 0.25rem;
     border: 1px solid var(--color-border);
@@ -1450,17 +1489,23 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
+    width: var(--pdp-field-note-icon-size);
+    height: var(--pdp-field-note-icon-size);
     flex-shrink: 0;
     border-radius: var(--radius-sm);
     color: var(--color-primary-hover);
     background: var(--color-primary-subtle);
   }
 
+  .pdp-field-note__icon svg {
+    width: 58%;
+    height: 58%;
+  }
+
   .pdp-field-note strong {
     display: block;
-    font-size: 0.6875rem;
+    font-size: var(--pdp-field-note-label-size);
+    line-height: var(--pdp-field-note-line-height);
     font-weight: 600;
     letter-spacing: 0.05em;
     text-transform: uppercase;
@@ -1469,8 +1514,9 @@
 
   .pdp-field-note span {
     display: block;
-    margin-top: 0.125rem;
-    font-size: 0.9375rem;
+    margin-top: var(--pdp-field-note-line-gap);
+    font-size: var(--pdp-field-note-value-size);
+    line-height: var(--pdp-field-note-line-height);
     font-weight: 500;
   }
 

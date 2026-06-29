@@ -1,4 +1,5 @@
 import { ExternalLink, Heart, Minus, Plus } from 'lucide-react'
+import { forwardRef, type CSSProperties } from 'react'
 import { useLocation } from 'react-router-dom'
 import type { Currency, Product } from '@/api/types'
 import { ProductBadges } from '@/components/product/ProductBadges'
@@ -14,14 +15,15 @@ interface ProductBuyPanelProps {
   currency: Currency
   quantity: number
   onQuantityChange: (quantity: number) => void
+  className?: string
+  style?: CSSProperties
 }
 
-export function ProductBuyPanel({
-  product,
-  currency,
-  quantity,
-  onQuantityChange,
-}: ProductBuyPanelProps) {
+export const ProductBuyPanel = forwardRef<HTMLElement, ProductBuyPanelProps>(
+  function ProductBuyPanel(
+    { product, currency, quantity, onQuantityChange, className = '', style },
+    ref,
+  ) {
   const { t, language } = useTranslation()
   const location = useLocation()
   const navigate = useLocaleNavigate()
@@ -40,7 +42,7 @@ export function ProductBuyPanel({
   }
 
   return (
-    <aside className="pdp-buy">
+    <aside ref={ref} className={`pdp-buy ${className}`.trim()} style={style}>
       {product.manufacturer ? (
         <p className="pdp-product-eyebrow">{product.manufacturer}</p>
       ) : null}
@@ -89,7 +91,11 @@ export function ProductBuyPanel({
           </button>
         </div>
 
-        <Button type="button" className="w-full" onClick={() => handleProtectedAction('cart')}>
+        <Button
+          type="button"
+          className="pdp-buy-actions__cart"
+          onClick={() => handleProtectedAction('cart')}
+        >
           {t('product.addToCart')}
         </Button>
       </div>
@@ -107,4 +113,5 @@ export function ProductBuyPanel({
       ) : null}
     </aside>
   )
-}
+},
+)

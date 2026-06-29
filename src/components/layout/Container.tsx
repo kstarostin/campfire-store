@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { forwardRef, type ReactNode } from 'react'
 
 interface ContainerProps {
   children: ReactNode
@@ -7,7 +7,14 @@ interface ContainerProps {
   wide?: boolean
 }
 
-export function Container({ children, className = '', wide = false }: ContainerProps) {
+export const Container = forwardRef<HTMLDivElement, ContainerProps>(function Container(
+  { children, className = '', wide = false },
+  ref,
+) {
   const baseClass = wide ? 'site-container--header' : 'site-container'
-  return <div className={`${baseClass} ${className}`.trim()}>{children}</div>
-}
+  return (
+    <div ref={ref} className={`${baseClass} ${className}`.trim()}>
+      {children}
+    </div>
+  )
+})

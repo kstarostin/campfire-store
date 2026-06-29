@@ -32,7 +32,7 @@ export function ProductFieldNotes({ product }: ProductFieldNotesProps) {
           return (
             <div key={highlight.code} className="pdp-field-note">
               <div className="pdp-field-note__icon" aria-hidden>
-                <Icon size={18} />
+                <Icon />
               </div>
               <div>
                 <strong>{label}</strong>
@@ -45,7 +45,7 @@ export function ProductFieldNotes({ product }: ProductFieldNotesProps) {
         {showFeatured ? (
           <div className="pdp-field-note">
             <div className="pdp-field-note__icon" aria-hidden>
-              <Flame size={18} />
+              <Flame />
             </div>
             <div>
               <strong>{t('product.featured')}</strong>
