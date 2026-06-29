@@ -89,18 +89,50 @@ export interface Category {
   subCategories?: Category[]
 }
 
+export interface UserImageSize {
+  url: string
+  altText?: string
+  mimeType?: string
+}
+
+export interface UserPhoto {
+  small?: UserImageSize
+  thumbnail?: UserImageSize
+}
+
+export interface Address {
+  _id?: string
+  name: string
+  phone?: string
+  street: string
+  house?: string
+  postalCode: string
+  town: string
+  country: string
+  title?: string
+}
+
 export interface User {
   _id: string
   name: string
   email: string
-  photo?: string
-  role?: string
+  photo?: UserPhoto
+  deliveryAddresses?: Address[]
+  billingAddresses?: Address[]
 }
 
 export interface AuthResponse {
+  status?: string
   token: string
   data: {
-    user: User
+    document: User
+  }
+}
+
+export interface UserDocumentResponse {
+  status?: string
+  data: {
+    document: User
   }
 }
 

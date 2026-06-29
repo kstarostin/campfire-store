@@ -38,7 +38,7 @@ export const ProductBuyPanel = forwardRef<HTMLElement, ProductBuyPanelProps>(
       return
     }
 
-    navigate(phase === 'cart' ? '/cart' : '/wishlist')
+    navigate(phase === 'cart' ? '/cart' : '/account?panel=wishlist')
   }
 
   return (

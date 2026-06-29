@@ -99,30 +99,74 @@
         font-weight: 600;
       }
 
-      .mockup-switch {
+      .mockup-bar__label {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.35rem 0.5rem;
+      }
+
+      .mockup-bar__label > span {
+        color: #a8a29e;
+      }
+
+      .mockup-bar__tools {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .mockup-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .mockup-nav a {
+        padding: 0.375rem 0.75rem;
+        border-radius: 999px;
+        color: #a8a29e;
+        text-decoration: none;
+      }
+
+      .mockup-nav a:hover {
+        color: #f5f5f4;
+      }
+
+      .mockup-nav a.is-active {
+        color: #171717;
+        background: #f5f5f4;
+        font-weight: 600;
+      }
+
+      .mockup-switch,
+      .mockup-modes {
         display: inline-flex;
         padding: 0.1875rem;
         border-radius: 999px;
         background: #1c1917;
       }
 
-      .mockup-switch button {
-        padding: 0.375rem 0.875rem;
+      .mockup-switch button,
+      .mockup-modes button {
+        padding: 0.375rem 0.75rem;
         border: 0;
         border-radius: 999px;
-        font-size: 0.8125rem;
+        font-size: 0.75rem;
         font-weight: 600;
         color: #a8a29e;
         background: transparent;
         cursor: pointer;
       }
 
-      .mockup-switch button.is-active {
+      .mockup-switch button.is-active,
+      .mockup-modes button.is-active {
         color: #171717;
         background: #f5f5f4;
       }
 
-      /* Header (abbreviated) */
+      /* Header */
       .site-header {
         position: sticky;
         top: 2.375rem;
@@ -649,14 +693,6 @@
       }
 
       @media (min-width: 768px) {
-        .mockup-bar {
-          top: 0;
-        }
-
-        .site-header {
-          top: 2.375rem;
-        }
-
         .header-search {
           display: block;
         }
@@ -693,29 +729,40 @@
   </head>
   <body>
     <div class="mockup-bar">
-      <strong>Catalog listing mockup</strong>
-      <span>Category &amp; search share this layout</span>
-      <div class="mockup-switch" role="tablist" aria-label="Preview variant">
-        <button
-          type="button"
-          class="is-active"
-          id="tab-category"
-          role="tab"
-          aria-selected="true"
-          aria-controls="view-category"
-        >
-          Category
-        </button>
-        <button
-          type="button"
-          id="tab-search"
-          role="tab"
-          aria-selected="false"
-          aria-controls="view-search"
-        >
-          Search
-        </button>
+      <div class="mockup-bar__label">
+        <strong>Catalog</strong>
+        <span>Category & search listing</span>
       </div>
+      <div class="mockup-bar__tools">
+        <div class="mockup-switch" role="tablist" aria-label="Preview variant">
+          <button
+            type="button"
+            class="is-active"
+            id="tab-category"
+            role="tab"
+            aria-selected="true"
+            aria-controls="view-category"
+          >
+            Category
+          </button>
+          <button
+            type="button"
+            id="tab-search"
+            role="tab"
+            aria-selected="false"
+            aria-controls="view-search"
+          >
+            Search
+          </button>
+        </div>
+      </div>
+      <nav class="mockup-nav" aria-label="Mockup pages">
+        <a href="homepage.html">Home</a>
+        <a href="catalog-listing.html" class="is-active" aria-current="page">Catalog</a>
+        <a href="product-detail.html">Product</a>
+        <a href="account.html">Account</a>
+        <a href="auth.html">Auth</a>
+      </nav>
     </div>
 
     <header class="site-header">

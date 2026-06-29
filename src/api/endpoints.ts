@@ -12,6 +12,7 @@ import type {
   PaginationParams,
   Product,
   User,
+  UserDocumentResponse,
   WishlistItem,
 } from './types'
 
@@ -99,11 +100,35 @@ export const endpoints = {
   logout: (token: string) =>
     api.get<void>('/users/logout', { token }),
 
-  user: (id: string, token: string) =>
-    api.get<{ data: User }>(`/users/${id}`, { token }),
+  user: (id: string, token: string, language: Language, currency: Currency) =>
+    api.get<UserDocumentResponse>(`/users/${id}`, {
+      token,
+      params: withLocale(language, currency),
+    }),
 
-  updateUser: (id: string, token: string, body: Partial<User>) =>
-    api.patch<{ data: User }>(`/users/${id}`, body, { token }),
+  updateUser: (
+    id: string,
+    token: string,
+    language: Language,
+    currency: Currency,
+    body: Partial<Pick<User, 'name' | 'deliveryAddresses' | 'billingAddresses'>>,
+  ) =>
+    api.patch<UserDocumentResponse>(`/users/${id}`, body, {
+      token,
+      params: withLocale(language, currency),
+    }),
+
+  uploadUserPhoto: (
+    id: string,
+    token: string,
+    language: Language,
+    currency: Currency,
+    file: File,
+  ) =>
+    api.upload<UserDocumentResponse>(`/users/${id}`, file, {
+      token,
+      params: withLocale(language, currency),
+    }),
 
   carts: (userId: string, token: string) =>
     api.get<{ data: Cart[] }>(`/users/${userId}/carts`, { token }),

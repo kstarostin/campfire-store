@@ -1,13 +1,5 @@
-import { PagePlaceholder } from '@/components/ui/PagePlaceholder'
-import { useTranslation } from '@/i18n'
+import { AccountView } from '@/components/account/AccountView'
 
 export function AccountPage() {
-  const { t } = useTranslation()
-
-  return (
-    <PagePlaceholder
-      title={t('pages.account')}
-      description={t('pages.accountHint')}
-    />
-  )
+  return <AccountView />
 }

@@ -35,6 +35,7 @@ export interface RequestOptions {
   token?: string | null
   params?: Record<string, string | number | boolean | undefined>
   signal?: AbortSignal
+  formData?: FormData
 }
 
 function buildQueryString(
@@ -92,25 +93,31 @@ export async function apiRequest<T>(
   path: string,
   options: RequestOptions = {},
 ): Promise<T> {
-  const { method = 'GET', body, token, params, signal } = options
+  const { method = 'GET', body, token, params, signal, formData } = options
   const url = `${API_BASE_URL}${path}${buildQueryString(params)}`
 
   const headers: HeadersInit = {
     Accept: 'application/json',
   }
 
-  if (body !== undefined) {
-    headers['Content-Type'] = 'application/json'
-  }
+  if (formData) {
+    if (token) {
+      headers.Authorization = `Bearer ${token}`
+    }
+  } else {
+    if (body !== undefined) {
+      headers['Content-Type'] = 'application/json'
+    }
 
-  if (token) {
-    headers.Authorization = `Bearer ${token}`
+    if (token) {
+      headers.Authorization = `Bearer ${token}`
+    }
   }
 
   const response = await fetch(url, {
     method,
     headers,
-    body: body !== undefined ? JSON.stringify(body) : undefined,
+    body: formData ?? (body !== undefined ? JSON.stringify(body) : undefined),
     signal,
   })
 
@@ -142,7 +149,17 @@ export const api = {
     return apiRequest<T>(path, { ...options, method: 'PATCH', body })
   },
 
-  delete<T>(path: string, options?: Omit<RequestOptions, 'method' | 'body'>) {
+  delete<T>(path: string, options?: Omit<RequestOptions, 'method' | 'body' | 'formData'>) {
     return apiRequest<T>(path, { ...options, method: 'DELETE' })
+  },
+
+  upload<T>(
+    path: string,
+    file: File,
+    options?: Omit<RequestOptions, 'method' | 'body' | 'formData'>,
+  ) {
+    const formData = new FormData()
+    formData.append('photo', file)
+    return apiRequest<T>(path, { ...options, method: 'PATCH', formData })
   },
 }

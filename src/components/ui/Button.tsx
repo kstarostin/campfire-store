@@ -1,12 +1,13 @@
 import type { ComponentPropsWithoutRef, ReactNode } from 'react'
 import { LocaleLink } from '@/components/ui/LocaleLink'
 
-type ButtonVariant = 'primary' | 'secondary' | 'forest'
+type ButtonVariant = 'primary' | 'secondary' | 'forest' | 'ghost'
 
 const variantClass: Record<ButtonVariant, string> = {
   primary: 'btn btn-primary',
   secondary: 'btn btn-secondary',
   forest: 'btn btn-forest',
+  ghost: 'btn btn-ghost',
 }
 
 interface ButtonBaseProps {

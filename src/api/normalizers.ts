@@ -1,10 +1,13 @@
 import type {
+  AuthResponse,
   BadgeStyle,
   Category,
   Language,
   Product,
   ProductBadge,
   ProductBadgeAssignment,
+  User,
+  UserDocumentResponse,
 } from '@/api/types'
 
 export interface ApiListEnvelope<TDocument> {
@@ -189,4 +192,26 @@ export function getManufacturerFilterValues(filters: ProductListFilter[]): strin
 export function getPriceQuickFilters(filters: ProductListFilter[]): PriceQuickFilter[] {
   const priceFilter = filters.find((filter) => filter.name === 'priceI18n')
   return priceFilter?.quickFilters ?? []
+}
+
+export function normalizeUser(document: User): User {
+  return {
+    _id: document._id,
+    name: document.name,
+    email: document.email,
+    photo: document.photo,
+    deliveryAddresses: document.deliveryAddresses ?? [],
+    billingAddresses: document.billingAddresses ?? [],
+  }
+}
+
+export function parseAuthResponse(response: AuthResponse): { token: string; user: User } {
+  return {
+    token: response.token,
+    user: normalizeUser(response.data.document),
+  }
+}
+
+export function parseUserResponse(response: UserDocumentResponse): User {
+  return normalizeUser(response.data.document)
 }

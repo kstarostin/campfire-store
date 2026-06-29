@@ -7,7 +7,39 @@ import { MegaMenu } from '@/components/layout/MegaMenu'
 import { MobileNav } from '@/components/layout/MobileNav'
 import { SearchField } from '@/components/layout/SearchField'
 import { useTranslation } from '@/i18n'
-import { useIsAuthenticated } from '@/store/authStore'
+import { userPhotoUrl } from '@/lib/imageUrl'
+import { useAuthStore, useIsAuthenticated } from '@/store/authStore'
+
+function HeaderAccountIcon() {
+  const isAuthenticated = useIsAuthenticated()
+  const user = useAuthStore((state) => state.user)
+
+  if (!isAuthenticated) {
+    return <User size={20} aria-hidden />
+  }
+
+  const photoSrc = user ? userPhotoUrl(user.photo, 'thumbnail') : ''
+  const initials = user?.name
+    .split(' ')
+    .map((part) => part[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase()
+
+  if (photoSrc) {
+    return <img src={photoSrc} alt="" className="header-account-avatar" width={40} height={40} />
+  }
+
+  if (initials) {
+    return (
+      <span className="header-account-avatar header-account-avatar--initials" aria-hidden>
+        {initials}
+      </span>
+    )
+  }
+
+  return <User size={20} aria-hidden />
+}
 
 export function Header() {
   const { t } = useTranslation()
@@ -92,33 +124,37 @@ export function Header() {
             <div className="ml-auto flex shrink-0 items-center gap-1">
               <LocalePill />
 
-              <LocaleLink
-                to="/wishlist"
-                className="header-icon-btn hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full md:inline-flex"
-                aria-label={t('nav.wishlist')}
-              >
-                <Heart size={20} />
-              </LocaleLink>
+              {isAuthenticated ? (
+                <>
+                  <LocaleLink
+                    to="/account?panel=wishlist"
+                    className="header-icon-btn hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full md:inline-flex"
+                    aria-label={t('nav.wishlist')}
+                  >
+                    <Heart size={20} />
+                  </LocaleLink>
 
-              <LocaleLink
-                to="/cart"
-                className="header-icon-btn relative inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full"
-                aria-label={t('nav.cart')}
-              >
-                <ShoppingCart size={20} />
-                {cartCount > 0 ? (
-                  <span className="absolute right-[0.2rem] top-[0.2rem] min-w-[1.125rem] rounded-full bg-primary px-1 text-center text-[0.6875rem] font-semibold leading-[1.125rem] text-white">
-                    {cartCount}
-                  </span>
-                ) : null}
-              </LocaleLink>
+                  <LocaleLink
+                    to="/cart"
+                    className="header-icon-btn relative inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full"
+                    aria-label={t('nav.cart')}
+                  >
+                    <ShoppingCart size={20} />
+                    {cartCount > 0 ? (
+                      <span className="absolute right-[0.2rem] top-[0.2rem] min-w-[1.125rem] rounded-full bg-primary px-1 text-center text-[0.6875rem] font-semibold leading-[1.125rem] text-white">
+                        {cartCount}
+                      </span>
+                    ) : null}
+                  </LocaleLink>
+                </>
+              ) : null}
 
               <LocaleLink
                 to={isAuthenticated ? '/account' : '/login'}
-                className="header-icon-btn hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full md:inline-flex"
+                className="header-icon-btn hidden h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full p-0 md:inline-flex"
                 aria-label={isAuthenticated ? t('nav.account') : t('nav.signIn')}
               >
-                <User size={20} />
+                <HeaderAccountIcon />
               </LocaleLink>
 
               <button

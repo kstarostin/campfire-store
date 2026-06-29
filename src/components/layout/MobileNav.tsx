@@ -158,15 +158,17 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
                 {isAuthenticated ? t('nav.account') : t('nav.signIn')}
               </LocaleLink>
             </li>
-            <li>
-              <LocaleLink
-                to="/wishlist"
-                className="block rounded-md px-2 py-2 hover:bg-white/10 hover:text-[#fdba74]"
-                onClick={onClose}
-              >
-                {t('nav.wishlist')}
-              </LocaleLink>
-            </li>
+            {isAuthenticated ? (
+              <li>
+                <LocaleLink
+                  to="/account?panel=wishlist"
+                  className="block rounded-md px-2 py-2 hover:bg-white/10 hover:text-[#fdba74]"
+                  onClick={onClose}
+                >
+                  {t('nav.wishlist')}
+                </LocaleLink>
+              </li>
+            ) : null}
           </ul>
         </div>
       </nav>

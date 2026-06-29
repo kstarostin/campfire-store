@@ -20,3 +20,10 @@ export function productImageUrl(
   const image = product.images?.[0]?.[size]?.url
   return imageUrl(image)
 }
+
+export function userPhotoUrl(
+  photo: { small?: { url: string }; thumbnail?: { url: string } } | undefined,
+  size: 'thumbnail' | 'small' = 'thumbnail',
+): string {
+  return imageUrl(photo?.[size]?.url)
+}

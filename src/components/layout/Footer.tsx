@@ -59,7 +59,7 @@ export function Footer() {
               {[
                 { label: t('nav.signIn'), to: '/login' },
                 { label: t('footer.cart'), to: '/cart' },
-                { label: t('footer.orders'), to: '/orders' },
+                { label: t('footer.orders'), to: '/account?panel=orders' },
                 { label: t('footer.profile'), to: '/account' },
               ].map((link) => (
                 <li key={link.to} className="mt-2 first:mt-0">

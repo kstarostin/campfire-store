@@ -14,12 +14,10 @@ import { CheckoutPage } from '@/pages/CheckoutPage'
 import { HomePage } from '@/pages/HomePage'
 import { LoginPage } from '@/pages/LoginPage'
 import { OrderDetailPage } from '@/pages/OrderDetailPage'
-import { OrdersPage } from '@/pages/OrdersPage'
 import { ProductDetailPage } from '@/pages/ProductDetailPage'
 import { ProductsPage } from '@/pages/ProductsPage'
 import { SearchPage } from '@/pages/SearchPage'
 import { SignupPage } from '@/pages/SignupPage'
-import { WishlistPage } from '@/pages/WishlistPage'
 
 function LocalizedNotFound() {
   const { lang } = useParams<{ lang: string }>()
@@ -46,9 +44,9 @@ export function AppRouter() {
             <Route path="account" element={<AccountPage />} />
             <Route path="cart" element={<CartPage />} />
             <Route path="checkout" element={<CheckoutPage />} />
-            <Route path="orders" element={<OrdersPage />} />
+            <Route path="orders" element={<Navigate to="../account?panel=orders" replace />} />
             <Route path="orders/:id" element={<OrderDetailPage />} />
-            <Route path="wishlist" element={<WishlistPage />} />
+            <Route path="wishlist" element={<Navigate to="../account?panel=wishlist" replace />} />
           </Route>
         </Route>
 
