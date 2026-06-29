@@ -19,6 +19,26 @@ import {
 } from 'lucide-react'
 import type { TranslationKey } from '@/i18n'
 
+export type ProductHighlightGroup = 'environment' | 'build' | 'fit'
+
+const PRODUCT_HIGHLIGHT_GROUPS: Record<string, ProductHighlightGroup> = {
+  use: 'environment',
+  terrain: 'environment',
+  season: 'environment',
+  waterproof: 'environment',
+  skill: 'environment',
+  material: 'build',
+  frame: 'build',
+  wheel: 'build',
+  type: 'build',
+  weight: 'build',
+  fit: 'fit',
+  volume: 'fit',
+  capacity: 'fit',
+  waist: 'fit',
+  length: 'fit',
+}
+
 export const PRODUCT_HIGHLIGHT_ICONS: Record<string, LucideIcon> = {
   frame: Layers,
   wheel: Circle,
@@ -39,6 +59,10 @@ export const PRODUCT_HIGHLIGHT_ICONS: Record<string, LucideIcon> = {
 
 export function productHighlightIcon(code: string): LucideIcon {
   return PRODUCT_HIGHLIGHT_ICONS[code] ?? Tag
+}
+
+export function productHighlightGroup(code: string): ProductHighlightGroup {
+  return PRODUCT_HIGHLIGHT_GROUPS[code] ?? 'build'
 }
 
 export function productHighlightLabelKey(code: string): TranslationKey {

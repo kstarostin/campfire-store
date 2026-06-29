@@ -3,6 +3,7 @@ import type { Product } from '@/api/types'
 import { useTranslation } from '@/i18n'
 import { localizedText } from '@/lib/localizedText'
 import {
+  productHighlightGroup,
   productHighlightIcon,
   productHighlightLabelKey,
 } from '@/lib/productHighlights'
@@ -31,7 +32,11 @@ export function ProductFieldNotes({ product }: ProductFieldNotesProps) {
 
           return (
             <div key={highlight.code} className="pdp-field-note">
-              <div className="pdp-field-note__icon" aria-hidden>
+              <div
+                className="pdp-field-note__icon"
+                data-highlight-group={productHighlightGroup(highlight.code)}
+                aria-hidden
+              >
                 <Icon />
               </div>
               <div>
@@ -44,7 +49,7 @@ export function ProductFieldNotes({ product }: ProductFieldNotesProps) {
 
         {showFeatured ? (
           <div className="pdp-field-note">
-            <div className="pdp-field-note__icon" aria-hidden>
+            <div className="pdp-field-note__icon" data-highlight-group="featured" aria-hidden>
               <Flame />
             </div>
             <div>
