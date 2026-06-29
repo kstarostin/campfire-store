@@ -4,6 +4,8 @@ import {
   type CatalogSort,
 } from '@/lib/productCatalogFilters'
 
+export type CatalogVariant = 'category' | 'search' | 'all'
+
 export interface CatalogUrlState {
   filters: CatalogFilterState
   sort: CatalogSort
@@ -12,7 +14,7 @@ export interface CatalogUrlState {
 
 const SORT_VALUES: CatalogSort[] = ['newest', 'priceAsc', 'priceDesc', 'relevance']
 
-export function defaultCatalogSort(variant: 'category' | 'search'): CatalogSort {
+export function defaultCatalogSort(variant: CatalogVariant): CatalogSort {
   return variant === 'search' ? 'relevance' : 'newest'
 }
 
@@ -23,10 +25,10 @@ function parsePositiveInt(value: string | null): number | null {
   return parsed
 }
 
-function parseSort(value: string | null, variant: 'category' | 'search'): CatalogSort {
+function parseSort(value: string | null, variant: CatalogVariant): CatalogSort {
   if (value && SORT_VALUES.includes(value as CatalogSort)) {
     const sort = value as CatalogSort
-    if (variant === 'category' && sort === 'relevance') {
+    if (variant !== 'search' && sort === 'relevance') {
       return defaultCatalogSort(variant)
     }
     return sort
@@ -36,7 +38,7 @@ function parseSort(value: string | null, variant: 'category' | 'search'): Catalo
 
 export function parseCatalogUrlState(
   searchParams: URLSearchParams,
-  variant: 'category' | 'search',
+  variant: CatalogVariant,
 ): CatalogUrlState {
   const under = parsePositiveInt(searchParams.get('under'))
   const min = parsePositiveInt(searchParams.get('min'))
@@ -67,7 +69,7 @@ export function parseCatalogUrlState(
 export function buildCatalogSearchParams(
   current: URLSearchParams,
   state: CatalogUrlState,
-  variant: 'category' | 'search',
+  variant: CatalogVariant,
 ): URLSearchParams {
   const next = new URLSearchParams()
   const defaultSort = defaultCatalogSort(variant)

@@ -6,6 +6,7 @@ import { LocalePill } from '@/components/layout/LocalePill'
 import { MegaMenu } from '@/components/layout/MegaMenu'
 import { MobileNav } from '@/components/layout/MobileNav'
 import { SearchField } from '@/components/layout/SearchField'
+import { useCartItemCount } from '@/hooks/useCart'
 import { useTranslation } from '@/i18n'
 import { userPhotoUrl } from '@/lib/imageUrl'
 import { useAuthStore, useIsAuthenticated } from '@/store/authStore'
@@ -48,7 +49,7 @@ export function Header() {
   const [megaOpen, setMegaOpen] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const isAuthenticated = useIsAuthenticated()
-  const cartCount = 0
+  const cartCount = useCartItemCount()
 
   useEffect(() => {
     if (!megaOpen) return

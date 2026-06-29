@@ -1,10 +1,16 @@
 import { endpoints } from '@/api/endpoints'
 import { parseAuthResponse } from '@/api/normalizers'
 import { useAuthStore } from '@/store/authStore'
+import { useCartStore } from '@/store/cartStore'
+
+function clearCartSession() {
+  useCartStore.getState().clearCartId()
+}
 
 export async function loginWithCredentials(email: string, password: string) {
   const response = await endpoints.login({ email, password })
   const { token, user } = parseAuthResponse(response)
+  clearCartSession()
   useAuthStore.getState().setSession(token, user)
   return user
 }
@@ -17,6 +23,7 @@ export async function signupWithCredentials(
 ) {
   const response = await endpoints.signup({ name, email, password, passwordConfirm })
   const { token, user } = parseAuthResponse(response)
+  clearCartSession()
   useAuthStore.getState().setSession(token, user)
   return user
 }
@@ -32,5 +39,6 @@ export async function logoutSession() {
     }
   }
 
+  clearCartSession()
   useAuthStore.getState().clearSession()
 }

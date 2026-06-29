@@ -1,6 +1,10 @@
 import type {
   AuthResponse,
   BadgeStyle,
+  Cart,
+  CartDocumentResponse,
+  CartEntry,
+  CartEntryDocumentResponse,
   Category,
   Language,
   Product,
@@ -214,4 +218,35 @@ export function parseAuthResponse(response: AuthResponse): { token: string; user
 
 export function parseUserResponse(response: UserDocumentResponse): User {
   return normalizeUser(response.data.document)
+}
+
+export function normalizeCart(document: Cart): Cart {
+  return {
+    _id: document._id,
+    currency: document.currency,
+    total: document.total ?? 0,
+    vat: document.vat,
+    tax: document.tax,
+    entries: document.entries ?? [],
+  }
+}
+
+export function parseCartResponse(response: CartDocumentResponse): Cart {
+  return normalizeCart(response.data.document)
+}
+
+export function parseCartList(response: ApiListEnvelope<Cart>): Cart[] {
+  const payload = response.data
+  const documents = Array.isArray(payload) ? payload : (payload?.documents ?? [])
+  return documents.map(normalizeCart)
+}
+
+export function parseCartEntryResponse(response: CartEntryDocumentResponse): CartEntry {
+  const entry = response.data.document
+  return {
+    _id: entry._id,
+    product: entry.product,
+    quantity: entry.quantity,
+    price: entry.price,
+  }
 }

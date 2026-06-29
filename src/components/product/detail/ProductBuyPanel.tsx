@@ -5,6 +5,7 @@ import type { Currency, Product } from '@/api/types'
 import { ProductBadges } from '@/components/product/ProductBadges'
 import { Price } from '@/components/product/Price'
 import { Button } from '@/components/ui/Button'
+import { useAddToCart } from '@/hooks/useCart'
 import { useLocaleNavigate } from '@/hooks/useLocaleNavigate'
 import { useTranslation } from '@/i18n'
 import { localizedText } from '@/lib/localizedText'
@@ -28,6 +29,7 @@ export const ProductBuyPanel = forwardRef<HTMLElement, ProductBuyPanelProps>(
   const location = useLocation()
   const navigate = useLocaleNavigate()
   const isAuthenticated = useIsAuthenticated()
+  const addToCart = useAddToCart()
   const tagline = localizedText(product.taglineI18n, language)
 
   const clampQuantity = (value: number) => Math.min(99, Math.max(1, value))
@@ -38,7 +40,21 @@ export const ProductBuyPanel = forwardRef<HTMLElement, ProductBuyPanelProps>(
       return
     }
 
-    navigate(phase === 'cart' ? '/cart' : '/account?panel=wishlist')
+    if (phase === 'wishlist') {
+      navigate('/account?panel=wishlist')
+    }
+  }
+
+  const handleAddToCart = () => {
+    if (!isAuthenticated) {
+      navigate('/login', { state: { from: location.pathname } })
+      return
+    }
+
+    addToCart.mutate(
+      { productId: product._id, quantity },
+      { onSuccess: () => navigate('/cart') },
+    )
   }
 
   return (
@@ -94,7 +110,8 @@ export const ProductBuyPanel = forwardRef<HTMLElement, ProductBuyPanelProps>(
         <Button
           type="button"
           className="pdp-buy-actions__cart"
-          onClick={() => handleProtectedAction('cart')}
+          disabled={addToCart.isPending}
+          onClick={handleAddToCart}
         >
           {t('product.addToCart')}
         </Button>

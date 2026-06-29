@@ -140,13 +140,30 @@ export interface CartEntry {
   _id: string
   product: string | Product
   quantity: number
-  price?: number
+  price: number
 }
 
 export interface Cart {
   _id: string
   currency: Currency
+  total?: number
+  vat?: number
+  tax?: number
   entries?: CartEntry[]
+}
+
+export interface CartDocumentResponse {
+  status?: string
+  data: {
+    document: Cart
+  }
+}
+
+export interface CartEntryDocumentResponse {
+  status?: string
+  data: {
+    document: CartEntry
+  }
 }
 
 export interface Order {

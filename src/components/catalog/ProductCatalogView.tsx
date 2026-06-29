@@ -14,6 +14,7 @@ import { ErrorState } from '@/components/ui/ErrorState'
 import { LoadingState } from '@/components/ui/LoadingState'
 import { getManufacturerFilterValues, getPriceQuickFilters } from '@/api/normalizers'
 import { useCategoryProducts } from '@/hooks/useCategoryProducts'
+import { useProducts } from '@/hooks/useProducts'
 import { useSearch } from '@/hooks/useSearch'
 import { useTranslation } from '@/i18n'
 import { useLocale } from '@/hooks/useLocale'
@@ -46,6 +47,7 @@ type ProductCatalogViewProps = ProductCatalogViewBaseProps &
   (
     | { variant: 'category'; categoryCode: string }
     | { variant: 'search'; query: string }
+    | { variant: 'all' }
   )
 
 export function ProductCatalogView(props: ProductCatalogViewProps) {
@@ -54,7 +56,8 @@ export function ProductCatalogView(props: ProductCatalogViewProps) {
   const { currency } = useLocale()
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const sourceKey = variant === 'category' ? props.categoryCode : props.query
+  const sourceKey =
+    variant === 'category' ? props.categoryCode : variant === 'search' ? props.query : 'all'
   const previousSourceKey = useRef(sourceKey)
 
   const { filters, sort, page } = useMemo(
@@ -156,7 +159,17 @@ export function ProductCatalogView(props: ProductCatalogViewProps) {
     enabled: variant === 'search',
   })
 
-  const productsQuery = variant === 'category' ? categoryProductsQuery : searchQuery
+  const allProductsQuery = useProducts({
+    ...queryParams,
+    enabled: variant === 'all',
+  })
+
+  const productsQuery =
+    variant === 'category'
+      ? categoryProductsQuery
+      : variant === 'search'
+        ? searchQuery
+        : allProductsQuery
 
   const resolvedSubtitle =
     subtitle ??

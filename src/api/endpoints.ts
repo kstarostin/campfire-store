@@ -3,7 +3,8 @@ import type { ApiListEnvelope } from './normalizers'
 import type {
   AuthResponse,
   Cart,
-  CartEntry,
+  CartDocumentResponse,
+  CartEntryDocumentResponse,
   Category,
   Currency,
   Language,
@@ -130,44 +131,76 @@ export const endpoints = {
       params: withLocale(language, currency),
     }),
 
-  carts: (userId: string, token: string) =>
-    api.get<{ data: Cart[] }>(`/users/${userId}/carts`, { token }),
+  carts: (userId: string, token: string, language: Language, currency: Currency) =>
+    api.get<ApiListEnvelope<Cart>>(`/users/${userId}/carts`, {
+      token,
+      params: withLocale(language, currency),
+    }),
 
-  createCart: (userId: string, token: string, body: { currency: Currency }) =>
-    api.post<{ data: Cart }>(`/users/${userId}/carts`, body, { token }),
+  createCart: (
+    userId: string,
+    token: string,
+    language: Language,
+    currency: Currency,
+    body: { currency: Currency },
+  ) =>
+    api.post<CartDocumentResponse>(`/users/${userId}/carts`, body, {
+      token,
+      params: withLocale(language, currency),
+    }),
 
-  cart: (userId: string, cartId: string, token: string) =>
-    api.get<{ data: Cart }>(`/users/${userId}/carts/${cartId}`, { token }),
+  cart: (
+    userId: string,
+    cartId: string,
+    token: string,
+    language: Language,
+    currency: Currency,
+  ) =>
+    api.get<CartDocumentResponse>(`/users/${userId}/carts/${cartId}`, {
+      token,
+      params: withLocale(language, currency),
+    }),
 
   updateCart: (
     userId: string,
     cartId: string,
     token: string,
+    language: Language,
+    currency: Currency,
     body: Partial<Cart>,
   ) =>
-    api.patch<{ data: Cart }>(`/users/${userId}/carts/${cartId}`, body, {
+    api.patch<CartDocumentResponse>(`/users/${userId}/carts/${cartId}`, body, {
       token,
+      params: withLocale(language, currency),
     }),
 
-  deleteCart: (userId: string, cartId: string, token: string) =>
-    api.delete<void>(`/users/${userId}/carts/${cartId}`, { token }),
-
-  cartEntries: (userId: string, cartId: string, token: string) =>
-    api.get<{ data: CartEntry[] }>(
-      `/users/${userId}/carts/${cartId}/entries`,
-      { token },
-    ),
+  deleteCart: (
+    userId: string,
+    cartId: string,
+    token: string,
+    language: Language,
+    currency: Currency,
+  ) =>
+    api.delete<void>(`/users/${userId}/carts/${cartId}`, {
+      token,
+      params: withLocale(language, currency),
+    }),
 
   addCartEntry: (
     userId: string,
     cartId: string,
     token: string,
+    language: Language,
+    currency: Currency,
     body: { product: string; quantity: number },
   ) =>
-    api.post<{ data: CartEntry }>(
+    api.post<CartEntryDocumentResponse>(
       `/users/${userId}/carts/${cartId}/entries`,
       body,
-      { token },
+      {
+        token,
+        params: withLocale(language, currency),
+      },
     ),
 
   updateCartEntry: (
@@ -175,12 +208,14 @@ export const endpoints = {
     cartId: string,
     entryId: string,
     token: string,
+    language: Language,
+    currency: Currency,
     body: { quantity: number },
   ) =>
-    api.patch<{ data: CartEntry }>(
+    api.patch<CartEntryDocumentResponse>(
       `/users/${userId}/carts/${cartId}/entries/${entryId}`,
       body,
-      { token },
+      { token, params: withLocale(language, currency) },
     ),
 
   deleteCartEntry: (
@@ -188,11 +223,13 @@ export const endpoints = {
     cartId: string,
     entryId: string,
     token: string,
+    language: Language,
+    currency: Currency,
   ) =>
-    api.delete<void>(
-      `/users/${userId}/carts/${cartId}/entries/${entryId}`,
-      { token },
-    ),
+    api.delete<void>(`/users/${userId}/carts/${cartId}/entries/${entryId}`, {
+      token,
+      params: withLocale(language, currency),
+    }),
 
   orders: (userId: string, token: string, pagination?: PaginationParams) =>
     api.get<PaginatedResponse<Order>>(`/users/${userId}/orders`, {

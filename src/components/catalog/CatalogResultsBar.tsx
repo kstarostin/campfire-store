@@ -1,11 +1,12 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import type { CatalogVariant } from '@/lib/catalogUrlState'
 import { useTranslation } from '@/i18n'
 
 interface CatalogResultsBarProps {
   page: number
   limit: number
   total: number
-  variant: 'category' | 'search'
+  variant: CatalogVariant
 }
 
 export function CatalogResultsBar({ page, limit, total, variant }: CatalogResultsBarProps) {

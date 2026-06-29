@@ -1,13 +1,5 @@
-import { PagePlaceholder } from '@/components/ui/PagePlaceholder'
-import { useTranslation } from '@/i18n'
+import { CartView } from '@/components/cart/CartView'
 
 export function CartPage() {
-  const { t } = useTranslation()
-
-  return (
-    <PagePlaceholder
-      title={t('pages.cart')}
-      description={t('pages.cartHint')}
-    />
-  )
+  return <CartView />
 }

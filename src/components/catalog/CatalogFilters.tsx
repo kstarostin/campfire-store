@@ -5,6 +5,7 @@ import { useTranslation, useFormatLocale } from '@/i18n'
 import type { Currency } from '@/api/types'
 import type { PriceQuickFilter } from '@/api/normalizers'
 import { formatPrice } from '@/lib/formatPrice'
+import type { CatalogVariant } from '@/lib/catalogUrlState'
 import type { CatalogFilterState, CatalogSort } from '@/lib/productCatalogFilters'
 import {
   countActiveCatalogFilters,
@@ -18,7 +19,7 @@ interface CatalogFiltersProps {
   filters: CatalogFilterState
   sort: CatalogSort
   currency: Currency
-  variant: 'category' | 'search'
+  variant: CatalogVariant
   activeSummary?: string
   defaultOpen?: boolean
   onFiltersChange: (filters: CatalogFilterState) => void

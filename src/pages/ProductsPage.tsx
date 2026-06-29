@@ -1,13 +1,15 @@
-import { PagePlaceholder } from '@/components/ui/PagePlaceholder'
+import { CatalogBreadcrumb } from '@/components/catalog/CatalogPageHeader'
+import { ProductCatalogView } from '@/components/catalog/ProductCatalogView'
 import { useTranslation } from '@/i18n'
 
 export function ProductsPage() {
   const { t } = useTranslation()
 
   return (
-    <PagePlaceholder
+    <ProductCatalogView
+      variant="all"
       title={t('pages.allProducts')}
-      description={t('pages.allProductsHint')}
+      breadcrumb={<CatalogBreadcrumb items={[{ label: t('pages.allProducts') }]} />}
     />
   )
 }
