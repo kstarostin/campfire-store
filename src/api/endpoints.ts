@@ -10,7 +10,6 @@ import type {
   Language,
   Order,
   OrderDocumentResponse,
-  PaginatedResponse,
   PaginationParams,
   Product,
   User,
@@ -233,7 +232,7 @@ export const endpoints = {
     }),
 
   orders: (userId: string, token: string, pagination?: PaginationParams) =>
-    api.get<PaginatedResponse<Order>>(`/users/${userId}/orders`, {
+    api.get<ApiListEnvelope<Order>>(`/users/${userId}/orders`, {
       token,
       params: {
         page: pagination?.page,
@@ -243,7 +242,7 @@ export const endpoints = {
     }),
 
   order: (userId: string, orderId: string, token: string) =>
-    api.get<{ data: Order }>(`/users/${userId}/orders/${orderId}`, { token }),
+    api.get<OrderDocumentResponse>(`/users/${userId}/orders/${orderId}`, { token }),
 
   placeOrder: (userId: string, token: string, body: { cartId: string }) =>
     api.post<OrderDocumentResponse>(`/users/${userId}/orders`, body, { token }),

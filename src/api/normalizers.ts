@@ -262,8 +262,57 @@ export function parseCartList(response: ApiListEnvelope<Cart>): Cart[] {
   return documents.map(normalizeCart)
 }
 
+export function normalizeOrder(document: Order): Order {
+  return {
+    _id: document._id,
+    status: document.status,
+    total: document.total ?? 0,
+    currency: document.currency,
+    createdAt: document.createdAt,
+    deliveryNote: document.deliveryNote,
+    deliveryAddress: document.deliveryAddress
+      ? normalizeAddress(document.deliveryAddress)
+      : undefined,
+    billingAddress: document.billingAddress
+      ? normalizeAddress(document.billingAddress)
+      : undefined,
+    entries: document.entries ?? [],
+  }
+}
+
+export interface ParsedOrderList {
+  orders: Order[]
+  total: number
+  page: number
+  limit: number
+  pages: number
+}
+
+export function parseOrderList(
+  response: ApiListEnvelope<Order> & {
+    currentPage?: number
+    resultsPerPage?: number
+    pages?: number
+  },
+): ParsedOrderList {
+  const payload = response.data
+  const documents = Array.isArray(payload) ? payload : (payload?.documents ?? [])
+
+  return {
+    orders: documents.map(normalizeOrder),
+    total:
+      response.resultsTotal ??
+      response.results ??
+      response.resultsFound ??
+      documents.length,
+    page: response.currentPage ?? 1,
+    limit: response.resultsPerPage ?? documents.length,
+    pages: response.pages ?? 1,
+  }
+}
+
 export function parseOrderResponse(response: OrderDocumentResponse): Order {
-  return response.data.document
+  return normalizeOrder(response.data.document)
 }
 
 export function parseCartEntryResponse(response: CartEntryDocumentResponse): CartEntry {

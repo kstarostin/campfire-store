@@ -20,7 +20,7 @@ export function CheckoutSuccess({ order, customerName }: CheckoutSuccessProps) {
       <p>{t('checkout.successBody', { name: customerName })}</p>
       <p className="checkout-success__order">{t('checkout.orderNumber', { id: order._id })}</p>
       <div className="checkout-success__actions">
-        <Button to={`/orders/${order._id}`}>{t('checkout.viewOrder')}</Button>
+        <Button to={`/account?panel=orders&order=${order._id}`}>{t('checkout.viewOrder')}</Button>
         <Button to="/products" variant="secondary">
           {t('checkout.continueShopping')}
         </Button>

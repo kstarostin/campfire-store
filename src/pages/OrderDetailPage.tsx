@@ -1,15 +1,13 @@
-import { useParams } from 'react-router-dom'
-import { PagePlaceholder } from '@/components/ui/PagePlaceholder'
-import { useTranslation } from '@/i18n'
+import { Navigate, useParams } from 'react-router-dom'
+import { useLocalePath } from '@/hooks/useLocalePath'
 
 export function OrderDetailPage() {
-  const { t } = useTranslation()
   const { id } = useParams()
+  const localePath = useLocalePath()
 
-  return (
-    <PagePlaceholder
-      title={t('pages.orderDetail')}
-      description={t('pages.orderDetailHint', { id: id ?? 'unknown' })}
-    />
-  )
+  if (!id) {
+    return <Navigate to={localePath('/account?panel=orders')} replace />
+  }
+
+  return <Navigate to={localePath(`/account?panel=orders&order=${id}`)} replace />
 }

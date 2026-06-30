@@ -183,6 +183,8 @@ export interface Order {
   currency?: Currency
   createdAt?: string
   deliveryNote?: string
+  deliveryAddress?: Address
+  billingAddress?: Address
   entries?: CartEntry[]
 }
 

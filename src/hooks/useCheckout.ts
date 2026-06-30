@@ -45,6 +45,7 @@ export function usePlaceOrder() {
     onSuccess: async () => {
       useCartStore.getState().clearCartId()
       await queryClient.invalidateQueries({ queryKey: ['cart', user?._id] })
+      await queryClient.invalidateQueries({ queryKey: ['orders', user?._id] })
     },
   })
 }
