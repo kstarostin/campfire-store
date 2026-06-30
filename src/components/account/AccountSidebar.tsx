@@ -6,23 +6,23 @@ import {
   Package,
   UserRound,
 } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
 import { useAccountUser } from '@/hooks/useAccount'
 import { useTranslation } from '@/i18n'
 import type { AccountPanel } from '@/lib/accountPanel'
-import { logoutSession } from '@/lib/authSession'
 import { userPhotoUrl } from '@/lib/imageUrl'
 
 interface AccountSidebarProps {
   activePanel: AccountPanel
   onPanelChange: (panel: AccountPanel) => void
+  onSignOutRequest: () => void
 }
 
-const MOBILE_PANELS: AccountPanel[] = ['profile', 'addresses', 'orders', 'wishlist']
-
-export function AccountSidebar({ activePanel, onPanelChange }: AccountSidebarProps) {
-  const { t, language } = useTranslation()
-  const navigate = useNavigate()
+export function AccountSidebar({
+  activePanel,
+  onPanelChange,
+  onSignOutRequest,
+}: AccountSidebarProps) {
+  const { t } = useTranslation()
   const { data: user } = useAccountUser()
 
   if (!user) {
@@ -37,23 +37,7 @@ export function AccountSidebar({ activePanel, onPanelChange }: AccountSidebarPro
     .slice(0, 2)
     .toUpperCase()
 
-  const handleSignOut = async () => {
-    await logoutSession()
-    navigate(`/${language}`, { replace: true })
-  }
-
-  const panelLabel = (panel: AccountPanel) => {
-    switch (panel) {
-      case 'profile':
-        return t('account.profile')
-      case 'addresses':
-        return t('account.addresses')
-      case 'orders':
-        return t('pages.orders')
-      case 'wishlist':
-        return t('nav.wishlist')
-    }
-  }
+  const handleSignOut = () => onSignOutRequest()
 
   const panelButton = (panel: AccountPanel, label: string, icon: ReactNode | null) => (
     <button
@@ -97,22 +81,6 @@ export function AccountSidebar({ activePanel, onPanelChange }: AccountSidebarPro
         </div>
       </div>
 
-      <div className="account-mobile-tabs" role="tablist" aria-label={t('account.sectionTabs')}>
-        {MOBILE_PANELS.map((panel) => (
-          <button
-            key={panel}
-            type="button"
-            role="tab"
-            className={activePanel === panel ? 'is-active' : undefined}
-            aria-selected={activePanel === panel}
-            aria-controls={`panel-${panel}`}
-            onClick={() => onPanelChange(panel)}
-          >
-            {panelLabel(panel)}
-          </button>
-        ))}
-      </div>
-
       <ul className="account-nav" role="tablist" aria-label={t('account.sectionTabs')}>
         <li>{panelButton('profile', t('account.profile'), <UserRound size={18} aria-hidden />)}</li>
         <li>
@@ -129,7 +97,7 @@ export function AccountSidebar({ activePanel, onPanelChange }: AccountSidebarPro
         </li>
       </ul>
 
-      <button type="button" className="account-sign-out" onClick={() => void handleSignOut()}>
+      <button type="button" className="account-sign-out" onClick={handleSignOut}>
         <LogOut size={18} aria-hidden />
         {t('account.signOut')}
       </button>

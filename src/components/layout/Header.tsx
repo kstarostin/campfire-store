@@ -7,7 +7,6 @@ import { MegaMenu } from '@/components/layout/MegaMenu'
 import { MobileNav } from '@/components/layout/MobileNav'
 import { SearchField } from '@/components/layout/SearchField'
 import { useCartItemCount } from '@/hooks/useCart'
-import { useWishlistItemCount } from '@/hooks/useWishlist'
 import { useTranslation } from '@/i18n'
 import { userPhotoUrl } from '@/lib/imageUrl'
 import { useAuthStore, useIsAuthenticated } from '@/store/authStore'
@@ -51,7 +50,6 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const isAuthenticated = useIsAuthenticated()
   const cartCount = useCartItemCount()
-  const wishlistCount = useWishlistItemCount()
 
   useEffect(() => {
     if (!megaOpen) return
@@ -131,15 +129,10 @@ export function Header() {
                 <>
                   <LocaleLink
                     to="/account?panel=wishlist"
-                    className="header-icon-btn relative hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full md:inline-flex"
+                    className="header-icon-btn hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full md:inline-flex"
                     aria-label={t('nav.wishlist')}
                   >
                     <Heart size={20} />
-                    {wishlistCount > 0 ? (
-                      <span className="absolute right-[0.2rem] top-[0.2rem] min-w-[1.125rem] rounded-full bg-primary px-1 text-center text-[0.6875rem] font-semibold leading-[1.125rem] text-white">
-                        {wishlistCount}
-                      </span>
-                    ) : null}
                   </LocaleLink>
 
                   <LocaleLink

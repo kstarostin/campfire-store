@@ -1,12 +1,16 @@
+import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { AccountAddressesPanel } from '@/components/account/AccountAddressesPanel'
+import { AccountMobileBar } from '@/components/account/AccountMobileBar'
 import { AccountOrdersPanel } from '@/components/account/AccountOrdersPanel'
 import { AccountProfilePanel } from '@/components/account/AccountProfilePanel'
 import { AccountSidebar } from '@/components/account/AccountSidebar'
 import { AccountWishlistPanel } from '@/components/account/AccountWishlistPanel'
 import { CatalogBreadcrumb } from '@/components/catalog/CatalogPageHeader'
 import { Container } from '@/components/layout/Container'
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 import { useAccountUser } from '@/hooks/useAccount'
+import { useAccountSignOut } from '@/hooks/useAccountSignOut'
 import { useTranslation } from '@/i18n'
 import { parseAccountPanel, type AccountPanel } from '@/lib/accountPanel'
 
@@ -27,6 +31,9 @@ export function AccountView() {
   const { t } = useTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
   const { data: user, isLoading, isError } = useAccountUser()
+  const signOut = useAccountSignOut()
+  const [signOutOpen, setSignOutOpen] = useState(false)
+  const [isSigningOut, setIsSigningOut] = useState(false)
   const activePanel = parseAccountPanel(searchParams.get('panel'))
 
   const setActivePanel = (panel: AccountPanel) => {
@@ -35,6 +42,16 @@ export function AccountView() {
       return
     }
     setSearchParams({ panel }, { replace: true })
+  }
+
+  const handleConfirmSignOut = async () => {
+    setIsSigningOut(true)
+    try {
+      await signOut()
+      setSignOutOpen(false)
+    } finally {
+      setIsSigningOut(false)
+    }
   }
 
   if (isLoading && !user) {
@@ -54,21 +71,44 @@ export function AccountView() {
   }
 
   return (
-    <Container className="account-page">
-      <CatalogBreadcrumb items={[{ label: t('pages.account') }]} />
+    <>
+      <Container className="account-page has-mobile-nav">
+        <CatalogBreadcrumb items={[{ label: t('pages.account') }]} />
 
-      <header className="account-header">
-        <h1>{t('pages.account')}</h1>
-        <p>{t('account.pageDescription')}</p>
-      </header>
+        <header className="account-header">
+          <h1>{t('pages.account')}</h1>
+          <p>{t('account.pageDescription')}</p>
+        </header>
 
-      <div className="account-shell">
-        <AccountSidebar activePanel={activePanel} onPanelChange={setActivePanel} />
+        <div className="account-shell">
+          <AccountSidebar
+            activePanel={activePanel}
+            onPanelChange={setActivePanel}
+            onSignOutRequest={() => setSignOutOpen(true)}
+          />
 
-        <div className="account-main">
-          <AccountPanelContent panel={activePanel} />
+          <div className="account-main">
+            <AccountPanelContent panel={activePanel} />
+          </div>
         </div>
-      </div>
-    </Container>
+      </Container>
+
+      <AccountMobileBar
+        activePanel={activePanel}
+        onPanelChange={setActivePanel}
+        onSignOutRequest={() => setSignOutOpen(true)}
+      />
+
+      <ConfirmDialog
+        open={signOutOpen}
+        title={t('account.signOutConfirmTitle')}
+        description={t('account.signOutConfirmBody')}
+        confirmLabel={t('account.signOut')}
+        onConfirm={handleConfirmSignOut}
+        onCancel={() => setSignOutOpen(false)}
+        isPending={isSigningOut}
+        variant="danger"
+      />
+    </>
   )
 }

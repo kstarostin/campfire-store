@@ -1671,6 +1671,69 @@
     width: auto;
   }
 
+  .confirm-dialog {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+  }
+
+  .confirm-dialog__backdrop {
+    position: absolute;
+    inset: 0;
+    border: 0;
+    background: rgb(0 0 0 / 40%);
+    cursor: pointer;
+  }
+
+  .confirm-dialog__panel {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 24rem);
+    padding: 1.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-md);
+  }
+
+  .confirm-dialog__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+  }
+
+  .confirm-dialog__description {
+    margin: 0.5rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  .confirm-dialog__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.625rem;
+    margin-top: 1.25rem;
+  }
+
+  .confirm-dialog__actions .btn {
+    width: auto;
+  }
+
+  .confirm-dialog__confirm--danger {
+    background: #b91c1c;
+    border-color: #b91c1c;
+  }
+
+  .confirm-dialog__confirm--danger:hover {
+    background: #991b1b;
+    border-color: #991b1b;
+  }
+
   /* Auth */
   .auth-page {
     width: min(100%, 28rem);
@@ -1996,42 +2059,55 @@
     background: #fef2f2;
   }
 
-  .account-mobile-tabs {
-    display: flex;
-    gap: 0.5rem;
-    overflow-x: auto;
-    padding-bottom: 0.125rem;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+  .account-mobile-bar {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 40;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.25rem;
+    padding: 0.5rem 0.75rem calc(0.5rem + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid var(--color-border);
+    background: rgb(255 255 255 / 96%);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 -4px 20px rgb(0 0 0 / 6%);
   }
 
-  .account-mobile-tabs::-webkit-scrollbar {
-    display: none;
-  }
-
-  .account-mobile-tabs button {
-    flex: 0 0 auto;
-    scroll-snap-align: start;
-    padding: 0.5rem 0.875rem;
-    border: 1px solid var(--color-border);
-    border-radius: 999px;
-    font-size: 0.875rem;
-    font-weight: 600;
+  .account-mobile-bar button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    padding: 0.375rem;
+    border: 0;
+    border-radius: var(--radius-sm);
     color: var(--color-text-muted);
-    background: var(--color-surface);
+    background: transparent;
     cursor: pointer;
-    white-space: nowrap;
   }
 
-  .account-mobile-tabs button.is-active {
+  .account-mobile-bar button:hover {
     color: var(--color-primary-hover);
-    border-color: #fdba74;
+    background: var(--color-surface-muted);
+  }
+
+  .account-mobile-bar button.is-active {
+    color: var(--color-primary-hover);
     background: var(--color-primary-subtle);
   }
 
+  .account-mobile-bar__sign-out {
+    color: #b91c1c;
+  }
+
+  .account-mobile-bar__sign-out:hover {
+    color: #991b1b;
+    background: #fef2f2;
+  }
+
   @media (min-width: 900px) {
-    .account-mobile-tabs {
+    .account-mobile-bar {
       display: none;
     }
 
@@ -2041,8 +2117,13 @@
   }
 
   @media (max-width: 899px) {
+    .account-page.has-mobile-nav {
+      padding-bottom: 5.5rem;
+    }
+
     .account-nav,
-    .account-shortcuts {
+    .account-shortcuts,
+    .account-sign-out {
       display: none;
     }
 

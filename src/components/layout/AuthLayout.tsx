@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import { LocaleLink } from '@/components/ui/LocaleLink'
 import { Container } from '@/components/layout/Container'
+import { Footer } from '@/components/layout/Footer'
 import { useTranslation } from '@/i18n'
 
 export function AuthLayout() {
@@ -28,6 +29,7 @@ export function AuthLayout() {
       <main className="site-container flex flex-1 justify-center py-10">
         <Outlet />
       </main>
+      <Footer />
     </div>
   )
 }

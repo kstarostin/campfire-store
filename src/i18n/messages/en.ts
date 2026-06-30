@@ -170,6 +170,7 @@ export const en = {
     pageDescription:
       'Manage your profile, addresses, orders, and wishlist in one place.',
     sidebarLabel: 'Account navigation',
+    mobileNavLabel: 'Account sections',
     sectionTabs: 'Account sections',
     shortcutsLabel: 'Account shortcuts',
     profile: 'Profile',
@@ -235,6 +236,8 @@ export const en = {
     noBillingAddressesBody:
       "Add one for invoices, or we'll use your delivery address at checkout.",
     signOut: 'Sign out',
+    signOutConfirmTitle: 'Sign out?',
+    signOutConfirmBody: 'You will need to sign in again to continue.',
     addressFields: {
       label: 'Label',
       labelPlaceholder: 'e.g. Home, Office',

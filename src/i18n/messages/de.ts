@@ -178,6 +178,7 @@ export const de: Messages = {
     pageDescription:
       'Verwalte Profil, Adressen, Bestellungen und Wunschliste an einem Ort.',
     sidebarLabel: 'Kontonavigation',
+    mobileNavLabel: 'Kontobereiche',
     sectionTabs: 'Kontobereiche',
     shortcutsLabel: 'Konto-Schnellzugriffe',
     profile: 'Profil',
@@ -244,6 +245,8 @@ export const de: Messages = {
     noBillingAddressesBody:
       'Füge eine für Rechnungen hinzu — sonst verwenden wir deine Lieferadresse beim Checkout.',
     signOut: 'Abmelden',
+    signOutConfirmTitle: 'Abmelden?',
+    signOutConfirmBody: 'Du musst dich erneut anmelden, um fortzufahren.',
     addressFields: {
       label: 'Bezeichnung',
       labelPlaceholder: 'z. B. Zuhause, Büro',
