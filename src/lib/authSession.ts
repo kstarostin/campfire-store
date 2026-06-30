@@ -1,5 +1,6 @@
 import { endpoints } from '@/api/endpoints'
 import { parseAuthResponse } from '@/api/normalizers'
+import { queryClient } from '@/lib/queryClient'
 import { useAuthStore } from '@/store/authStore'
 import { useCartStore } from '@/store/cartStore'
 
@@ -12,6 +13,7 @@ export async function loginWithCredentials(email: string, password: string) {
   const { token, user } = parseAuthResponse(response)
   clearCartSession()
   useAuthStore.getState().setSession(token, user)
+  await queryClient.invalidateQueries({ queryKey: ['account-user'] })
   return user
 }
 
@@ -25,6 +27,7 @@ export async function signupWithCredentials(
   const { token, user } = parseAuthResponse(response)
   clearCartSession()
   useAuthStore.getState().setSession(token, user)
+  await queryClient.invalidateQueries({ queryKey: ['account-user'] })
   return user
 }
 
@@ -41,4 +44,5 @@ export async function logoutSession() {
 
   clearCartSession()
   useAuthStore.getState().clearSession()
+  await queryClient.removeQueries({ queryKey: ['account-user'] })
 }

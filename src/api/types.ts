@@ -100,8 +100,16 @@ export interface UserPhoto {
   thumbnail?: UserImageSize
 }
 
+export interface AddressTitle {
+  _id: string
+  code?: string
+  nameI18n?: I18nString
+}
+
 export interface Address {
   _id?: string
+  label?: string
+  title?: string | AddressTitle
   name: string
   phone?: string
   street: string
@@ -109,7 +117,6 @@ export interface Address {
   postalCode: string
   town: string
   country: string
-  title?: string
 }
 
 export interface User {
@@ -149,6 +156,9 @@ export interface Cart {
   total?: number
   vat?: number
   tax?: number
+  deliveryAddress?: Address
+  billingAddress?: Address
+  deliveryNote?: string
   entries?: CartEntry[]
 }
 
@@ -172,7 +182,15 @@ export interface Order {
   total?: number
   currency?: Currency
   createdAt?: string
+  deliveryNote?: string
   entries?: CartEntry[]
+}
+
+export interface OrderDocumentResponse {
+  status?: string
+  data: {
+    document: Order
+  }
 }
 
 export interface WishlistItem {

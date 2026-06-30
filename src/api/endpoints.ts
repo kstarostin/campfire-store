@@ -9,6 +9,7 @@ import type {
   Currency,
   Language,
   Order,
+  OrderDocumentResponse,
   PaginatedResponse,
   PaginationParams,
   Product,
@@ -245,7 +246,7 @@ export const endpoints = {
     api.get<{ data: Order }>(`/users/${userId}/orders/${orderId}`, { token }),
 
   placeOrder: (userId: string, token: string, body: { cartId: string }) =>
-    api.post<{ data: Order }>(`/users/${userId}/orders`, body, { token }),
+    api.post<OrderDocumentResponse>(`/users/${userId}/orders`, body, { token }),
 
   wishlist: (userId: string, token: string) =>
     api.get<{ data: WishlistItem[] }>(`/users/${userId}/wishlist`, { token }),

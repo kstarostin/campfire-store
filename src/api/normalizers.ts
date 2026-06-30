@@ -1,4 +1,5 @@
 import type {
+  Address,
   AuthResponse,
   BadgeStyle,
   Cart,
@@ -7,6 +8,8 @@ import type {
   CartEntryDocumentResponse,
   Category,
   Language,
+  Order,
+  OrderDocumentResponse,
   Product,
   ProductBadge,
   ProductBadgeAssignment,
@@ -198,14 +201,29 @@ export function getPriceQuickFilters(filters: ProductListFilter[]): PriceQuickFi
   return priceFilter?.quickFilters ?? []
 }
 
+export function normalizeAddress(address: Address): Address {
+  return {
+    _id: address._id,
+    label: address.label,
+    title: address.title,
+    name: address.name,
+    phone: address.phone,
+    street: address.street,
+    house: address.house,
+    postalCode: address.postalCode,
+    town: address.town,
+    country: address.country,
+  }
+}
+
 export function normalizeUser(document: User): User {
   return {
     _id: document._id,
     name: document.name,
     email: document.email,
     photo: document.photo,
-    deliveryAddresses: document.deliveryAddresses ?? [],
-    billingAddresses: document.billingAddresses ?? [],
+    deliveryAddresses: (document.deliveryAddresses ?? []).map(normalizeAddress),
+    billingAddresses: (document.billingAddresses ?? []).map(normalizeAddress),
   }
 }
 
@@ -227,6 +245,9 @@ export function normalizeCart(document: Cart): Cart {
     total: document.total ?? 0,
     vat: document.vat,
     tax: document.tax,
+    deliveryAddress: document.deliveryAddress,
+    billingAddress: document.billingAddress,
+    deliveryNote: document.deliveryNote,
     entries: document.entries ?? [],
   }
 }
@@ -239,6 +260,10 @@ export function parseCartList(response: ApiListEnvelope<Cart>): Cart[] {
   const payload = response.data
   const documents = Array.isArray(payload) ? payload : (payload?.documents ?? [])
   return documents.map(normalizeCart)
+}
+
+export function parseOrderResponse(response: OrderDocumentResponse): Order {
+  return response.data.document
 }
 
 export function parseCartEntryResponse(response: CartEntryDocumentResponse): CartEntry {

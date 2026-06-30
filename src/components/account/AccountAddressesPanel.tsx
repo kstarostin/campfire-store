@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { AddressAddCard, AddressCard } from '@/components/account/AddressCard'
 import { AddressForm, emptyAddress } from '@/components/account/AddressForm'
 import type { Address } from '@/api/types'
+import { toApiAddresses } from '@/lib/address'
 import { useAccountUser, useUpdateAddresses } from '@/hooks/useAccount'
 import { useTranslation } from '@/i18n'
 
@@ -32,8 +33,8 @@ export function AccountAddressesPanel() {
 
   const addresses = activeKind === 'delivery' ? deliveryAddresses : billingAddresses
 
-  const addressLabel = (index: number) =>
-    index === 0 ? t('account.addressPrimary') : t('account.addressSecondary', { index: index + 1 })
+  const addressLabel = (address: Address, index: number) =>
+    address.label?.trim() || t('account.addressFallback', { index: index + 1 })
 
   const resetForm = () => {
     setEditingIndex(null)
@@ -51,10 +52,11 @@ export function AccountAddressesPanel() {
     setError(null)
 
     try {
+      const payload = toApiAddresses(nextAddresses)
       if (activeKind === 'delivery') {
-        await updateAddresses.mutateAsync({ deliveryAddresses: nextAddresses })
+        await updateAddresses.mutateAsync({ deliveryAddresses: payload })
       } else {
-        await updateAddresses.mutateAsync({ billingAddresses: nextAddresses })
+        await updateAddresses.mutateAsync({ billingAddresses: payload })
       }
       resetForm()
     } catch {
@@ -126,7 +128,7 @@ export function AccountAddressesPanel() {
           <AddressCard
             key={address._id ?? `${address.street}-${index}`}
             address={address}
-            label={addressLabel(index)}
+            label={addressLabel(address, index)}
             isPrimary={index === 0}
             onEdit={() => startEdit(index)}
             onDelete={() => void handleDelete(index)}

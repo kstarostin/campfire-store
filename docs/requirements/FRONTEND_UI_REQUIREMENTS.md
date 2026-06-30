@@ -367,6 +367,8 @@ Product card: image, manufacturer, optional badges, name, formatted price (no se
 
 ### 8.8 Checkout (`/checkout`)
 
+**Design reference:** `docs/mockups/checkout.html`
+
 - Review cart summary
 - Select delivery address (from user profile or inline form if API supports PATCH)
 - Place order button → `POST /users/:id/orders`

@@ -2,6 +2,7 @@ import type { Address } from '@/api/types'
 import { useTranslation } from '@/i18n'
 
 export const emptyAddress = (): Address => ({
+  label: '',
   name: '',
   phone: '',
   street: '',
@@ -43,6 +44,16 @@ export function AddressForm({
       }}
     >
       <div className="address-form__grid">
+        <div className="field address-form__field--wide">
+          <label htmlFor="address-label">{t('account.addressFields.label')}</label>
+          <input
+            id="address-label"
+            value={value.label ?? ''}
+            onChange={(event) => updateField('label', event.target.value)}
+            placeholder={t('account.addressFields.labelPlaceholder')}
+            maxLength={32}
+          />
+        </div>
         <div className="field">
           <label htmlFor="address-name">{t('account.addressFields.name')}</label>
           <input

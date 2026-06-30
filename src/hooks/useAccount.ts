@@ -20,7 +20,9 @@ export function useAccountUser() {
       return user
     },
     enabled: Boolean(token && storedUser?._id),
-    initialData: storedUser ?? undefined,
+    placeholderData: storedUser ?? undefined,
+    staleTime: 0,
+    refetchOnMount: 'always',
   })
 }
 

@@ -1,0 +1,1085 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Campfire Store — Checkout mockup (Phase 7)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      :root {
+        --font-sans: 'Inter', system-ui, sans-serif;
+        --font-display: 'Fraunces', Georgia, serif;
+
+        --color-bg: #fafafa;
+        --color-header-bg: #1c1917;
+        --color-header-border: #292524;
+        --color-footer-bg: #f0f0f0;
+        --color-surface: #ffffff;
+        --color-surface-muted: #f5f5f5;
+        --color-border: #e5e5e5;
+        --color-text: #171717;
+        --color-text-muted: #737373;
+        --color-primary: #ea580c;
+        --color-primary-hover: #c2410c;
+        --color-primary-subtle: #fff7ed;
+        --color-secondary: #047857;
+        --color-secondary-hover: #065f46;
+        --color-secondary-subtle: #e8f7f0;
+
+        --radius-sm: 0.5rem;
+        --radius-md: 0.75rem;
+        --radius-lg: 1rem;
+        --shadow-sm: 0 1px 2px rgb(0 0 0 / 6%);
+        --shadow-md: 0 10px 28px rgb(0 0 0 / 8%);
+        --header-height: 4.75rem;
+        --max-width: 72rem;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--font-sans);
+        font-size: 1rem;
+        line-height: 1.5;
+        color: var(--color-text);
+        background: var(--color-bg);
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      .container {
+        width: min(100% - 2rem, var(--max-width));
+        margin-inline: auto;
+      }
+
+      /* Mockup chrome */
+      .mockup-bar {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 0.625rem 1rem;
+        border-bottom: 1px solid #44403c;
+        background: #292524;
+        color: #f5f5f4;
+        font-size: 0.8125rem;
+      }
+
+      .mockup-bar strong {
+        font-weight: 600;
+      }
+
+      .mockup-bar__label {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.35rem 0.5rem;
+      }
+
+      .mockup-bar__label > span {
+        color: #a8a29e;
+      }
+
+      .mockup-bar__tools {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .mockup-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .mockup-nav a {
+        padding: 0.375rem 0.75rem;
+        border-radius: 999px;
+        color: #a8a29e;
+        text-decoration: none;
+      }
+
+      .mockup-nav a:hover {
+        color: #f5f5f4;
+      }
+
+      .mockup-nav a.is-active {
+        color: #171717;
+        background: #f5f5f4;
+        font-weight: 600;
+      }
+
+      .mockup-modes {
+        display: inline-flex;
+        padding: 0.1875rem;
+        border-radius: 999px;
+        background: #1c1917;
+      }
+
+      .mockup-modes button {
+        padding: 0.375rem 0.75rem;
+        border: 0;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #a8a29e;
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .mockup-modes button.is-active {
+        color: #171717;
+        background: #f5f5f4;
+      }
+
+      /* Header */
+      .site-header {
+        position: sticky;
+        top: 2.375rem;
+        z-index: 30;
+        border-bottom: 1px solid var(--color-header-border);
+        background: rgb(28 25 23 / 96%);
+        backdrop-filter: blur(10px);
+        color: #f5f5f4;
+      }
+
+      .header-inner {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        min-height: var(--header-height);
+      }
+
+      .logo img {
+        height: 3rem;
+        width: auto;
+        transform: translateY(-0.4rem);
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        margin-left: auto;
+      }
+
+      .icon-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        border: 0;
+        border-radius: 999px;
+        color: inherit;
+        background: transparent;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .icon-btn:hover {
+        color: #fdba74;
+      }
+
+      .header-avatar {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 999px;
+        object-fit: cover;
+      }
+
+      .cart-badge {
+        position: absolute;
+        right: 0.2rem;
+        top: 0.2rem;
+        min-width: 1.125rem;
+        padding: 0 0.25rem;
+        border-radius: 999px;
+        font-size: 0.6875rem;
+        font-weight: 600;
+        line-height: 1.125rem;
+        text-align: center;
+        color: white;
+        background: var(--color-primary);
+      }
+
+      /* Checkout page */
+      .checkout-page {
+        padding: 1.25rem 0 3rem;
+      }
+
+      .checkout-page.has-mobile-bar {
+        padding-bottom: 5.5rem;
+      }
+
+      .breadcrumb {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 0 0 1.25rem;
+        padding: 0;
+        list-style: none;
+        font-size: 0.8125rem;
+        color: var(--color-text-muted);
+      }
+
+      .breadcrumb li {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .breadcrumb a:hover {
+        color: var(--color-secondary);
+      }
+
+      .breadcrumb [aria-current='page'] {
+        color: var(--color-text);
+        font-weight: 500;
+      }
+
+      .breadcrumb-sep {
+        color: #d4d4d4;
+      }
+
+      .checkout-header {
+        margin-bottom: 1.5rem;
+      }
+
+      .checkout-header h1 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: clamp(1.75rem, 4vw, 2.25rem);
+        letter-spacing: -0.025em;
+      }
+
+      .checkout-header p {
+        margin: 0.375rem 0 0;
+        color: var(--color-text-muted);
+      }
+
+      .checkout-shell {
+        display: grid;
+        gap: 1.5rem;
+        align-items: start;
+      }
+
+      @media (min-width: 900px) {
+        .checkout-shell {
+          grid-template-columns: minmax(0, 1fr) 18.5rem;
+          gap: 2rem;
+        }
+      }
+
+      .checkout-panel {
+        padding: 1.25rem;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        background: var(--color-surface);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .checkout-panel + .checkout-panel {
+        margin-top: 1rem;
+      }
+
+      .checkout-panel h2 {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 0 0 1rem;
+        font-family: var(--font-display);
+        font-size: 1.125rem;
+        font-weight: 600;
+      }
+
+      .checkout-panel h2 svg {
+        color: var(--color-primary-hover);
+      }
+
+      .checkout-panel__head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .checkout-panel__head h2 {
+        margin: 0;
+      }
+
+      .checkout-text-link {
+        border: 0;
+        padding: 0;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--color-secondary);
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .checkout-text-link:hover {
+        color: var(--color-secondary-hover);
+      }
+
+      /* Address selection */
+      .address-options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+      }
+
+      .address-option {
+        position: relative;
+        display: block;
+        cursor: pointer;
+      }
+
+      .address-option input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .address-option__card {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        width: 100%;
+        padding: 0.625rem 0.875rem;
+        border: 2px solid var(--color-border);
+        border-radius: var(--radius-md);
+        background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+        transition:
+          border-color 0.15s ease,
+          box-shadow 0.15s ease;
+      }
+
+      .address-option input:checked + .address-option__card {
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 1px rgb(234 88 12 / 20%);
+      }
+
+      .address-option input:focus-visible + .address-option__card {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 2px;
+      }
+
+      .address-option__check {
+        display: inline-flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        width: 1.125rem;
+        height: 1.125rem;
+        border: 2px solid var(--color-border);
+        border-radius: 999px;
+        color: transparent;
+        background: var(--color-surface);
+      }
+
+      .address-option input:checked + .address-option__card .address-option__check {
+        border-color: var(--color-primary);
+        color: white;
+        background: var(--color-primary);
+      }
+
+      .address-option__body {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+        line-height: 1.35;
+      }
+
+      .address-option__label {
+        display: inline-flex;
+        flex-shrink: 0;
+        align-items: center;
+        padding: 0.125rem 0.4375rem;
+        border-radius: 999px;
+        font-size: 0.625rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--color-primary-hover);
+        background: var(--color-primary-subtle);
+      }
+
+      .address-option .address-name {
+        font-weight: 600;
+        color: var(--color-text);
+      }
+
+      .address-option .address-sep {
+        color: #d4d4d4;
+        user-select: none;
+      }
+
+      .address-option .address-line {
+        color: var(--color-text-muted);
+      }
+
+      .address-option .address-phone {
+        color: var(--color-text-muted);
+      }
+
+      @media (min-width: 640px) {
+        .address-option__body {
+          flex-wrap: nowrap;
+        }
+
+        .address-option .address-line {
+          flex: 1;
+          min-width: 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .address-option .address-phone {
+          flex-shrink: 0;
+          margin-left: auto;
+        }
+
+        .address-option .address-sep:last-of-type {
+          display: none;
+        }
+      }
+
+      .address-empty {
+        padding: 2rem 1rem;
+        border: 1px dashed var(--color-border);
+        border-radius: var(--radius-md);
+        text-align: center;
+        color: var(--color-text-muted);
+        background: var(--color-surface-muted);
+      }
+
+      .address-empty strong {
+        display: block;
+        margin-bottom: 0.375rem;
+        color: var(--color-text);
+      }
+
+      /* Compact order review */
+      .checkout-items {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .checkout-item {
+        display: grid;
+        grid-template-columns: 3.5rem minmax(0, 1fr) auto;
+        gap: 0.75rem;
+        align-items: center;
+      }
+
+      .checkout-item__media {
+        overflow: hidden;
+        border-radius: var(--radius-sm);
+        background: var(--color-surface-muted);
+        aspect-ratio: 1;
+      }
+
+      .checkout-item__media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .checkout-item__meta {
+        margin: 0;
+        font-size: 0.6875rem;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+      }
+
+      .checkout-item__title {
+        margin: 0.125rem 0 0;
+        font-size: 0.9375rem;
+        font-weight: 600;
+        line-height: 1.25;
+      }
+
+      .checkout-item__qty {
+        margin: 0.125rem 0 0;
+        font-size: 0.8125rem;
+        color: var(--color-text-muted);
+      }
+
+      .checkout-item__price {
+        margin: 0;
+        font-size: 0.9375rem;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+
+      /* Summary — flat like cart / PDP buy panel */
+      .checkout-summary {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 0.25rem 0;
+      }
+
+      @media (min-width: 900px) {
+        .checkout-summary {
+          position: sticky;
+          top: calc(2.375rem + var(--header-height) + 1rem);
+        }
+      }
+
+      .checkout-summary h2 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 1.125rem;
+        font-weight: 600;
+      }
+
+      .checkout-summary__rows {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .checkout-summary__row {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1rem;
+        font-size: 0.9375rem;
+      }
+
+      .checkout-summary__row--total {
+        margin-top: 0.25rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid var(--color-border);
+        font-size: 1.0625rem;
+        font-weight: 600;
+      }
+
+      .checkout-summary__row--total span:last-child {
+        font-family: var(--font-display);
+        font-size: 1.375rem;
+        color: var(--color-primary-hover);
+      }
+
+      .checkout-summary__secure {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 0;
+        font-size: 0.8125rem;
+        color: var(--color-text-muted);
+      }
+
+      .checkout-summary__secure svg {
+        color: var(--color-secondary);
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        width: 100%;
+        padding: 0.75rem 1.125rem;
+        border: 1px solid transparent;
+        border-radius: var(--radius-sm);
+        font-size: 0.9375rem;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      .btn-primary {
+        color: white;
+        background: var(--color-primary);
+      }
+
+      .btn-primary:hover {
+        background: var(--color-primary-hover);
+      }
+
+      .btn-primary:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+      }
+
+      .btn-secondary {
+        margin-top: 0.625rem;
+        color: var(--color-text);
+        border-color: var(--color-border);
+        background: var(--color-surface);
+      }
+
+      .btn-secondary:hover {
+        background: var(--color-surface-muted);
+      }
+
+      .checkout-mobile-bar {
+        position: fixed;
+        inset-inline: 0;
+        bottom: 0;
+        z-index: 25;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        border-top: 1px solid var(--color-border);
+        background: rgb(255 255 255 / 96%);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 -4px 20px rgb(0 0 0 / 6%);
+      }
+
+      @media (min-width: 900px) {
+        .checkout-mobile-bar {
+          display: none;
+        }
+
+        .checkout-summary .checkout-summary__place,
+        .checkout-summary .checkout-summary__back {
+          display: block;
+        }
+      }
+
+      @media (max-width: 899px) {
+        .checkout-summary .checkout-summary__place,
+        .checkout-summary .checkout-summary__back {
+          display: none;
+        }
+      }
+
+      .checkout-mobile-bar__total {
+        font-family: var(--font-display);
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--color-primary-hover);
+        white-space: nowrap;
+      }
+
+      .checkout-mobile-bar .btn-primary {
+        flex: 1;
+        width: auto;
+      }
+
+      /* Success state */
+      .checkout-success {
+        max-width: 32rem;
+        margin: 2rem auto 0;
+        padding: 2rem 1.5rem;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        text-align: center;
+        background: var(--color-surface);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .checkout-success__icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 3.5rem;
+        height: 3.5rem;
+        margin-bottom: 1rem;
+        border-radius: 999px;
+        color: var(--color-secondary);
+        background: var(--color-secondary-subtle);
+      }
+
+      .checkout-success h2 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+      }
+
+      .checkout-success p {
+        margin: 0.5rem 0 0;
+        color: var(--color-text-muted);
+        font-size: 0.9375rem;
+      }
+
+      .checkout-success__order {
+        margin: 1rem 0 0;
+        padding: 0.75rem 1rem;
+        border-radius: var(--radius-sm);
+        font-family: ui-monospace, monospace;
+        font-size: 0.875rem;
+        color: var(--color-text);
+        background: var(--color-surface-muted);
+      }
+
+      .checkout-success__actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.75rem;
+        margin-top: 1.25rem;
+      }
+
+      .checkout-success__actions .btn {
+        width: auto;
+        min-width: 10rem;
+      }
+
+      .demo-hint {
+        margin-top: 1.25rem;
+        padding: 0.75rem;
+        border-radius: var(--radius-sm);
+        font-size: 0.75rem;
+        line-height: 1.45;
+        color: var(--color-text-muted);
+        background: var(--color-primary-subtle);
+      }
+
+      .demo-hint strong {
+        color: var(--color-text);
+      }
+
+      .site-footer {
+        margin-top: 2rem;
+        padding: 2rem 0;
+        border-top: 1px solid var(--color-border);
+        background: var(--color-footer-bg);
+        font-size: 0.875rem;
+      }
+
+      .footer-bottom {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 0.5rem;
+        color: var(--color-text-muted);
+        font-size: 0.8125rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="mockup-bar">
+      <div class="mockup-bar__label">
+        <strong>Checkout</strong>
+        <span>Place order · Phase 7</span>
+      </div>
+      <div class="mockup-bar__tools">
+        <div class="mockup-modes" aria-label="Preview checkout state">
+          <button type="button" class="is-active" data-preview-mode="checkout">Checkout</button>
+          <button type="button" data-preview-mode="no-address">No address</button>
+          <button type="button" data-preview-mode="success">Order placed</button>
+        </div>
+      </div>
+      <nav class="mockup-nav" aria-label="Mockup pages">
+        <a href="homepage.html">Home</a>
+        <a href="catalog-listing.html">Catalog</a>
+        <a href="product-detail.html">Product</a>
+        <a href="account.html">Account</a>
+        <a href="auth.html">Auth</a>
+        <a href="cart.html">Cart</a>
+        <a href="checkout.html" class="is-active" aria-current="page">Checkout</a>
+      </nav>
+    </div>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="logo" href="homepage.html" aria-label="Campfire Store home">
+          <img src="../../public/img/campfire_logo_light.png" alt="Campfire Store" />
+        </a>
+        <div class="header-actions">
+          <a class="icon-btn" href="account.html" aria-label="Account">
+            <img
+              class="header-avatar"
+              src="https://campfire-store-api.onrender.com/img/users/thumbnail/alex_200.jpg"
+              alt=""
+              width="40"
+              height="40"
+            />
+          </a>
+          <a class="icon-btn" href="cart.html" aria-label="Cart">
+            <i data-lucide="shopping-cart" size="20"></i>
+            <span class="cart-badge">2</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="checkout-page has-mobile-bar" id="checkout-page">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li><a href="homepage.html">Home</a></li>
+          <li>
+            <span class="breadcrumb-sep" aria-hidden="true">›</span>
+            <a href="cart.html">Cart</a>
+          </li>
+          <li>
+            <span class="breadcrumb-sep" aria-hidden="true">›</span>
+            <span aria-current="page">Checkout</span>
+          </li>
+        </ol>
+
+        <header class="checkout-header" id="checkout-header">
+          <h1>Checkout</h1>
+          <p>Choose a delivery address and place your order.</p>
+        </header>
+
+        <div class="checkout-shell" id="checkout-form">
+          <div class="checkout-main">
+            <section class="checkout-panel" aria-labelledby="delivery-heading">
+              <div class="checkout-panel__head">
+                <h2 id="delivery-heading">
+                  <i data-lucide="map-pin" size="18"></i>
+                  Delivery address
+                </h2>
+                <a class="checkout-text-link" href="account.html?panel=addresses">Manage addresses</a>
+              </div>
+
+              <div class="address-options" id="address-options">
+                <label class="address-option">
+                  <input type="radio" name="delivery-address" value="home" checked />
+                  <span class="address-option__card">
+                    <span class="address-option__check" aria-hidden="true">
+                      <i data-lucide="check" size="10"></i>
+                    </span>
+                    <span class="address-option__body">
+                      <span class="address-option__label">Home</span>
+                      <span class="address-name">Alex Chen</span>
+                      <span class="address-sep" aria-hidden="true">·</span>
+                      <span class="address-line">42 Trailhead Lane, 80331 Munich, Germany</span>
+                      <span class="address-sep" aria-hidden="true">·</span>
+                      <span class="address-phone">+49 89 1234 5678</span>
+                    </span>
+                  </span>
+                </label>
+
+                <label class="address-option">
+                  <input type="radio" name="delivery-address" value="office" />
+                  <span class="address-option__card">
+                    <span class="address-option__check" aria-hidden="true">
+                      <i data-lucide="check" size="10"></i>
+                    </span>
+                    <span class="address-option__body">
+                      <span class="address-option__label">Office</span>
+                      <span class="address-name">Alex Chen</span>
+                      <span class="address-sep" aria-hidden="true">·</span>
+                      <span class="address-line"
+                        >ExplorerNet GmbH, 8 Bergstraße, 10115 Berlin, Germany</span
+                      >
+                      <span class="address-sep" aria-hidden="true">·</span>
+                      <span class="address-phone">+49 30 9876 5432</span>
+                    </span>
+                  </span>
+                </label>
+              </div>
+
+              <div class="address-empty" id="address-empty" hidden>
+                <strong>No delivery address saved</strong>
+                Add an address in your account before checkout.
+                <p style="margin: 1rem 0 0">
+                  <a class="btn btn-primary" href="account.html?panel=addresses" style="width: auto"
+                    >Add address</a
+                  >
+                </p>
+              </div>
+            </section>
+
+            <section class="checkout-panel" aria-labelledby="review-heading">
+              <h2 id="review-heading">
+                <i data-lucide="package" size="18"></i>
+                Order review
+              </h2>
+              <div class="checkout-items">
+                <article class="checkout-item">
+                  <div class="checkout-item__media">
+                    <img
+                      src="../../public/img/products/small/product-5c88fa8cf4afda39709c2955-1714287500165-1_500.jpg"
+                      alt=""
+                      width="56"
+                      height="56"
+                    />
+                  </div>
+                  <div>
+                    <p class="checkout-item__meta">Mammut</p>
+                    <p class="checkout-item__title">Lithium 40</p>
+                    <p class="checkout-item__qty">Qty 1</p>
+                  </div>
+                  <p class="checkout-item__price">$209.00</p>
+                </article>
+
+                <article class="checkout-item">
+                  <div class="checkout-item__media">
+                    <img
+                      src="../../public/img/products/small/product-5c8a34ed14eb5c17645c9108-1714292832655-1_500.jpg"
+                      alt=""
+                      width="56"
+                      height="56"
+                    />
+                  </div>
+                  <div>
+                    <p class="checkout-item__meta">Specialized</p>
+                    <p class="checkout-item__title">Rockhopper Comp</p>
+                    <p class="checkout-item__qty">Qty 1</p>
+                  </div>
+                  <p class="checkout-item__price">$1,250.00</p>
+                </article>
+              </div>
+            </section>
+          </div>
+
+          <aside class="checkout-summary" aria-labelledby="summary-heading">
+            <h2 id="summary-heading">Order summary</h2>
+            <div class="checkout-summary__rows">
+              <div class="checkout-summary__row">
+                <span>Items (2)</span>
+              </div>
+              <div class="checkout-summary__row">
+                <span>Subtotal</span>
+                <span>$1,459.00</span>
+              </div>
+              <div class="checkout-summary__row">
+                <span>VAT</span>
+                <span>$0.00</span>
+              </div>
+              <div class="checkout-summary__row checkout-summary__row--total">
+                <span>Total</span>
+                <span>$1,459.00</span>
+              </div>
+            </div>
+            <p class="checkout-summary__secure">
+              <i data-lucide="lock" size="14"></i>
+              Demo checkout — no payment capture in Phase 7
+            </p>
+            <button type="button" class="btn btn-primary checkout-summary__place" id="place-order-btn">
+              Place order
+            </button>
+            <a class="btn btn-secondary checkout-summary__back" href="cart.html">Back to cart</a>
+          </aside>
+        </div>
+
+        <div class="checkout-success" id="checkout-success" hidden>
+          <div class="checkout-success__icon" aria-hidden="true">
+            <i data-lucide="circle-check" size="32"></i>
+          </div>
+          <h2>Order placed</h2>
+          <p>Thanks, Alex. We&apos;ll send a confirmation email shortly.</p>
+          <p class="checkout-success__order">Order #ORD-2026-0042</p>
+          <div class="checkout-success__actions">
+            <a class="btn btn-primary" href="account.html?panel=orders">View orders</a>
+            <a class="btn btn-secondary" href="catalog-listing.html">Continue shopping</a>
+          </div>
+        </div>
+
+        <p class="demo-hint" id="checkout-demo-hint">
+          <strong>Phase 7:</strong> protected route <code>/checkout</code> · select delivery address from
+          profile · <code>POST /users/:id/orders</code> with <code>{ cartId }</code> · redirect to order
+          detail. Demo user <strong>alex.chen@explorernet.net</strong> / <strong>test1234</strong>.
+        </p>
+      </div>
+    </main>
+
+    <div class="checkout-mobile-bar" id="checkout-mobile-bar">
+      <span class="checkout-mobile-bar__total">$1,459.00</span>
+      <button type="button" class="btn btn-primary" id="place-order-mobile">Place order</button>
+    </div>
+
+    <footer class="site-footer">
+      <div class="container footer-bottom">
+        <span>© 2026 Campfire Store — design mockup</span>
+        <span>Phase 7 · Checkout</span>
+      </div>
+    </footer>
+
+    <script>
+      lucide.createIcons();
+
+      const checkoutPage = document.getElementById('checkout-page');
+      const checkoutHeader = document.getElementById('checkout-header');
+      const checkoutForm = document.getElementById('checkout-form');
+      const checkoutSuccess = document.getElementById('checkout-success');
+      const checkoutMobileBar = document.getElementById('checkout-mobile-bar');
+      const checkoutDemoHint = document.getElementById('checkout-demo-hint');
+      const addressOptions = document.getElementById('address-options');
+      const addressEmpty = document.getElementById('address-empty');
+      const placeOrderBtn = document.getElementById('place-order-btn');
+      const placeOrderMobile = document.getElementById('place-order-mobile');
+
+      function setPreviewMode(mode) {
+        const isSuccess = mode === 'success';
+        const isNoAddress = mode === 'no-address';
+
+        checkoutForm.hidden = isSuccess;
+        checkoutSuccess.hidden = !isSuccess;
+        checkoutMobileBar.hidden = isSuccess;
+        checkoutDemoHint.hidden = isSuccess;
+        checkoutPage.classList.toggle('has-mobile-bar', !isSuccess);
+
+        checkoutHeader.hidden = isSuccess;
+        if (isSuccess) {
+          checkoutHeader.querySelector('p').textContent = '';
+        } else {
+          checkoutHeader.querySelector('p').textContent = isNoAddress
+            ? 'Add a delivery address to continue.'
+            : 'Choose a delivery address and place your order.';
+        }
+
+        addressOptions.hidden = isNoAddress;
+        addressEmpty.hidden = !isNoAddress;
+        placeOrderBtn.disabled = isNoAddress;
+        placeOrderMobile.disabled = isNoAddress;
+
+        document.querySelectorAll('[data-preview-mode]').forEach((button) => {
+          button.classList.toggle('is-active', button.dataset.previewMode === mode);
+        });
+      }
+
+      function showSuccess() {
+        setPreviewMode('success');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      document.querySelectorAll('[data-preview-mode]').forEach((button) => {
+        button.addEventListener('click', () => setPreviewMode(button.dataset.previewMode));
+      });
+
+      placeOrderBtn.addEventListener('click', showSuccess);
+      placeOrderMobile.addEventListener('click', showSuccess);
+    </script>
+  </body>
+</html>
