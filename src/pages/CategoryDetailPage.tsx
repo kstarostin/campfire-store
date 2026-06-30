@@ -7,21 +7,35 @@ import { ErrorState } from '@/components/ui/ErrorState'
 import { LoadingState } from '@/components/ui/LoadingState'
 import { useCategory, useCategoryAncestors } from '@/hooks/useCategory'
 import { useLocaleNavigate } from '@/hooks/useLocaleNavigate'
-import { usePageTitle } from '@/hooks/usePageTitle'
+import { formatPageTitle, usePageMeta, usePageTitle } from '@/hooks/usePageTitle'
 import { useTranslation } from '@/i18n'
 import { categoryPath } from '@/lib/categoryPath'
+import { truncateMetaDescription } from '@/lib/pageMeta'
 
 export function CategoryDetailPage() {
-  const { t } = useTranslation()
+  const { t, language } = useTranslation()
   const { categoryCode } = useParams()
   const location = useLocation()
   const navigate = useLocaleNavigate()
   const category = useCategory(categoryCode)
   const ancestors = useCategoryAncestors(categoryCode)
 
+  const categoryName = category.data?.name ?? t('pages.category')
+
   usePageTitle('documentTitle.category', {
-    name: category.data?.name ?? t('pages.category'),
+    name: categoryName,
   })
+
+  usePageMeta(
+    category.data
+      ? {
+          title: formatPageTitle(language, category.data.name),
+          description: truncateMetaDescription(
+            t('meta.categoryDescription', { name: category.data.name }),
+          ),
+        }
+      : undefined,
+  )
 
   useEffect(() => {
     if (!category.data?.code || !categoryCode) return

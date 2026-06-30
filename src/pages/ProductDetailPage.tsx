@@ -5,18 +5,41 @@ import { Container } from '@/components/layout/Container'
 import { ErrorState } from '@/components/ui/ErrorState'
 import { LoadingState } from '@/components/ui/LoadingState'
 import { useCategoryAncestors } from '@/hooks/useCategory'
-import { usePageTitle } from '@/hooks/usePageTitle'
+import { formatPageTitle, usePageMeta, usePageTitle } from '@/hooks/usePageTitle'
 import { useProduct, useRelatedProducts } from '@/hooks/useProduct'
 import { useTranslation } from '@/i18n'
+import { productImageUrl } from '@/lib/imageUrl'
+import { localizedText } from '@/lib/localizedText'
+import { truncateMetaDescription } from '@/lib/pageMeta'
 
 export function ProductDetailPage() {
-  const { t } = useTranslation()
+  const { t, language } = useTranslation()
   const { id } = useParams()
   const product = useProduct(id)
 
-  usePageTitle('documentTitle.product', {
-    name: product.data?.name ?? t('pages.productDetail'),
-  })
+  const productName = product.data?.name ?? t('pages.productDetail')
+
+  usePageTitle('documentTitle.product', { name: productName })
+
+  const pageMeta = useMemo(() => {
+    if (!product.data) return undefined
+
+    const description =
+      localizedText(product.data.descriptionI18n, language) ??
+      localizedText(product.data.taglineI18n, language) ??
+      t('meta.productFallbackDescription', { name: product.data.name })
+
+    const image = productImageUrl(product.data, 'medium')
+
+    return {
+      title: formatPageTitle(language, product.data.name),
+      description: truncateMetaDescription(description),
+      image: image || undefined,
+      type: 'product' as const,
+    }
+  }, [language, product.data, t])
+
+  usePageMeta(pageMeta)
 
   const categoryCode = useMemo(() => {
     const category = product.data?.category

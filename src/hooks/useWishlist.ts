@@ -12,6 +12,7 @@ import { useLocale } from '@/hooks/useLocale'
 import { useAuthStore } from '@/store/authStore'
 import { useWishlistStore } from '@/store/wishlistStore'
 import { showToast } from '@/lib/toast'
+import { SESSION_STALE_TIME_MS } from '@/lib/queryClient'
 import { translate } from '@/i18n'
 import { useLocaleStore } from '@/store/localeStore'
 
@@ -143,6 +144,8 @@ export function useWishlist() {
     queryKey: wishlistQueryKey(user?._id, wishlistId, language, currency),
     queryFn: () => loadWishlistWithProducts(user!._id, token!, language, currency, wishlistId),
     enabled: Boolean(token && user?._id),
+    staleTime: SESSION_STALE_TIME_MS,
+    refetchOnWindowFocus: true,
   })
 }
 

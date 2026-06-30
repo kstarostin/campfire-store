@@ -10,6 +10,7 @@ import type { Cart, Currency } from '@/api/types'
 import { useLocale } from '@/hooks/useLocale'
 import { cartItemCount, cartLinesSubtotal, cartOrderTotal, cartVat, type CartLine } from '@/lib/cart'
 import { showToast } from '@/lib/toast'
+import { SESSION_STALE_TIME_MS } from '@/lib/queryClient'
 import { translate } from '@/i18n'
 import { useAuthStore } from '@/store/authStore'
 import { useCartStore } from '@/store/cartStore'
@@ -169,6 +170,8 @@ export function useCart() {
     queryKey: cartQueryKey(user?._id, cartId, language, currency),
     queryFn: () => loadCartWithProducts(user!._id, token!, language, currency, cartId),
     enabled: Boolean(token && user?._id),
+    staleTime: SESSION_STALE_TIME_MS,
+    refetchOnWindowFocus: true,
   })
 }
 

@@ -46,6 +46,7 @@ export function Header() {
   const { t } = useTranslation()
   const megaMenuId = useId()
   const headerRef = useRef<HTMLElement>(null)
+  const mobileMenuButtonRef = useRef<HTMLButtonElement>(null)
   const [megaOpen, setMegaOpen] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const isAuthenticated = useIsAuthenticated()
@@ -159,6 +160,7 @@ export function Header() {
               </LocaleLink>
 
               <button
+                ref={mobileMenuButtonRef}
                 type="button"
                 className="header-icon-btn inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full md:hidden"
                 aria-label={t('nav.menu')}
@@ -174,7 +176,11 @@ export function Header() {
         <MegaMenu open={megaOpen} id={megaMenuId} />
       </header>
 
-      <MobileNav open={mobileOpen} onClose={() => setMobileOpen(false)} />
+      <MobileNav
+        open={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+        returnFocusRef={mobileMenuButtonRef}
+      />
     </>
   )
 }

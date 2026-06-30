@@ -1,9 +1,10 @@
 import { ChevronDown, X } from 'lucide-react'
-import { useEffect, useId, useState } from 'react'
+import { useEffect, useId, useRef, useState, type RefObject } from 'react'
 import { MegaMenuLink } from '@/components/layout/MegaMenuLink'
 import { LocaleLink } from '@/components/ui/LocaleLink'
 import { ErrorState } from '@/components/ui/ErrorState'
 import { LoadingState } from '@/components/ui/LoadingState'
+import { useFocusTrap } from '@/hooks/useFocusTrap'
 import { useTranslation } from '@/i18n'
 import { useCategories } from '@/hooks/useCategories'
 import { categoryPath } from '@/lib/categoryPath'
@@ -12,14 +13,18 @@ import { useIsAuthenticated } from '@/store/authStore'
 interface MobileNavProps {
   open: boolean
   onClose: () => void
+  returnFocusRef?: RefObject<HTMLElement | null>
 }
 
-export function MobileNav({ open, onClose }: MobileNavProps) {
+export function MobileNav({ open, onClose, returnFocusRef }: MobileNavProps) {
   const { t } = useTranslation()
   const baseId = useId()
+  const navRef = useRef<HTMLElement>(null)
   const isAuthenticated = useIsAuthenticated()
   const categories = useCategories()
   const [expandedCategoryId, setExpandedCategoryId] = useState<string | null>(null)
+
+  useFocusTrap(open, navRef, returnFocusRef)
 
   useEffect(() => {
     if (!open) {
@@ -43,6 +48,7 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
       />
 
       <nav
+        ref={navRef}
         aria-label={t('nav.menu')}
         className="fixed inset-y-0 right-0 z-50 flex h-dvh max-h-dvh w-[min(100%,20rem)] flex-col overflow-hidden border-l border-header-border bg-header-bg text-header-text md:hidden"
       >
@@ -52,6 +58,7 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
             type="button"
             className="header-icon-btn inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full"
             aria-label={t('nav.closeMenu')}
+            data-focus-initial
             onClick={onClose}
           >
             <X size={20} />

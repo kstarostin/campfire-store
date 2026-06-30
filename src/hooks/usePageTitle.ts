@@ -1,7 +1,12 @@
 import { useEffect, useMemo } from 'react'
+import { useLocation } from 'react-router-dom'
 import { translate, useTranslation, type TranslationKey } from '@/i18n'
+import { applyPageMeta, type PageMetaInput } from '@/lib/pageMeta'
 
-function formatPageTitle(language: ReturnType<typeof useTranslation>['language'], pageTitle: string) {
+export function formatPageTitle(
+  language: ReturnType<typeof useTranslation>['language'],
+  pageTitle: string,
+) {
   const brand = translate(language, 'common.storeBrand')
   return `${brand} | ${pageTitle}`
 }
@@ -12,15 +17,32 @@ export function usePageTitle(titleKey: TranslationKey, values?: Record<string, s
 
   useEffect(() => {
     const parsedValues = valuesKey === 'null' ? undefined : JSON.parse(valuesKey)
-    document.title = formatPageTitle(language, t(titleKey, parsedValues))
+    const title = formatPageTitle(language, t(titleKey, parsedValues))
+    applyPageMeta({
+      title,
+      description: translate(language, 'meta.defaultDescription'),
+    })
   }, [t, language, titleKey, valuesKey])
 }
 
-export function usePageTitleText(pageTitle: string | undefined) {
-  const { language } = useTranslation()
+export function usePageMeta(meta: PageMetaInput | undefined) {
+  const location = useLocation()
+
+  const title = meta?.title
+  const description = meta?.description
+  const image = meta?.image
+  const type = meta?.type
+  const url = meta?.url
 
   useEffect(() => {
-    if (!pageTitle) return
-    document.title = formatPageTitle(language, pageTitle)
-  }, [language, pageTitle])
+    if (!title && !description) return
+
+    applyPageMeta({
+      title,
+      description,
+      image,
+      type,
+      url: url ?? `${window.location.origin}${location.pathname}${location.search}`,
+    })
+  }, [description, image, location.pathname, location.search, title, type, url])
 }

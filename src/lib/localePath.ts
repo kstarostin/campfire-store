@@ -30,14 +30,3 @@ export function localizedPath(language: Language, path: string): string {
 
   return `${localized}${search}${hash}`
 }
-
-export function pathWithoutInvalidLang(pathname: string, lang: string): string {
-  const segments = pathname.split('/').filter(Boolean)
-
-  if (segments.length === 1 && segments[0] === lang) {
-    return `/${lang}`
-  }
-
-  const rest = segments.slice(1)
-  return rest.length ? `/${rest.join('/')}` : '/'
-}

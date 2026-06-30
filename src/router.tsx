@@ -4,6 +4,7 @@ import { AuthLayout } from '@/components/layout/AuthLayout'
 import { LocaleRoute } from '@/components/routing/LocaleRoute'
 import { ProtectedRoute } from '@/components/routing/ProtectedRoute'
 import { RootRedirect } from '@/components/routing/RootRedirect'
+import { UnlocalizedPathRedirect } from '@/components/routing/UnlocalizedPathRedirect'
 import { AccountPage } from '@/pages/AccountPage'
 import { CartPage } from '@/pages/CartPage'
 import { CategoriesPage } from '@/pages/CategoriesPage'
@@ -50,7 +51,7 @@ export function AppRouter() {
         </Route>
       </Route>
 
-      <Route path="*" element={<RootRedirect />} />
+      <Route path="*" element={<UnlocalizedPathRedirect />} />
     </Routes>
   )
 }

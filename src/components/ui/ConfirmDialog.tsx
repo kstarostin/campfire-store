@@ -1,5 +1,6 @@
-import { useEffect, useId } from 'react'
+import { useEffect, useId, useRef } from 'react'
 import { Button } from '@/components/ui/Button'
+import { useFocusTrap } from '@/hooks/useFocusTrap'
 import { useTranslation } from '@/i18n'
 
 interface ConfirmDialogProps {
@@ -28,6 +29,9 @@ export function ConfirmDialog({
   const { t } = useTranslation()
   const titleId = useId()
   const descriptionId = useId()
+  const panelRef = useRef<HTMLDivElement>(null)
+
+  useFocusTrap(open, panelRef)
 
   useEffect(() => {
     if (!open) return
@@ -60,6 +64,7 @@ export function ConfirmDialog({
       />
 
       <div
+        ref={panelRef}
         role="alertdialog"
         aria-modal="true"
         aria-labelledby={titleId}
@@ -80,6 +85,7 @@ export function ConfirmDialog({
           <Button
             type="button"
             className={variant === 'danger' ? 'confirm-dialog__confirm--danger' : undefined}
+            data-focus-initial
             disabled={isPending}
             onClick={() => void onConfirm()}
           >

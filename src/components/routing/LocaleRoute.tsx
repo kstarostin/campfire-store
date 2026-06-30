@@ -1,10 +1,6 @@
 import { useEffect } from 'react'
 import { Navigate, Outlet, useLocation, useParams } from 'react-router-dom'
-import {
-  isLanguage,
-  localizedPath,
-  pathWithoutInvalidLang,
-} from '@/lib/localePath'
+import { isLanguage, localizedPath } from '@/lib/localePath'
 import { useLocaleStore } from '@/store/localeStore'
 
 export function LocaleRoute() {
@@ -21,14 +17,8 @@ export function LocaleRoute() {
   }, [isValid, lang, setLanguage])
 
   if (!isValid) {
-    const path = pathWithoutInvalidLang(location.pathname, lang ?? '')
-    const target = localizedPath(storedLanguage, path)
-    return (
-      <Navigate
-        to={`${target}${location.search}${location.hash}`}
-        replace
-      />
-    )
+    const target = `${localizedPath(storedLanguage, location.pathname)}${location.search}${location.hash}`
+    return <Navigate to={target} replace />
   }
 
   return <Outlet />

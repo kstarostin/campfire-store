@@ -13,6 +13,12 @@ export const en = {
     errorDefault: 'Something went wrong loading data.',
     dismiss: 'Dismiss',
   },
+  meta: {
+    defaultDescription:
+      'Shop kayaks, bikes, camping gear, and trail equipment at Campfire Store — priced in your language and currency.',
+    productFallbackDescription: 'Shop {name} at Campfire Store.',
+    categoryDescription: 'Browse {name} at Campfire Store — outdoor gear priced in your language and currency.',
+  },
   toast: {
     addedToCart: 'Added to cart',
     addedToWishlist: 'Saved to wishlist',

@@ -15,6 +15,13 @@ export const de: Messages = {
     errorDefault: 'Beim Laden der Daten ist ein Fehler aufgetreten.',
     dismiss: 'Schließen',
   },
+  meta: {
+    defaultDescription:
+      'Kajaks, Bikes, Camping- und Trail-Ausrüstung im Campfire Store — in deiner Sprache und Währung.',
+    productFallbackDescription: 'Shoppe {name} im Campfire Store.',
+    categoryDescription:
+      'Entdecke {name} im Campfire Store — Outdoor-Ausrüstung in deiner Sprache und Währung.',
+  },
   toast: {
     addedToCart: 'Zum Warenkorb hinzugefügt',
     addedToWishlist: 'Zur Wunschliste hinzugefügt',
