@@ -339,6 +339,13 @@ export const en = {
     continueShopping: 'Continue shopping',
     loadError: 'Could not load checkout.',
   },
+  notFound: {
+    eyebrow: 'Off the map',
+    message:
+      'This page never caught fire — the trail ends in cold ash and good intentions.',
+    backHome: 'Back to base camp',
+    browseProducts: 'Browse gear',
+  },
   pages: {
     home: 'Home',
     homeHint:

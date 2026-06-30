@@ -349,6 +349,13 @@ export const de: Messages = {
     continueShopping: 'Weiter einkaufen',
     loadError: 'Checkout konnte nicht geladen werden.',
   },
+  notFound: {
+    eyebrow: 'Nicht auf der Karte',
+    message:
+      'Diese Seite ist nie aufgeflammt — der Weg endet in kalter Asche und guten Vorsätzen.',
+    backHome: 'Zurück ins Basecamp',
+    browseProducts: 'Ausrüstung entdecken',
+  },
   pages: {
     home: 'Startseite',
     homeHint:

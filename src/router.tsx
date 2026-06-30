@@ -1,11 +1,9 @@
-import { Navigate, Route, Routes, useParams } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { AppLayout } from '@/components/layout/AppLayout'
 import { AuthLayout } from '@/components/layout/AuthLayout'
 import { LocaleRoute } from '@/components/routing/LocaleRoute'
 import { ProtectedRoute } from '@/components/routing/ProtectedRoute'
 import { RootRedirect } from '@/components/routing/RootRedirect'
-import { isLanguage } from '@/lib/localePath'
-import { useLocaleStore } from '@/store/localeStore'
 import { AccountPage } from '@/pages/AccountPage'
 import { CartPage } from '@/pages/CartPage'
 import { CategoriesPage } from '@/pages/CategoriesPage'
@@ -13,18 +11,12 @@ import { CategoryDetailPage } from '@/pages/CategoryDetailPage'
 import { CheckoutPage } from '@/pages/CheckoutPage'
 import { HomePage } from '@/pages/HomePage'
 import { LoginPage } from '@/pages/LoginPage'
+import { NotFoundPage } from '@/pages/NotFoundPage'
 import { OrderDetailPage } from '@/pages/OrderDetailPage'
 import { ProductDetailPage } from '@/pages/ProductDetailPage'
 import { ProductsPage } from '@/pages/ProductsPage'
 import { SearchPage } from '@/pages/SearchPage'
 import { SignupPage } from '@/pages/SignupPage'
-
-function LocalizedNotFound() {
-  const { lang } = useParams<{ lang: string }>()
-  const storedLanguage = useLocaleStore((state) => state.language)
-  const language = isLanguage(lang ?? '') ? lang : storedLanguage
-  return <Navigate to={`/${language}`} replace />
-}
 
 export function AppRouter() {
   return (
@@ -48,14 +40,14 @@ export function AppRouter() {
             <Route path="orders/:id" element={<OrderDetailPage />} />
             <Route path="wishlist" element={<Navigate to="../account?panel=wishlist" replace />} />
           </Route>
+
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
 
         <Route element={<AuthLayout />}>
           <Route path="login" element={<LoginPage />} />
           <Route path="signup" element={<SignupPage />} />
         </Route>
-
-        <Route path="*" element={<LocalizedNotFound />} />
       </Route>
 
       <Route path="*" element={<RootRedirect />} />
