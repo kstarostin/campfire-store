@@ -16,7 +16,7 @@ export const useCartStore = create<CartState>()(
     }),
     {
       name: 'campfire-cart',
-      storage: createJSONStorage(() => sessionStorage),
+      storage: createJSONStorage(() => localStorage),
     },
   ),
 )

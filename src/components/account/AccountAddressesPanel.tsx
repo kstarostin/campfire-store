@@ -2,9 +2,11 @@ import { useMemo, useState } from 'react'
 import { AddressAddCard, AddressCard } from '@/components/account/AddressCard'
 import { AddressForm, emptyAddress } from '@/components/account/AddressForm'
 import type { Address } from '@/api/types'
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 import { toApiAddresses } from '@/lib/address'
 import { useAccountUser, useUpdateAddresses } from '@/hooks/useAccount'
 import { useTranslation } from '@/i18n'
+import { showToast } from '@/lib/toast'
 
 type AddressKind = 'delivery' | 'billing'
 
@@ -17,6 +19,7 @@ export function AccountAddressesPanel() {
   const [isAdding, setIsAdding] = useState(false)
   const [formValue, setFormValue] = useState<Address>(emptyAddress())
   const [error, setError] = useState<string | null>(null)
+  const [deleteIndex, setDeleteIndex] = useState<number | null>(null)
 
   const deliveryAddresses = useMemo(
     () => user?.deliveryAddresses ?? [],
@@ -48,7 +51,10 @@ export function AccountAddressesPanel() {
     resetForm()
   }
 
-  const persistAddresses = async (nextAddresses: Address[]) => {
+  const persistAddresses = async (
+    nextAddresses: Address[],
+    successMessage: 'toast.addressSaved' | 'toast.addressDeleted',
+  ) => {
     setError(null)
 
     try {
@@ -58,6 +64,7 @@ export function AccountAddressesPanel() {
       } else {
         await updateAddresses.mutateAsync({ billingAddresses: payload })
       }
+      showToast(t(successMessage))
       resetForm()
     } catch {
       setError(t('account.addressSaveError'))
@@ -73,13 +80,15 @@ export function AccountAddressesPanel() {
       next.push(formValue)
     }
 
-    await persistAddresses(next)
+    await persistAddresses(next, 'toast.addressSaved')
   }
 
-  const handleDelete = async (index: number) => {
-    if (!window.confirm(t('account.deleteAddressConfirm'))) return
-    const next = addresses.filter((_, itemIndex) => itemIndex !== index)
-    await persistAddresses(next)
+  const handleConfirmDelete = async () => {
+    if (deleteIndex === null) return
+
+    const next = addresses.filter((_, itemIndex) => itemIndex !== deleteIndex)
+    await persistAddresses(next, 'toast.addressDeleted')
+    setDeleteIndex(null)
   }
 
   const startEdit = (index: number) => {
@@ -131,7 +140,7 @@ export function AccountAddressesPanel() {
             label={addressLabel(address, index)}
             isPrimary={index === 0}
             onEdit={() => startEdit(index)}
-            onDelete={() => void handleDelete(index)}
+            onDelete={() => setDeleteIndex(index)}
           />
         ))}
         <AddressAddCard label={addLabel} onClick={startAdd} />
@@ -140,48 +149,61 @@ export function AccountAddressesPanel() {
   }
 
   return (
-    <section
-      className="account-panel is-active"
-      id="panel-addresses"
-      aria-labelledby="account-addresses-heading"
-    >
-      <header className="account-panel__head">
-        <div>
-          <h2 id="account-addresses-heading">{t('account.addressesTitle')}</h2>
-          <p>{t('account.addressesDescription')}</p>
-        </div>
+    <>
+      <section
+        className="account-panel is-active"
+        id="panel-addresses"
+        aria-labelledby="account-addresses-heading"
+      >
+        <header className="account-panel__head">
+          <div>
+            <h2 id="account-addresses-heading">{t('account.addressesTitle')}</h2>
+            <p>{t('account.addressesDescription')}</p>
+          </div>
 
-        <div className="address-tabs" role="tablist" aria-label={t('account.addressKindTabs')}>
-          <button
-            type="button"
-            role="tab"
-            className={activeKind === 'delivery' ? 'is-active' : undefined}
-            aria-selected={activeKind === 'delivery'}
-            onClick={() => switchKind('delivery')}
-          >
-            {t('account.deliveryAddresses')}
-          </button>
-          <button
-            type="button"
-            role="tab"
-            className={activeKind === 'billing' ? 'is-active' : undefined}
-            aria-selected={activeKind === 'billing'}
-            onClick={() => switchKind('billing')}
-          >
-            {t('account.billingAddresses')}
-          </button>
-        </div>
-      </header>
+          <div className="address-tabs" role="tablist" aria-label={t('account.addressKindTabs')}>
+            <button
+              type="button"
+              role="tab"
+              className={activeKind === 'delivery' ? 'is-active' : undefined}
+              aria-selected={activeKind === 'delivery'}
+              onClick={() => switchKind('delivery')}
+            >
+              {t('account.deliveryAddresses')}
+            </button>
+            <button
+              type="button"
+              role="tab"
+              className={activeKind === 'billing' ? 'is-active' : undefined}
+              aria-selected={activeKind === 'billing'}
+              onClick={() => switchKind('billing')}
+            >
+              {t('account.billingAddresses')}
+            </button>
+          </div>
+        </header>
 
-      {activeKind === 'delivery'
-        ? renderAddressList('delivery', deliveryAddresses)
-        : renderAddressList('billing', billingAddresses)}
+        {activeKind === 'delivery'
+          ? renderAddressList('delivery', deliveryAddresses)
+          : renderAddressList('billing', billingAddresses)}
 
-      {error ? (
-        <p className="account-form-message account-form-message--error" role="alert">
-          {error}
-        </p>
-      ) : null}
-    </section>
+        {error ? (
+          <p className="account-form-message account-form-message--error" role="alert">
+            {error}
+          </p>
+        ) : null}
+      </section>
+
+      <ConfirmDialog
+        open={deleteIndex !== null}
+        title={t('account.deleteAddressTitle')}
+        description={t('account.deleteAddressConfirm')}
+        confirmLabel={t('account.deleteAddress')}
+        onConfirm={() => void handleConfirmDelete()}
+        onCancel={() => setDeleteIndex(null)}
+        isPending={updateAddresses.isPending}
+        variant="danger"
+      />
+    </>
   )
 }

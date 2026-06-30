@@ -1,6 +1,7 @@
 import { LocaleLink } from '@/components/ui/LocaleLink'
 import { API_BASE_URL } from '@/api/config'
 import { Container } from '@/components/layout/Container'
+import { ErrorState } from '@/components/ui/ErrorState'
 import { LoadingState } from '@/components/ui/LoadingState'
 import { useTranslation } from '@/i18n'
 import { useCategories } from '@/hooks/useCategories'
@@ -40,6 +41,11 @@ export function Footer() {
             <h3 className="m-0 mb-3 font-display text-base">{t('footer.shop')}</h3>
             {categories.isLoading ? (
               <LoadingState label={t('home.categoriesLoading')} />
+            ) : categories.isError ? (
+              <ErrorState
+                message={t('home.categoriesError')}
+                onRetry={() => categories.refetch()}
+              />
             ) : (
               <ul className="m-0 list-none p-0">
                 {shopLinks.map((link) => (

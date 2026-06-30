@@ -1,10 +1,12 @@
 import { useMemo, useState } from 'react'
+import { SlidersHorizontal } from 'lucide-react'
 import { Container } from '@/components/layout/Container'
 import { ProductCard } from '@/components/product/ProductCard'
 import { ProductGrid } from '@/components/product/ProductGrid'
+import { ProductGridSkeleton } from '@/components/product/ProductGridSkeleton'
 import { Chip } from '@/components/ui/Chip'
+import { EmptyState } from '@/components/ui/EmptyState'
 import { ErrorState } from '@/components/ui/ErrorState'
-import { LoadingState } from '@/components/ui/LoadingState'
 import { SectionHead } from '@/components/ui/SectionHead'
 import type { Currency } from '@/api/types'
 import { useTranslation, type TranslationKey } from '@/i18n'
@@ -132,7 +134,7 @@ export function FeaturedProducts() {
         </div>
 
         {productsQuery.isLoading ? (
-          <LoadingState label={t('home.productsLoading')} />
+          <ProductGridSkeleton count={8} label={t('home.productsLoading')} />
         ) : null}
 
         {productsQuery.isError ? (
@@ -143,7 +145,20 @@ export function FeaturedProducts() {
         ) : null}
 
         {productsQuery.data && filteredProducts.length === 0 ? (
-          <p className="text-[0.9375rem] text-text-muted">{t('home.noFilterMatch')}</p>
+          <EmptyState
+            className="featured-products-empty"
+            icon={SlidersHorizontal}
+            title={t('home.featuredEmptyTitle')}
+            description={t('home.featuredEmptyBody')}
+            action={{
+              label: t('common.all'),
+              onClick: () => {
+                setManufacturer(null)
+                setUnderBudget(false)
+              },
+            }}
+            secondaryAction={{ label: t('catalog.browseAllProducts'), to: '/products' }}
+          />
         ) : null}
 
         {filteredProducts.length > 0 ? (

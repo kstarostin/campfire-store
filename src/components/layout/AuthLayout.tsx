@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom'
 import { LocaleLink } from '@/components/ui/LocaleLink'
 import { Container } from '@/components/layout/Container'
 import { Footer } from '@/components/layout/Footer'
+import { ToastStack } from '@/components/ui/ToastStack'
 import { useTranslation } from '@/i18n'
 
 export function AuthLayout() {
@@ -30,6 +31,7 @@ export function AuthLayout() {
         <Outlet />
       </main>
       <Footer />
+      <ToastStack />
     </div>
   )
 }

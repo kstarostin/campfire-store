@@ -1,5 +1,6 @@
 import type { Order } from '@/api/types'
 import type { OrderLine } from '@/hooks/useOrders'
+import { OrderStatusBadge } from '@/components/account/orders/OrderStatusBadge'
 import { useFormatLocale, useTranslation } from '@/i18n'
 import { formatAddressLine, formatRecipientName } from '@/lib/address'
 import { formatAmount, lineTotal } from '@/lib/cart'
@@ -7,7 +8,6 @@ import { useLocale } from '@/hooks/useLocale'
 import {
   formatOrderDate,
   normalizeOrderStatus,
-  orderStatusClassName,
 } from '@/lib/order'
 import { productImageUrl } from '@/lib/imageUrl'
 import { LoadingState } from '@/components/ui/LoadingState'
@@ -68,11 +68,7 @@ export function OrderDetailView({
           <div>
             <h3>{t('account.orders.orderNumber', { id: order._id })}</h3>
           </div>
-          {status ? (
-            <span className={`order-status ${orderStatusClassName(status)}`}>
-              {t(`account.orders.status.${status}`)}
-            </span>
-          ) : null}
+          {status ? <OrderStatusBadge status={status} /> : null}
         </header>
 
         <p className="orders-detail__placed">

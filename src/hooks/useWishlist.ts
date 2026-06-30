@@ -11,6 +11,9 @@ import type { Currency, Product, Wishlist, WishlistEntry } from '@/api/types'
 import { useLocale } from '@/hooks/useLocale'
 import { useAuthStore } from '@/store/authStore'
 import { useWishlistStore } from '@/store/wishlistStore'
+import { showToast } from '@/lib/toast'
+import { translate } from '@/i18n'
+import { useLocaleStore } from '@/store/localeStore'
 
 export interface WishlistLine {
   entry: WishlistEntry
@@ -198,6 +201,9 @@ export function useRemoveWishlistEntry() {
     onSettled: async () => {
       await queryClient.invalidateQueries({ queryKey: ['wishlist', user?._id] })
     },
+    onSuccess: () => {
+      showToast(translate(useLocaleStore.getState().language, 'toast.removedFromWishlist'))
+    },
   })
 }
 
@@ -243,6 +249,15 @@ export function useToggleWishlist() {
       )
       parseWishlistEntryResponse(response)
       return { action: 'added' as const, productId }
+    },
+    onSuccess: (result) => {
+      const language = useLocaleStore.getState().language
+      showToast(
+        translate(
+          language,
+          result.action === 'added' ? 'toast.addedToWishlist' : 'toast.removedFromWishlist',
+        ),
+      )
     },
     onSettled: async () => {
       await queryClient.invalidateQueries({ queryKey: ['wishlist', user?._id] })

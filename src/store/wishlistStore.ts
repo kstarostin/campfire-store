@@ -16,7 +16,7 @@ export const useWishlistStore = create<WishlistState>()(
     }),
     {
       name: 'campfire-wishlist',
-      storage: createJSONStorage(() => sessionStorage),
+      storage: createJSONStorage(() => localStorage),
     },
   ),
 )

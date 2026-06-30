@@ -1,7 +1,8 @@
 import { Container } from '@/components/layout/Container'
 import { LocaleLink } from '@/components/ui/LocaleLink'
+import { CategoryGridSkeleton } from '@/components/catalog/CategoryGridSkeleton'
 import { ErrorState } from '@/components/ui/ErrorState'
-import { LoadingState } from '@/components/ui/LoadingState'
+import { usePageTitle } from '@/hooks/usePageTitle'
 import { useTranslation } from '@/i18n'
 import { useCategories } from '@/hooks/useCategories'
 import { getCategoryIcon } from '@/lib/categoryIcons'
@@ -9,6 +10,7 @@ import { categoryPath } from '@/lib/categoryPath'
 
 export function CategoriesPage() {
   const { t } = useTranslation()
+  usePageTitle('documentTitle.categories')
   const categories = useCategories()
 
   return (
@@ -19,9 +21,7 @@ export function CategoriesPage() {
           <p>{t('catalog.allCategoriesDescription')}</p>
         </header>
 
-        {categories.isLoading ? (
-          <LoadingState label={t('home.categoriesLoading')} />
-        ) : null}
+        {categories.isLoading ? <CategoryGridSkeleton count={9} /> : null}
 
         {categories.isError ? (
           <ErrorState

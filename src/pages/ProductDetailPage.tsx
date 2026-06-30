@@ -5,6 +5,7 @@ import { Container } from '@/components/layout/Container'
 import { ErrorState } from '@/components/ui/ErrorState'
 import { LoadingState } from '@/components/ui/LoadingState'
 import { useCategoryAncestors } from '@/hooks/useCategory'
+import { usePageTitle } from '@/hooks/usePageTitle'
 import { useProduct, useRelatedProducts } from '@/hooks/useProduct'
 import { useTranslation } from '@/i18n'
 
@@ -12,6 +13,10 @@ export function ProductDetailPage() {
   const { t } = useTranslation()
   const { id } = useParams()
   const product = useProduct(id)
+
+  usePageTitle('documentTitle.product', {
+    name: product.data?.name ?? t('pages.productDetail'),
+  })
 
   const categoryCode = useMemo(() => {
     const category = product.data?.category
@@ -42,6 +47,9 @@ export function ProductDetailPage() {
     <ProductDetailView
       product={product.data}
       relatedProducts={related.data ?? []}
+      relatedIsLoading={related.isLoading}
+      relatedIsError={related.isError}
+      onRelatedRetry={() => related.refetch()}
       ancestors={ancestors}
     />
   )

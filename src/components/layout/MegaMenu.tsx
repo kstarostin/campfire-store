@@ -1,5 +1,6 @@
 import { Container } from '@/components/layout/Container'
 import { MegaMenuLink } from '@/components/layout/MegaMenuLink'
+import { ErrorState } from '@/components/ui/ErrorState'
 import { LoadingState } from '@/components/ui/LoadingState'
 import { useTranslation } from '@/i18n'
 import { categoryPath } from '@/lib/categoryPath'
@@ -26,6 +27,13 @@ export function MegaMenu({ open, id }: MegaMenuProps) {
       <Container wide className="py-5 pb-4">
         {categories.isLoading ? (
           <LoadingState label={t('home.categoriesLoading')} />
+        ) : null}
+
+        {categories.isError ? (
+          <ErrorState
+            message={t('home.categoriesError')}
+            onRetry={() => categories.refetch()}
+          />
         ) : null}
 
         {categories.data ? (

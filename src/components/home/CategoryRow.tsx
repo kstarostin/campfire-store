@@ -1,8 +1,8 @@
 import { LocaleLink } from '@/components/ui/LocaleLink'
 import { Container } from '@/components/layout/Container'
 import { SectionHead } from '@/components/ui/SectionHead'
+import { CategoryRowSkeleton } from '@/components/catalog/CategoryRowSkeleton'
 import { ErrorState } from '@/components/ui/ErrorState'
-import { LoadingState } from '@/components/ui/LoadingState'
 import { useTranslation } from '@/i18n'
 import { useCategories } from '@/hooks/useCategories'
 import { getCategoryIcon } from '@/lib/categoryIcons'
@@ -21,9 +21,7 @@ export function CategoryRow() {
           action={{ label: t('home.viewAll'), to: '/categories', className: 'link-view-all' }}
         />
 
-        {categories.isLoading ? (
-          <LoadingState label={t('home.categoriesLoading')} />
-        ) : null}
+        {categories.isLoading ? <CategoryRowSkeleton /> : null}
 
         {categories.isError ? (
           <ErrorState

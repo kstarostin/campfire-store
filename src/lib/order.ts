@@ -1,3 +1,5 @@
+import type { LucideIcon } from 'lucide-react'
+import { CircleCheck, Clock, Truck } from 'lucide-react'
 import type { CartEntry, Order } from '@/api/types'
 
 export const ORDERS_PAGE_SIZE = 10
@@ -47,5 +49,16 @@ export function orderStatusClassName(status: OrderStatus): string {
       return 'order-status--progress'
     case 'delivered':
       return 'order-status--delivered'
+  }
+}
+
+export function orderStatusIcon(status: OrderStatus): LucideIcon {
+  switch (status) {
+    case 'open':
+      return Clock
+    case 'progress':
+      return Truck
+    case 'delivered':
+      return CircleCheck
   }
 }

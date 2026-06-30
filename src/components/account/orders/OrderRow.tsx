@@ -1,11 +1,11 @@
 import type { Order } from '@/api/types'
+import { OrderStatusBadge } from '@/components/account/orders/OrderStatusBadge'
 import { useFormatLocale, useTranslation } from '@/i18n'
 import { formatAmount } from '@/lib/cart'
 import {
   formatOrderDate,
   normalizeOrderStatus,
   orderItemCount,
-  orderStatusClassName,
 } from '@/lib/order'
 
 interface OrderRowProps {
@@ -31,11 +31,7 @@ export function OrderRow({ order, isSelected, onSelect }: OrderRowProps) {
     >
       <div className="order-row__top">
         <p className="order-row__id">{order._id}</p>
-        {status ? (
-          <span className={`order-status ${orderStatusClassName(status)}`}>
-            {t(`account.orders.status.${status}`)}
-          </span>
-        ) : null}
+        {status ? <OrderStatusBadge status={status} /> : null}
       </div>
 
       <p className="order-row__date">{formatOrderDate(order, formatLocale)}</p>

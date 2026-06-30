@@ -10,8 +10,9 @@ import { CatalogPageHeader } from '@/components/catalog/CatalogPageHeader'
 import { CategorySubcategoryStrip } from '@/components/catalog/CategorySubcategoryStrip'
 import { ProductCard } from '@/components/product/ProductCard'
 import { ProductGrid } from '@/components/product/ProductGrid'
+import { ProductGridSkeleton } from '@/components/product/ProductGridSkeleton'
+import { CatalogProductsEmpty } from '@/components/catalog/CatalogProductsEmpty'
 import { ErrorState } from '@/components/ui/ErrorState'
-import { LoadingState } from '@/components/ui/LoadingState'
 import { getManufacturerFilterValues, getPriceQuickFilters } from '@/api/normalizers'
 import { useCategoryProducts } from '@/hooks/useCategoryProducts'
 import { useProducts } from '@/hooks/useProducts'
@@ -201,6 +202,7 @@ export function ProductCatalogView(props: ProductCatalogViewProps) {
   const hasActiveFilters = countActiveCatalogFilters(filters) > 0
   const showFilters =
     Boolean(catalogData) && ((catalogData?.total ?? 0) > 0 || hasActiveFilters)
+  const isEmptyCatalog = Boolean(catalogData && catalogData.products.length === 0)
 
   return (
     <section className="catalog-page section--products">
@@ -232,7 +234,7 @@ export function ProductCatalogView(props: ProductCatalogViewProps) {
         ) : null}
 
         {productsQuery.isLoading ? (
-          <LoadingState label={t('catalog.productsLoading')} />
+          <ProductGridSkeleton label={t('catalog.productsLoading')} />
         ) : null}
 
         {productsQuery.isError ? (
@@ -244,28 +246,37 @@ export function ProductCatalogView(props: ProductCatalogViewProps) {
 
         {productsQuery.data ? (
           <>
-            <CatalogResultsBar
-              page={productsQuery.data.page}
-              limit={productsQuery.data.limit}
-              total={productsQuery.data.total}
-              variant={variant}
-            />
+            {!isEmptyCatalog ? (
+              <CatalogResultsBar
+                page={productsQuery.data.page}
+                limit={productsQuery.data.limit}
+                total={productsQuery.data.total}
+                variant={variant}
+              />
+            ) : null}
 
-            {productsQuery.data.products.length > 0 ? (
+            {isEmptyCatalog ? (
+              <CatalogProductsEmpty
+                variant={variant}
+                hasActiveFilters={hasActiveFilters}
+                query={variant === 'search' ? props.query : undefined}
+                onClearFilters={hasActiveFilters ? clearFilters : undefined}
+              />
+            ) : (
               <ProductGrid>
                 {productsQuery.data.products.map((product) => (
                   <ProductCard key={product._id} product={product} currency={currency} />
                 ))}
               </ProductGrid>
-            ) : hasActiveFilters ? (
-              <p className="catalog-empty">{t('catalog.noFilterMatch')}</p>
-            ) : null}
+            )}
 
-            <Pagination
-              page={productsQuery.data.page}
-              pages={productsQuery.data.pages}
-              onPageChange={setPage}
-            />
+            {!isEmptyCatalog ? (
+              <Pagination
+                page={productsQuery.data.page}
+                pages={productsQuery.data.pages}
+                onPageChange={setPage}
+              />
+            ) : null}
           </>
         ) : null}
       </Container>

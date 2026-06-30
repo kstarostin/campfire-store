@@ -2,10 +2,12 @@ import { FlameKindling } from 'lucide-react'
 import { useId } from 'react'
 import { Container } from '@/components/layout/Container'
 import { Button } from '@/components/ui/Button'
+import { usePageTitle } from '@/hooks/usePageTitle'
 import { useTranslation } from '@/i18n'
 
 export function NotFoundView() {
   const { t } = useTranslation()
+  usePageTitle('documentTitle.notFound')
   const gradientId = `not-found-flame-${useId().replace(/:/g, '')}`
 
   return (

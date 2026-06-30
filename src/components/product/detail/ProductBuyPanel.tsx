@@ -6,6 +6,7 @@ import { ProductBadges } from '@/components/product/ProductBadges'
 import { Price } from '@/components/product/Price'
 import { Button } from '@/components/ui/Button'
 import { useAddToCart } from '@/hooks/useCart'
+import { useLoginRedirect } from '@/hooks/useLoginRedirect'
 import { useIsInWishlist, useToggleWishlist } from '@/hooks/useWishlist'
 import { useLocaleNavigate } from '@/hooks/useLocaleNavigate'
 import { useTranslation } from '@/i18n'
@@ -29,6 +30,7 @@ export const ProductBuyPanel = forwardRef<HTMLElement, ProductBuyPanelProps>(
   const { t, language } = useTranslation()
   const location = useLocation()
   const navigate = useLocaleNavigate()
+  const redirectToLogin = useLoginRedirect()
   const isAuthenticated = useIsAuthenticated()
   const addToCart = useAddToCart()
   const toggleWishlist = useToggleWishlist()
@@ -39,7 +41,7 @@ export const ProductBuyPanel = forwardRef<HTMLElement, ProductBuyPanelProps>(
 
   const handleWishlistToggle = () => {
     if (!isAuthenticated) {
-      navigate('/login', { state: { from: location.pathname } })
+      redirectToLogin(location.pathname + location.search)
       return
     }
 
@@ -48,7 +50,7 @@ export const ProductBuyPanel = forwardRef<HTMLElement, ProductBuyPanelProps>(
 
   const handleAddToCart = () => {
     if (!isAuthenticated) {
-      navigate('/login', { state: { from: location.pathname } })
+      redirectToLogin(location.pathname + location.search)
       return
     }
 

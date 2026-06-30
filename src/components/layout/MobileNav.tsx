@@ -2,6 +2,7 @@ import { ChevronDown, X } from 'lucide-react'
 import { useEffect, useId, useState } from 'react'
 import { MegaMenuLink } from '@/components/layout/MegaMenuLink'
 import { LocaleLink } from '@/components/ui/LocaleLink'
+import { ErrorState } from '@/components/ui/ErrorState'
 import { LoadingState } from '@/components/ui/LoadingState'
 import { useTranslation } from '@/i18n'
 import { useCategories } from '@/hooks/useCategories'
@@ -64,6 +65,13 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
 
           {categories.isLoading ? (
             <LoadingState label={t('home.categoriesLoading')} />
+          ) : null}
+
+          {categories.isError ? (
+            <ErrorState
+              message={t('home.categoriesError')}
+              onRetry={() => categories.refetch()}
+            />
           ) : null}
 
           {categories.data ? (

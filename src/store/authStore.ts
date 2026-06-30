@@ -19,7 +19,7 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: 'campfire-auth',
-      storage: createJSONStorage(() => sessionStorage),
+      storage: createJSONStorage(() => localStorage),
     },
   ),
 )

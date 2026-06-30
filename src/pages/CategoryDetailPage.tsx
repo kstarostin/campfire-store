@@ -7,6 +7,7 @@ import { ErrorState } from '@/components/ui/ErrorState'
 import { LoadingState } from '@/components/ui/LoadingState'
 import { useCategory, useCategoryAncestors } from '@/hooks/useCategory'
 import { useLocaleNavigate } from '@/hooks/useLocaleNavigate'
+import { usePageTitle } from '@/hooks/usePageTitle'
 import { useTranslation } from '@/i18n'
 import { categoryPath } from '@/lib/categoryPath'
 
@@ -17,6 +18,10 @@ export function CategoryDetailPage() {
   const navigate = useLocaleNavigate()
   const category = useCategory(categoryCode)
   const ancestors = useCategoryAncestors(categoryCode)
+
+  usePageTitle('documentTitle.category', {
+    name: category.data?.name ?? t('pages.category'),
+  })
 
   useEffect(() => {
     if (!category.data?.code || !categoryCode) return

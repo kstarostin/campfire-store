@@ -1,29 +1,33 @@
-import { Heart } from 'lucide-react'
+import { Heart, ShoppingCart } from 'lucide-react'
 import { useLocation } from 'react-router-dom'
-import type { Currency, Product } from '@/api/types'
-import { Price } from '@/components/product/Price'
-import { Button } from '@/components/ui/Button'
+import type { Product } from '@/api/types'
 import { useAddToCart } from '@/hooks/useCart'
 import { useLoginRedirect } from '@/hooks/useLoginRedirect'
-import { useLocaleNavigate } from '@/hooks/useLocaleNavigate'
 import { useIsInWishlist, useToggleWishlist } from '@/hooks/useWishlist'
 import { useTranslation } from '@/i18n'
 import { useIsAuthenticated } from '@/store/authStore'
 
-interface ProductMobileBuyBarProps {
+interface ProductCardQuickActionsProps {
   product: Product
-  currency: Currency
 }
 
-export function ProductMobileBuyBar({ product, currency }: ProductMobileBuyBarProps) {
+export function ProductCardQuickActions({ product }: ProductCardQuickActionsProps) {
   const { t } = useTranslation()
   const location = useLocation()
-  const navigate = useLocaleNavigate()
   const redirectToLogin = useLoginRedirect()
   const isAuthenticated = useIsAuthenticated()
   const addToCart = useAddToCart()
   const toggleWishlist = useToggleWishlist()
   const isInWishlist = useIsInWishlist(product._id)
+
+  const handleAddToCart = () => {
+    if (!isAuthenticated) {
+      redirectToLogin(location.pathname + location.search)
+      return
+    }
+
+    addToCart.mutate({ productId: product._id, quantity: 1 })
+  }
 
   const handleWishlistToggle = () => {
     if (!isAuthenticated) {
@@ -34,24 +38,11 @@ export function ProductMobileBuyBar({ product, currency }: ProductMobileBuyBarPr
     toggleWishlist.mutate(product._id)
   }
 
-  const handleAddToCart = () => {
-    if (!isAuthenticated) {
-      redirectToLogin(location.pathname + location.search)
-      return
-    }
-
-    addToCart.mutate(
-      { productId: product._id, quantity: 1 },
-      { onSuccess: () => navigate('/cart') },
-    )
-  }
-
   return (
-    <div className="pdp-mobile-buy-bar" aria-label={t('product.quickPurchase')}>
-      <Price priceI18n={product.priceI18n} currency={currency} />
+    <div className="product-card-quick-actions">
       <button
         type="button"
-        className={`pdp-wishlist-btn${isInWishlist ? ' is-active' : ''}`}
+        className={`product-card-quick-actions__btn${isInWishlist ? ' is-active' : ''}`}
         aria-label={
           isInWishlist ? t('product.removeFromWishlist') : t('product.addToWishlist')
         }
@@ -59,11 +50,17 @@ export function ProductMobileBuyBar({ product, currency }: ProductMobileBuyBarPr
         disabled={toggleWishlist.isPending}
         onClick={handleWishlistToggle}
       >
-        <Heart size={20} fill={isInWishlist ? 'currentColor' : 'none'} aria-hidden />
+        <Heart size={16} fill={isInWishlist ? 'currentColor' : 'none'} aria-hidden />
       </button>
-      <Button type="button" disabled={addToCart.isPending} onClick={handleAddToCart}>
-        {t('product.addToCart')}
-      </Button>
+      <button
+        type="button"
+        className="product-card-quick-actions__btn"
+        aria-label={t('product.addToCart')}
+        disabled={addToCart.isPending}
+        onClick={handleAddToCart}
+      >
+        <ShoppingCart size={16} aria-hidden />
+      </button>
     </div>
   )
 }

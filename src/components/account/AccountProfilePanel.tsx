@@ -7,6 +7,7 @@ import {
   useUploadUserPhoto,
 } from '@/hooks/useAccount'
 import { useTranslation } from '@/i18n'
+import { showToast } from '@/lib/toast'
 import { userPhotoUrl } from '@/lib/imageUrl'
 
 export function AccountProfilePanel() {
@@ -16,7 +17,6 @@ export function AccountProfilePanel() {
   const updateProfile = useUpdateProfile()
   const uploadPhoto = useUploadUserPhoto()
   const [name, setName] = useState('')
-  const [message, setMessage] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -38,12 +38,11 @@ export function AccountProfilePanel() {
     .toUpperCase()
 
   const handleSave = async () => {
-    setMessage(null)
     setError(null)
 
     try {
       await updateProfile.mutateAsync(name.trim())
-      setMessage(t('account.profileSaved'))
+      showToast(t('toast.profileSaved'))
     } catch {
       setError(t('account.profileSaveError'))
     }
@@ -52,12 +51,11 @@ export function AccountProfilePanel() {
   const handlePhotoChange = async (file: File | undefined) => {
     if (!file) return
 
-    setMessage(null)
     setError(null)
 
     try {
       await uploadPhoto.mutateAsync(file)
-      setMessage(t('account.photoSaved'))
+      showToast(t('toast.photoSaved'))
     } catch {
       setError(t('account.photoSaveError'))
     }
@@ -156,11 +154,6 @@ export function AccountProfilePanel() {
         </form>
       </div>
 
-      {message ? (
-        <p className="account-form-message account-form-message--success" role="status">
-          {message}
-        </p>
-      ) : null}
       {error ? (
         <p className="account-form-message account-form-message--error" role="alert">
           {error}

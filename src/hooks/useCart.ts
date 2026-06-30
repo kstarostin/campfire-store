@@ -9,8 +9,11 @@ import {
 import type { Cart, Currency } from '@/api/types'
 import { useLocale } from '@/hooks/useLocale'
 import { cartItemCount, cartLinesSubtotal, cartOrderTotal, cartVat, type CartLine } from '@/lib/cart'
+import { showToast } from '@/lib/toast'
+import { translate } from '@/i18n'
 import { useAuthStore } from '@/store/authStore'
 import { useCartStore } from '@/store/cartStore'
+import { useLocaleStore } from '@/store/localeStore'
 
 function cartQueryKey(
   userId: string | undefined,
@@ -311,6 +314,7 @@ export function useAddToCart() {
       parseCartEntryResponse(response)
     },
     onSuccess: async () => {
+      showToast(translate(useLocaleStore.getState().language, 'toast.addedToCart'))
       await queryClient.invalidateQueries({ queryKey: ['cart', user?._id] })
     },
   })

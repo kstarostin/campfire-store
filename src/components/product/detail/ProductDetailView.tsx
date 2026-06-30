@@ -15,12 +15,18 @@ import { categoryPath } from '@/lib/categoryPath'
 interface ProductDetailViewProps {
   product: Product
   relatedProducts: Product[]
+  relatedIsLoading?: boolean
+  relatedIsError?: boolean
+  onRelatedRetry?: () => void
   ancestors: Category[]
 }
 
 export function ProductDetailView({
   product,
   relatedProducts,
+  relatedIsLoading = false,
+  relatedIsError = false,
+  onRelatedRetry,
   ancestors,
 }: ProductDetailViewProps) {
   const { currency } = useLocale()
@@ -108,6 +114,9 @@ export function ProductDetailView({
               products={relatedProducts}
               currency={currency}
               categoryName={category?.name}
+              isLoading={relatedIsLoading}
+              isError={relatedIsError}
+              onRetry={onRelatedRetry}
             />
           </div>
         </div>

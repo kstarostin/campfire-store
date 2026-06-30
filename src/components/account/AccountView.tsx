@@ -9,6 +9,8 @@ import { AccountWishlistPanel } from '@/components/account/AccountWishlistPanel'
 import { CatalogBreadcrumb } from '@/components/catalog/CatalogPageHeader'
 import { Container } from '@/components/layout/Container'
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
+import { ErrorState } from '@/components/ui/ErrorState'
+import { LoadingState } from '@/components/ui/LoadingState'
 import { useAccountUser } from '@/hooks/useAccount'
 import { useAccountSignOut } from '@/hooks/useAccountSignOut'
 import { useTranslation } from '@/i18n'
@@ -30,7 +32,7 @@ function AccountPanelContent({ panel }: { panel: AccountPanel }) {
 export function AccountView() {
   const { t } = useTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
-  const { data: user, isLoading, isError } = useAccountUser()
+  const { data: user, isLoading, isError, refetch } = useAccountUser()
   const signOut = useAccountSignOut()
   const [signOutOpen, setSignOutOpen] = useState(false)
   const [isSigningOut, setIsSigningOut] = useState(false)
@@ -57,7 +59,9 @@ export function AccountView() {
   if (isLoading && !user) {
     return (
       <Container className="account-page">
-        <p className="account-page-loading">{t('account.loading')}</p>
+        <div className="account-page-loading">
+          <LoadingState label={t('account.loading')} />
+        </div>
       </Container>
     )
   }
@@ -65,7 +69,9 @@ export function AccountView() {
   if (isError || !user) {
     return (
       <Container className="account-page">
-        <p className="account-page-error">{t('account.loadError')}</p>
+        <div className="account-page-error">
+          <ErrorState message={t('account.loadError')} onRetry={() => refetch()} />
+        </div>
       </Container>
     )
   }

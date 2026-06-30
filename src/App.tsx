@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import { AppRouter } from '@/router'
-import { translate } from '@/i18n'
 import { useLocaleStore } from '@/store/localeStore'
 
 function LocaleDocumentSync() {
@@ -9,7 +8,6 @@ function LocaleDocumentSync() {
 
   useEffect(() => {
     document.documentElement.lang = language
-    document.title = translate(language, 'common.storeName')
   }, [language])
 
   return null
