@@ -15,6 +15,10 @@ import type {
   ProductBadgeAssignment,
   User,
   UserDocumentResponse,
+  Wishlist,
+  WishlistDocumentResponse,
+  WishlistEntry,
+  WishlistEntryDocumentResponse,
 } from '@/api/types'
 
 export interface ApiListEnvelope<TDocument> {
@@ -323,4 +327,43 @@ export function parseCartEntryResponse(response: CartEntryDocumentResponse): Car
     quantity: entry.quantity,
     price: entry.price,
   }
+}
+
+export function normalizeWishlist(document: Wishlist): Wishlist {
+  return {
+    _id: document._id,
+    name: document.name,
+  }
+}
+
+export function parseWishlistResponse(response: WishlistDocumentResponse): Wishlist {
+  return normalizeWishlist(response.data.document)
+}
+
+export function parseWishlistList(response: ApiListEnvelope<Wishlist>): Wishlist[] {
+  const payload = response.data
+  const documents = Array.isArray(payload) ? payload : (payload?.documents ?? [])
+  return documents.map(normalizeWishlist)
+}
+
+export function normalizeWishlistEntry(document: WishlistEntry): WishlistEntry {
+  return {
+    _id: document._id,
+    product: document.product,
+    createdAt: document.createdAt,
+  }
+}
+
+export function parseWishlistEntryList(
+  response: ApiListEnvelope<WishlistEntry>,
+): WishlistEntry[] {
+  const payload = response.data
+  const documents = Array.isArray(payload) ? payload : (payload?.documents ?? [])
+  return documents.map(normalizeWishlistEntry)
+}
+
+export function parseWishlistEntryResponse(
+  response: WishlistEntryDocumentResponse,
+): WishlistEntry {
+  return normalizeWishlistEntry(response.data.document)
 }

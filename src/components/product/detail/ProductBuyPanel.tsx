@@ -6,6 +6,7 @@ import { ProductBadges } from '@/components/product/ProductBadges'
 import { Price } from '@/components/product/Price'
 import { Button } from '@/components/ui/Button'
 import { useAddToCart } from '@/hooks/useCart'
+import { useIsInWishlist, useToggleWishlist } from '@/hooks/useWishlist'
 import { useLocaleNavigate } from '@/hooks/useLocaleNavigate'
 import { useTranslation } from '@/i18n'
 import { localizedText } from '@/lib/localizedText'
@@ -30,19 +31,19 @@ export const ProductBuyPanel = forwardRef<HTMLElement, ProductBuyPanelProps>(
   const navigate = useLocaleNavigate()
   const isAuthenticated = useIsAuthenticated()
   const addToCart = useAddToCart()
+  const toggleWishlist = useToggleWishlist()
+  const isInWishlist = useIsInWishlist(product._id)
   const tagline = localizedText(product.taglineI18n, language)
 
   const clampQuantity = (value: number) => Math.min(99, Math.max(1, value))
 
-  const handleProtectedAction = (phase: 'cart' | 'wishlist') => {
+  const handleWishlistToggle = () => {
     if (!isAuthenticated) {
       navigate('/login', { state: { from: location.pathname } })
       return
     }
 
-    if (phase === 'wishlist') {
-      navigate('/account?panel=wishlist')
-    }
+    toggleWishlist.mutate(product._id)
   }
 
   const handleAddToCart = () => {
@@ -99,11 +100,15 @@ export const ProductBuyPanel = forwardRef<HTMLElement, ProductBuyPanelProps>(
 
           <button
             type="button"
-            className="pdp-wishlist-btn"
-            aria-label={t('product.addToWishlist')}
-            onClick={() => handleProtectedAction('wishlist')}
+            className={`pdp-wishlist-btn${isInWishlist ? ' is-active' : ''}`}
+            aria-label={
+              isInWishlist ? t('product.removeFromWishlist') : t('product.addToWishlist')
+            }
+            aria-pressed={isInWishlist}
+            disabled={toggleWishlist.isPending}
+            onClick={handleWishlistToggle}
           >
-            <Heart size={20} aria-hidden />
+            <Heart size={20} fill={isInWishlist ? 'currentColor' : 'none'} aria-hidden />
           </button>
         </div>
 

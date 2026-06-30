@@ -197,7 +197,7 @@ export const en = {
       },
     },
     wishlistTitle: 'Wishlist',
-    wishlistDescription: 'Server-side wishlist — coming in Phase 8.',
+    wishlistDescription: 'Save products you want to revisit later.',
     profileTitle: 'Profile',
     profileDescription: 'Update how your name appears on orders and checkout.',
     fullName: 'Full name',
@@ -256,6 +256,7 @@ export const en = {
     increaseQuantity: 'Increase quantity',
     addToCart: 'Add to cart',
     addToWishlist: 'Add to wishlist',
+    removeFromWishlist: 'Remove from wishlist',
     viewOnManufacturer: 'View on {manufacturer}',
     fieldNotes: 'Field notes',
     featured: 'Featured',
@@ -300,6 +301,15 @@ export const en = {
     removeItem: 'Remove {name}',
     quantityFor: 'Quantity for {name}',
     loadError: 'Could not load your cart.',
+  },
+  wishlist: {
+    savedCount: '{count} saved',
+    emptyTitle: 'Your wishlist is empty',
+    emptyDescription: 'Tap the heart on any product to save it here while you are signed in.',
+    browseProducts: 'Browse products',
+    removeItem: 'Remove {name}',
+    addToCart: 'Add to cart',
+    loadError: 'Could not load your wishlist.',
   },
   checkout: {
     subtitle: 'Choose a delivery address and place your order.',
@@ -347,7 +357,7 @@ export const en = {
     orderDetail: 'Order detail',
     orderDetailHint: 'Order “{id}” — coming in Phase 7.',
     wishlist: 'Wishlist',
-    wishlistHint: 'Server-backed wishlist — coming in Phase 8.',
+    wishlistHint: 'Saved products synced to your account.',
   },
 } as const
 

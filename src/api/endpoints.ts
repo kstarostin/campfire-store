@@ -14,7 +14,10 @@ import type {
   Product,
   User,
   UserDocumentResponse,
-  WishlistItem,
+  Wishlist,
+  WishlistDocumentResponse,
+  WishlistEntry,
+  WishlistEntryDocumentResponse,
 } from './types'
 
 const withLocale = (language: Language, currency: Currency) =>
@@ -247,14 +250,67 @@ export const endpoints = {
   placeOrder: (userId: string, token: string, body: { cartId: string }) =>
     api.post<OrderDocumentResponse>(`/users/${userId}/orders`, body, { token }),
 
-  wishlist: (userId: string, token: string) =>
-    api.get<{ data: WishlistItem[] }>(`/users/${userId}/wishlist`, { token }),
+  wishlists: (userId: string, token: string) =>
+    api.get<ApiListEnvelope<Wishlist>>(`/users/${userId}/wishlists`, { token }),
 
-  addToWishlist: (userId: string, token: string, body: { product: string }) =>
-    api.post<{ data: WishlistItem }>(`/users/${userId}/wishlist`, body, {
+  createWishlist: (userId: string, token: string, body?: { name?: string }) =>
+    api.post<WishlistDocumentResponse>(`/users/${userId}/wishlists`, body ?? {}, {
       token,
     }),
 
-  removeFromWishlist: (userId: string, productId: string, token: string) =>
-    api.delete<void>(`/users/${userId}/wishlist/${productId}`, { token }),
+  wishlist: (userId: string, wishlistId: string, token: string) =>
+    api.get<WishlistDocumentResponse>(`/users/${userId}/wishlists/${wishlistId}`, {
+      token,
+    }),
+
+  wishlistEntries: (
+    userId: string,
+    wishlistId: string,
+    token: string,
+    language: Language,
+    currency: Currency,
+    pagination?: PaginationParams,
+  ) =>
+    api.get<ApiListEnvelope<WishlistEntry>>(
+      `/users/${userId}/wishlists/${wishlistId}/entries`,
+      {
+        token,
+        params: {
+          ...withLocale(language, currency),
+          page: pagination?.page,
+          limit: pagination?.limit,
+          sort: pagination?.sort,
+        },
+      },
+    ),
+
+  addWishlistEntry: (
+    userId: string,
+    wishlistId: string,
+    token: string,
+    language: Language,
+    currency: Currency,
+    body: { product: string },
+  ) =>
+    api.post<WishlistEntryDocumentResponse>(
+      `/users/${userId}/wishlists/${wishlistId}/entries`,
+      body,
+      {
+        token,
+        params: withLocale(language, currency),
+      },
+    ),
+
+  deleteWishlistEntry: (
+    userId: string,
+    wishlistId: string,
+    entryId: string,
+    token: string,
+    language: Language,
+    currency: Currency,
+  ) =>
+    api.delete<void>(`/users/${userId}/wishlists/${wishlistId}/entries/${entryId}`, {
+      token,
+      params: withLocale(language, currency),
+    }),
 }

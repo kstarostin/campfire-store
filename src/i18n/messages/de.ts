@@ -205,7 +205,7 @@ export const de: Messages = {
       },
     },
     wishlistTitle: 'Wunschliste',
-    wishlistDescription: 'Serverseitige Wunschliste — kommt in Phase 8.',
+    wishlistDescription: 'Speichere Produkte, die du dir später ansehen möchtest.',
     profileTitle: 'Profil',
     profileDescription:
       'Aktualisiere, wie dein Name in Bestellungen und beim Checkout angezeigt wird.',
@@ -265,6 +265,7 @@ export const de: Messages = {
     increaseQuantity: 'Menge erhöhen',
     addToCart: 'In den Warenkorb',
     addToWishlist: 'Zur Wunschliste',
+    removeFromWishlist: 'Von der Wunschliste entfernen',
     viewOnManufacturer: 'Bei {manufacturer} ansehen',
     fieldNotes: 'Auf einen Blick',
     featured: 'Empfohlen',
@@ -309,6 +310,16 @@ export const de: Messages = {
     removeItem: '{name} entfernen',
     quantityFor: 'Menge für {name}',
     loadError: 'Warenkorb konnte nicht geladen werden.',
+  },
+  wishlist: {
+    savedCount: '{count} gespeichert',
+    emptyTitle: 'Deine Wunschliste ist leer',
+    emptyDescription:
+      'Tippe auf das Herz bei einem Produkt, um es hier zu speichern, solange du angemeldet bist.',
+    browseProducts: 'Produkte entdecken',
+    removeItem: '{name} entfernen',
+    addToCart: 'In den Warenkorb',
+    loadError: 'Wunschliste konnte nicht geladen werden.',
   },
   checkout: {
     subtitle: 'Wähle eine Lieferadresse und schließe deine Bestellung ab.',
@@ -356,6 +367,6 @@ export const de: Messages = {
     orderDetail: 'Bestelldetails',
     orderDetailHint: 'Bestellung „{id}" — kommt in Phase 7.',
     wishlist: 'Wunschliste',
-    wishlistHint: 'Serverseitige Wunschliste — kommt in Phase 8.',
+    wishlistHint: 'Gespeicherte Produkte, synchron mit deinem Konto.',
   },
 }

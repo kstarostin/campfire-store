@@ -195,11 +195,33 @@ export interface OrderDocumentResponse {
   }
 }
 
-export interface WishlistItem {
+export interface Wishlist {
+  _id: string
+  name?: string
+}
+
+export interface WishlistEntry {
   _id: string
   product: string | Product
   createdAt?: string
 }
+
+export interface WishlistDocumentResponse {
+  status?: string
+  data: {
+    document: Wishlist
+  }
+}
+
+export interface WishlistEntryDocumentResponse {
+  status?: string
+  data: {
+    document: WishlistEntry
+  }
+}
+
+/** @deprecated Use WishlistEntry */
+export type WishlistItem = WishlistEntry
 
 export interface ApiErrorBody {
   status?: string
