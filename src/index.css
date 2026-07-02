@@ -2001,6 +2001,7 @@
   .pdp-related-scroll {
     display: flex;
     gap: 1rem;
+    padding-top: 0.25rem;
     padding-bottom: 0.5rem;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
