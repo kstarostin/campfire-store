@@ -1,0 +1,1462 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Campfire Store — Categories page mockup</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      :root {
+        --font-sans: 'Inter', system-ui, sans-serif;
+        --font-display: 'Fraunces', Georgia, serif;
+
+        --color-bg: #fafafa;
+        --color-header-bg: #1c1917;
+        --color-header-border: #292524;
+        --color-footer-bg: #f0f0f0;
+        --color-surface: #ffffff;
+        --color-surface-muted: #f5f5f5;
+        --color-border: #e5e5e5;
+        --color-text: #171717;
+        --color-text-muted: #737373;
+        --color-primary: #ea580c;
+        --color-primary-hover: #c2410c;
+        --color-secondary: #047857;
+        --color-secondary-hover: #065f46;
+
+        --radius-sm: 0.5rem;
+        --radius-md: 0.75rem;
+        --radius-lg: 1rem;
+        --shadow-md: 0 10px 28px rgb(0 0 0 / 8%);
+        --header-height: 4.75rem;
+        --max-width: 72rem;
+        --band-radius: 1.25rem;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--font-sans);
+        font-size: 1rem;
+        line-height: 1.5;
+        color: var(--color-text);
+        background: var(--color-bg);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button {
+        font: inherit;
+        cursor: pointer;
+      }
+
+      .container {
+        width: min(100% - 2rem, var(--max-width));
+        margin-inline: auto;
+      }
+
+      /* Mockup chrome */
+      .mockup-bar {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 0.625rem 1rem;
+        border-bottom: 1px solid #44403c;
+        background: #292524;
+        color: #f5f5f4;
+        font-size: 0.8125rem;
+      }
+
+      .mockup-bar strong {
+        font-weight: 600;
+      }
+
+      .mockup-bar__label {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.35rem 0.5rem;
+      }
+
+      .mockup-bar__label > span {
+        color: #a8a29e;
+      }
+
+      .mockup-bar__tools {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .mockup-modes {
+        display: inline-flex;
+        padding: 0.1875rem;
+        border-radius: 999px;
+        background: #1c1917;
+      }
+
+      .mockup-modes button {
+        padding: 0.375rem 0.75rem;
+        border: 0;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #a8a29e;
+        background: transparent;
+      }
+
+      .mockup-modes button.is-active {
+        color: #171717;
+        background: #f5f5f4;
+      }
+
+      .mockup-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .mockup-nav a {
+        padding: 0.375rem 0.75rem;
+        border-radius: 999px;
+        color: #a8a29e;
+      }
+
+      .mockup-nav a:hover {
+        color: #f5f5f4;
+      }
+
+      .mockup-nav a.is-active {
+        color: #171717;
+        background: #f5f5f4;
+        font-weight: 600;
+      }
+
+      /* Header */
+      .site-header {
+        position: sticky;
+        top: 2.375rem;
+        z-index: 30;
+        border-bottom: 1px solid var(--color-header-border);
+        background: rgb(28 25 23 / 96%);
+        backdrop-filter: blur(10px);
+        color: #f5f5f4;
+      }
+
+      .header-inner {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        min-height: var(--header-height);
+      }
+
+      .header-search {
+        display: none;
+        flex: 1;
+        max-width: 22rem;
+        margin-inline: auto;
+      }
+
+      @media (min-width: 768px) {
+        .header-search {
+          display: block;
+        }
+      }
+
+      .search-field {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        width: 100%;
+        padding: 0.625rem 0.875rem;
+        border: 1px solid #44403c;
+        border-radius: 999px;
+        background: #292524;
+      }
+
+      .search-field input {
+        width: 100%;
+        border: 0;
+        outline: none;
+        color: inherit;
+        background: transparent;
+      }
+
+      .search-field input::placeholder {
+        color: #a8a29e;
+      }
+
+      .logo img {
+        height: 3rem;
+        width: auto;
+        transform: translateY(-0.4rem);
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        margin-left: auto;
+      }
+
+      .icon-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        border: 0;
+        border-radius: 999px;
+        color: inherit;
+        background: transparent;
+      }
+
+      .icon-btn:hover {
+        color: var(--color-primary-hover);
+      }
+
+      /* Page intro */
+      .categories-page {
+        padding: 1.5rem 0 3rem;
+      }
+
+      .categories-intro {
+        margin-bottom: 1.75rem;
+      }
+
+      .categories-intro h1 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: clamp(1.75rem, 4vw, 2.35rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--color-text);
+      }
+
+      .categories-intro p {
+        margin: 0.5rem 0 0;
+        max-width: 38rem;
+        font-size: 0.9375rem;
+        color: var(--color-text-muted);
+      }
+
+      .categories-stack {
+        display: grid;
+        gap: 1.5rem;
+      }
+
+      /* Root category band */
+      .category-band {
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--band-radius);
+        border: 1px solid rgb(0 0 0 / 6%);
+        min-height: clamp(22rem, 52vw, 28rem);
+        box-shadow: var(--shadow-md);
+        isolation: isolate;
+      }
+
+      .category-band__photo {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        transform: scale(1.02);
+        transition: transform 0.6s ease;
+      }
+
+      .category-band:hover .category-band__photo {
+        transform: scale(1.06);
+      }
+
+      .category-band__scrim {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          105deg,
+          rgb(250 250 249 / 96%) 0%,
+          rgb(250 250 249 / 88%) 40%,
+          rgb(250 250 249 / 35%) 68%,
+          rgb(250 250 249 / 10%) 100%
+        );
+      }
+
+      .category-band--flip .category-band__scrim {
+        background: linear-gradient(
+          -105deg,
+          rgb(250 250 249 / 96%) 0%,
+          rgb(250 250 249 / 88%) 40%,
+          rgb(250 250 249 / 35%) 68%,
+          rgb(250 250 249 / 10%) 100%
+        );
+      }
+
+      .category-band__inner {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        gap: 1.25rem;
+        min-height: inherit;
+        padding: 1.25rem;
+      }
+
+      @media (min-width: 768px) {
+        .category-band__inner {
+          grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+          align-items: end;
+          padding: 1.75rem 1.75rem 1.5rem;
+        }
+
+        .category-band--flip .category-band__inner {
+          direction: rtl;
+        }
+
+        .category-band--flip .category-band__inner > * {
+          direction: ltr;
+        }
+      }
+
+      .category-band__copy {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        gap: 0.75rem;
+        color: #1c1917;
+      }
+
+      .category-band__eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        width: fit-content;
+        padding: 0.3rem 0.65rem;
+        border-radius: 999px;
+        border: 1px solid rgb(28 25 23 / 12%);
+        background: rgb(28 25 23 / 6%);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: #44403c;
+      }
+
+      .category-band__title {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: clamp(1.5rem, 3.5vw, 2.125rem);
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+      }
+
+      .category-band__description {
+        margin: 0;
+        max-width: 28rem;
+        font-size: 0.9375rem;
+        line-height: 1.55;
+        color: #57534e;
+      }
+
+      .category-band__browse {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        width: fit-content;
+        margin-top: 0.25rem;
+        padding: 0.6875rem 1.25rem;
+        border-radius: 999px;
+        background: var(--color-primary);
+        color: #ffffff;
+        font-size: 0.9375rem;
+        font-weight: 600;
+        line-height: 1;
+        box-shadow: 0 4px 14px rgb(234 88 12 / 28%);
+        transition:
+          background 0.15s ease,
+          transform 0.15s ease,
+          box-shadow 0.15s ease;
+      }
+
+      .category-band__browse:hover {
+        background: var(--color-primary-hover);
+        transform: translateY(-1px);
+        box-shadow: 0 6px 18px rgb(234 88 12 / 32%);
+      }
+
+      .category-band__browse:focus-visible {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 2px;
+      }
+
+      /* Leaf tiles */
+      .leaf-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.625rem;
+      }
+
+      @media (min-width: 480px) {
+        .leaf-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (min-width: 900px) {
+        .leaf-grid--5 {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .leaf-grid--5 .leaf-tile:last-child {
+          grid-column: span 1;
+        }
+      }
+
+      .leaf-tile {
+        position: relative;
+        overflow: hidden;
+        min-height: 7.25rem;
+        border-radius: var(--radius-md);
+        border: 1px solid rgb(255 255 255 / 14%);
+        background: #292524;
+        transition:
+          transform 0.2s ease,
+          border-color 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      .leaf-tile:hover {
+        transform: translateY(-2px);
+        border-color: rgb(253 186 116 / 55%);
+        box-shadow: 0 10px 24px rgb(0 0 0 / 35%);
+      }
+
+      .leaf-tile__photo {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        transition: transform 0.45s ease;
+      }
+
+      .leaf-tile:hover .leaf-tile__photo {
+        transform: scale(1.05);
+      }
+
+      .leaf-tile__scrim {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgb(12 10 9 / 12%) 0%,
+          rgb(12 10 9 / 55%) 48%,
+          rgb(12 10 9 / 92%) 100%
+        );
+      }
+
+      .leaf-tile__body {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        gap: 0.2rem;
+        min-height: 7.25rem;
+        padding: 0.75rem;
+        color: #fafaf9;
+      }
+
+      .leaf-tile__icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.75rem;
+        height: 1.75rem;
+        margin-bottom: 0.15rem;
+        border-radius: 999px;
+        background: rgb(255 255 255 / 14%);
+        color: #fdba74;
+      }
+
+      .leaf-tile strong {
+        font-size: 0.875rem;
+        line-height: 1.25;
+      }
+
+      .leaf-tile span {
+        font-size: 0.6875rem;
+        color: rgb(245 245 244 / 72%);
+      }
+
+      /* Design spec panel */
+      .design-spec {
+        margin-top: 2.5rem;
+        padding: 1.25rem 1.5rem;
+        border-radius: var(--band-radius);
+        border: 1px solid var(--color-border);
+        background: var(--color-surface);
+        color: var(--color-text);
+        box-shadow: var(--shadow-md);
+      }
+
+      .design-spec h2 {
+        margin: 0 0 0.75rem;
+        font-family: var(--font-display);
+        font-size: 1.25rem;
+        color: var(--color-text);
+      }
+
+      .design-spec h3 {
+        margin: 1.25rem 0 0.5rem;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--color-primary);
+      }
+
+      .design-spec p,
+      .design-spec li {
+        font-size: 0.875rem;
+        line-height: 1.6;
+        color: var(--color-text-muted);
+      }
+
+      .design-spec ul {
+        margin: 0;
+        padding-left: 1.1rem;
+      }
+
+      .design-spec code {
+        padding: 0.1rem 0.35rem;
+        border-radius: 0.25rem;
+        background: var(--color-surface-muted);
+        font-size: 0.8125rem;
+        color: #9a3412;
+      }
+
+      .design-spec pre {
+        margin: 0.5rem 0 0;
+        padding: 0.875rem 1rem;
+        overflow-x: auto;
+        border-radius: var(--radius-md);
+        background: #1c1917;
+        font-size: 0.75rem;
+        line-height: 1.5;
+        color: #d6d3d1;
+      }
+
+      .photo-credit {
+        margin-top: 2rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--color-border);
+        font-size: 0.75rem;
+        color: var(--color-text-muted);
+      }
+
+      .photo-credit a {
+        color: var(--color-secondary);
+        text-decoration: underline;
+      }
+
+      .photo-credit a:hover {
+        color: var(--color-secondary-hover);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .category-band__photo,
+        .leaf-tile__photo {
+          transition: none;
+        }
+
+        .category-band:hover .category-band__photo,
+        .leaf-tile:hover .leaf-tile__photo {
+          transform: none;
+        }
+      }
+
+      body[data-gradient='left'] .category-band__scrim {
+        background: linear-gradient(
+          105deg,
+          rgb(250 250 249 / 96%) 0%,
+          rgb(250 250 249 / 88%) 40%,
+          rgb(250 250 249 / 35%) 68%,
+          rgb(250 250 249 / 10%) 100%
+        ) !important;
+      }
+
+      body[data-gradient='left'] .category-band__inner {
+        grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr) !important;
+        direction: ltr !important;
+      }
+
+      body[data-gradient='left'] .category-band--flip .category-band__inner {
+        direction: ltr !important;
+      }
+
+      body[data-gradient='right'] .category-band__scrim {
+        background: linear-gradient(
+          -105deg,
+          rgb(250 250 249 / 96%) 0%,
+          rgb(250 250 249 / 88%) 40%,
+          rgb(250 250 249 / 35%) 68%,
+          rgb(250 250 249 / 10%) 100%
+        ) !important;
+      }
+
+      body[data-gradient='right'] .category-band__inner {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr) !important;
+        direction: rtl !important;
+      }
+
+      body[data-gradient='right'] .category-band__inner > * {
+        direction: ltr;
+      }
+    </style>
+  </head>
+  <body data-gradient="alternate">
+    <div class="mockup-bar">
+      <div class="mockup-bar__label">
+        <strong>Categories</strong>
+        <span>/categories — immersive group layout</span>
+      </div>
+      <div class="mockup-bar__tools">
+        <div class="mockup-modes" role="tablist" aria-label="Gradient preview">
+          <button
+            type="button"
+            class="is-active"
+            data-gradient-mode="alternate"
+            aria-selected="true"
+          >
+            Alternate
+          </button>
+          <button type="button" data-gradient-mode="left" aria-selected="false">
+            Gradient left
+          </button>
+          <button type="button" data-gradient-mode="right" aria-selected="false">
+            Gradient right
+          </button>
+        </div>
+      </div>
+      <nav class="mockup-nav" aria-label="Mockup pages">
+        <a href="homepage.html">Home</a>
+        <a href="categories.html" class="is-active" aria-current="page">Categories</a>
+        <a href="catalog-listing.html">Catalog</a>
+        <a href="product-detail.html">Product</a>
+        <a href="account.html">Account</a>
+        <a href="auth.html">Auth</a>
+        <a href="cart.html">Cart</a>
+        <a href="checkout.html">Checkout</a>
+      </nav>
+    </div>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="logo" href="homepage.html" aria-label="Campfire Store home">
+          <img src="./public/img/campfire_logo_light.png" alt="Campfire Store" />
+        </a>
+
+        <label class="header-search">
+          <span class="search-field">
+            <i data-lucide="search" size="18"></i>
+            <input
+              type="search"
+              placeholder="Search gear, brands, categories…"
+              aria-label="Search"
+            />
+          </span>
+        </label>
+
+        <div class="header-actions">
+          <button class="icon-btn" type="button" aria-label="Account">
+            <i data-lucide="user" size="20"></i>
+          </button>
+          <button class="icon-btn" type="button" aria-label="Cart">
+            <i data-lucide="shopping-cart" size="20"></i>
+          </button>
+          <button class="icon-btn" type="button" aria-label="Menu">
+            <i data-lucide="menu" size="20"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="categories-page">
+      <div class="container">
+        <header class="categories-intro">
+          <h1>Where will you go next?</h1>
+          <p>
+            Some trips start with a map. Others start with a paddle, a pack, or a pair of boots.
+            Pick your door — we&rsquo;ll meet you on the other side.
+          </p>
+        </header>
+
+        <div class="categories-stack">
+          <!-- Kayaks -->
+          <section class="category-band" aria-labelledby="band-kayaks">
+            <div
+              class="category-band__photo"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1480480565647-1c4385c7c0bf?auto=format&fit=crop&w=1800&q=80');
+              "
+              role="img"
+              aria-label="Woman paddling a kayak on calm water"
+            ></div>
+            <div class="category-band__scrim" aria-hidden="true"></div>
+            <div class="category-band__inner">
+              <div class="category-band__copy">
+                <span class="category-band__eyebrow">
+                  <i data-lucide="sailboat" size="14" aria-hidden="true"></i>
+                  Kayaks
+                </span>
+                <h2 id="band-kayaks" class="category-band__title">
+                  Follow the line where water meets horizon
+                </h2>
+                <p class="category-band__description">
+                  From glassy lakes to whitewater — find the hull, paddle, and kit that match your
+                  next put-in.
+                </p>
+                <a class="category-band__browse" href="catalog-listing.html">
+                  Browse all kayaks
+                  <i data-lucide="arrow-right" size="18" aria-hidden="true"></i>
+                </a>
+              </div>
+              <div class="leaf-grid">
+                <a class="leaf-tile" href="catalog-listing.html">
+                  <div
+                    class="leaf-tile__photo"
+                    style="
+                      background-image: url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80');
+                    "
+                  ></div>
+                  <div class="leaf-tile__scrim"></div>
+                  <div class="leaf-tile__body">
+                    <span class="leaf-tile__icon"><i data-lucide="sailboat" size="14"></i></span>
+                    <strong>Touring kayaks</strong>
+                    <span>Distance &amp; overnight</span>
+                  </div>
+                </a>
+                <a class="leaf-tile" href="catalog-listing.html">
+                  <div
+                    class="leaf-tile__photo"
+                    style="
+                      background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80');
+                    "
+                  ></div>
+                  <div class="leaf-tile__scrim"></div>
+                  <div class="leaf-tile__body">
+                    <span class="leaf-tile__icon"><i data-lucide="waves" size="14"></i></span>
+                    <strong>Whitewater kayaks</strong>
+                    <span>Play &amp; river running</span>
+                  </div>
+                </a>
+                <a class="leaf-tile" href="catalog-listing.html">
+                  <div
+                    class="leaf-tile__photo"
+                    style="
+                      background-image: url('https://images.unsplash.com/photo-1527004013197-933c4bb611b3?auto=format&fit=crop&w=800&q=80');
+                    "
+                  ></div>
+                  <div class="leaf-tile__scrim"></div>
+                  <div class="leaf-tile__body">
+                    <span class="leaf-tile__icon"><i data-lucide="wind" size="14"></i></span>
+                    <strong>Inflatable kayaks</strong>
+                    <span>Packable &amp; versatile</span>
+                  </div>
+                </a>
+                <a class="leaf-tile" href="catalog-listing.html">
+                  <div
+                    class="leaf-tile__photo"
+                    style="
+                      background-image: url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=800&q=80');
+                    "
+                  ></div>
+                  <div class="leaf-tile__scrim"></div>
+                  <div class="leaf-tile__body">
+                    <span class="leaf-tile__icon"><i data-lucide="package" size="14"></i></span>
+                    <strong>Kayak accessories</strong>
+                    <span>Paddles &amp; safety</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </section>
+
+          <!-- Bicycles -->
+          <section class="category-band category-band--flip" aria-labelledby="band-bikes">
+            <div
+              class="category-band__photo"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1571068316344-75bc76f77890?auto=format&fit=crop&w=1800&q=80');
+              "
+              role="img"
+              aria-label="Cyclist on a gravel road at golden hour"
+            ></div>
+            <div class="category-band__scrim"></div>
+            <div class="category-band__inner">
+              <div class="category-band__copy">
+                <span class="category-band__eyebrow">
+                  <i data-lucide="bike" size="14" aria-hidden="true"></i>
+                  Bicycles
+                </span>
+                <h2 id="band-bikes" class="category-band__title">
+                  Ride farther than yesterday's map edge
+                </h2>
+                <p class="category-band__description">
+                  Road, gravel, and trail — bikes built for European cols, forest doubletrack, and
+                  the commute that becomes an adventure.
+                </p>
+                <a class="category-band__browse" href="catalog-listing.html">
+                  Browse all bicycles
+                  <i data-lucide="arrow-right" size="18" aria-hidden="true"></i>
+                </a>
+              </div>
+              <div class="leaf-grid">
+                <a class="leaf-tile" href="catalog-listing.html">
+                  <div
+                    class="leaf-tile__photo"
+                    style="
+                      background-image: url('https://images.unsplash.com/photo-1517649763961-0c62306601b7?auto=format&fit=crop&w=800&q=80');
+                    "
+                  ></div>
+                  <div class="leaf-tile__scrim"></div>
+                  <div class="leaf-tile__body">
+                    <span class="leaf-tile__icon"><i data-lucide="bike" size="14"></i></span>
+                    <strong>Road bikes</strong>
+                    <span>Speed &amp; tarmac</span>
+                  </div>
+                </a>
+                <a class="leaf-tile" href="catalog-listing.html">
+                  <div
+                    class="leaf-tile__photo"
+                    style="
+                      background-image: url('https://images.unsplash.com/photo-1576435728678-68d0fbf94e35?auto=format&fit=crop&w=800&q=80');
+                    "
+                  ></div>
+                  <div class="leaf-tile__scrim"></div>
+                  <div class="leaf-tile__body">
+                    <span class="leaf-tile__icon"><i data-lucide="map" size="14"></i></span>
+                    <strong>Gravel bikes</strong>
+                    <span>All-road explorers</span>
+                  </div>
+                </a>
+                <a class="leaf-tile" href="catalog-listing.html">
+                  <div
+                    class="leaf-tile__photo"
+                    style="
+                      background-image: url('https://images.unsplash.com/photo-1541625602330-2277a4c46182?auto=format&fit=crop&w=800&q=80');
+                    "
+                  ></div>
+                  <div class="leaf-tile__scrim"></div>
+                  <div class="leaf-tile__body">
+                    <span class="leaf-tile__icon"><i data-lucide="mountain" size="14"></i></span>
+                    <strong>Mountain bikes</strong>
+                    <span>Singletrack &amp; enduro</span>
+                  </div>
+                </a>
+                <a class="leaf-tile" href="catalog-listing.html">
+                  <div
+                    class="leaf-tile__photo"
+                    style="
+                      background-image: url('https://images.unsplash.com/photo-1511994298241-608e28f14fde?auto=format&fit=crop&w=800&q=80');
+                    "
+                  ></div>
+                  <div class="leaf-tile__scrim"></div>
+                  <div class="leaf-tile__body">
+                    <span class="leaf-tile__icon"><i data-lucide="wrench" size="14"></i></span>
+                    <strong>Cycling accessories</strong>
+                    <span>Helmets &amp; kit</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </section>
+
+          <!-- Camping -->
+          <section class="category-band" aria-labelledby="band-camping">
+            <div
+              class="category-band__photo"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1478139811881-cfb7896bb608?auto=format&fit=crop&w=1800&q=80');
+              "
+              role="img"
+              aria-label="Tent under a starry mountain sky"
+            ></div>
+            <div class="category-band__scrim"></div>
+            <div class="category-band__inner">
+              <div class="category-band__copy">
+                <span class="category-band__eyebrow">
+                  <i data-lucide="tent" size="14" aria-hidden="true"></i>
+                  Camping
+                </span>
+                <h2 id="band-camping" class="category-band__title">
+                  Make home wherever the fire crackles
+                </h2>
+                <p class="category-band__description">
+                  Shelter, sleep systems, camp kitchen — everything for nights when the Milky Way is
+                  your ceiling.
+                </p>
+                <a class="category-band__browse" href="catalog-listing.html">
+                  Browse all camping
+                  <i data-lucide="arrow-right" size="18" aria-hidden="true"></i>
+                </a>
+              </div>
+              <div class="leaf-grid leaf-grid--5">
+                <a class="leaf-tile" href="catalog-listing.html">
+                  <div
+                    class="leaf-tile__photo"
+                    style="
+                      background-image: url('https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=800&q=80');
+                    "
+                  ></div>
+                  <div class="leaf-tile__scrim"></div>
+                  <div class="leaf-tile__body">
+                    <span class="leaf-tile__icon"><i data-lucide="tent" size="14"></i></span>
+                    <strong>Tents</strong>
+                    <span>2P to expedition</span>
+                  </div>
+                </a>
+                <a class="leaf-tile" href="catalog-listing.html">
+                  <div
+                    class="leaf-tile__photo"
+                    style="
+                      background-image: url('https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=800&q=80');
+                    "
+                  ></div>
+                  <div class="leaf-tile__scrim"></div>
+                  <div class="leaf-tile__body">
+                    <span class="leaf-tile__icon"><i data-lucide="moon" size="14"></i></span>
+                    <strong>Sleeping bags</strong>
+                    <span>Warmth rated</span>
+                  </div>
+                </a>
+                <a class="leaf-tile" href="catalog-listing.html">
+                  <div
+                    class="leaf-tile__photo"
+                    style="
+                      background-image: url('https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=800&q=80');
+                    "
+                  ></div>
+                  <div class="leaf-tile__scrim"></div>
+                  <div class="leaf-tile__body">
+                    <span class="leaf-tile__icon"><i data-lucide="layers" size="14"></i></span>
+                    <strong>Sleeping pads</strong>
+                    <span>Insulation &amp; comfort</span>
+                  </div>
+                </a>
+                <a class="leaf-tile" href="catalog-listing.html">
+                  <div
+                    class="leaf-tile__photo"
+                    style="
+                      background-image: url('https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?auto=format&fit=crop&w=800&q=80');
+                    "
+                  ></div>
+                  <div class="leaf-tile__scrim"></div>
+                  <div class="leaf-tile__body">
+                    <span class="leaf-tile__icon"><i data-lucide="flame" size="14"></i></span>
+                    <strong>Camp kitchen</strong>
+                    <span>Stoves &amp; cookware</span>
+                  </div>
+                </a>
+                <a class="leaf-tile" href="catalog-listing.html">
+                  <div
+                    class="leaf-tile__photo"
+                    style="
+                      background-image: url('https://images.unsplash.com/photo-1475483768296-6163e08872a1?auto=format&fit=crop&w=800&q=80');
+                    "
+                  ></div>
+                  <div class="leaf-tile__scrim"></div>
+                  <div class="leaf-tile__body">
+                    <span class="leaf-tile__icon"><i data-lucide="backpack" size="14"></i></span>
+                    <strong>Camping accessories</strong>
+                    <span>Chairs &amp; essentials</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </section>
+
+          <!-- Bags & gear -->
+          <section class="category-band category-band--flip" aria-labelledby="band-bags">
+            <div
+              class="category-band__photo"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1800&q=80');
+              "
+              role="img"
+              aria-label="Hiker with backpack on a mountain ridge"
+            ></div>
+            <div class="category-band__scrim"></div>
+            <div class="category-band__inner">
+              <div class="category-band__copy">
+                <span class="category-band__eyebrow">
+                  <i data-lucide="backpack" size="14" aria-hidden="true"></i>
+                  Bags &amp; gear
+                </span>
+                <h2 id="band-bags" class="category-band__title">
+                  Carry only what earns its grams
+                </h2>
+                <p class="category-band__description">
+                  Packs that distribute the load, lights that outlast dusk, and tools you hope you
+                  never need — until you do.
+                </p>
+                <a class="category-band__browse" href="catalog-listing.html">
+                  Browse bags &amp; gear
+                  <i data-lucide="arrow-right" size="18" aria-hidden="true"></i>
+                </a>
+              </div>
+              <div class="leaf-grid">
+                <a class="leaf-tile" href="catalog-listing.html">
+                  <div
+                    class="leaf-tile__photo"
+                    style="
+                      background-image: url('https://images.unsplash.com/photo-1622260614153-3d45fc03b0d2?auto=format&fit=crop&w=800&q=80');
+                    "
+                  ></div>
+                  <div class="leaf-tile__scrim"></div>
+                  <div class="leaf-tile__body">
+                    <span class="leaf-tile__icon"><i data-lucide="backpack" size="14"></i></span>
+                    <strong>Backpacks</strong>
+                    <span>Day to expedition</span>
+                  </div>
+                </a>
+                <a class="leaf-tile" href="catalog-listing.html">
+                  <div
+                    class="leaf-tile__photo"
+                    style="
+                      background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80');
+                    "
+                  ></div>
+                  <div class="leaf-tile__scrim"></div>
+                  <div class="leaf-tile__body">
+                    <span class="leaf-tile__icon"><i data-lucide="flashlight" size="14"></i></span>
+                    <strong>Lighting &amp; tools</strong>
+                    <span>Headlamps &amp; repair</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </section>
+
+          <!-- Clothing -->
+          <section class="category-band" aria-labelledby="band-clothing">
+            <div
+              class="category-band__photo"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=1800&q=80');
+              "
+              role="img"
+              aria-label="Hiker on a misty mountain trail"
+            ></div>
+            <div class="category-band__scrim"></div>
+            <div class="category-band__inner">
+              <div class="category-band__copy">
+                <span class="category-band__eyebrow">
+                  <i data-lucide="shirt" size="14" aria-hidden="true"></i>
+                  Clothing
+                </span>
+                <h2 id="band-clothing" class="category-band__title">
+                  Layer smart. Stay out longer.
+                </h2>
+                <p class="category-band__description">
+                  Shells that shrug off squalls, midlayers that breathe on the uphill, and bottoms
+                  that move with you from valley to summit.
+                </p>
+                <a class="category-band__browse" href="catalog-listing.html">
+                  Browse all clothing
+                  <i data-lucide="arrow-right" size="18" aria-hidden="true"></i>
+                </a>
+              </div>
+              <div class="leaf-grid">
+                <a class="leaf-tile" href="catalog-listing.html">
+                  <div
+                    class="leaf-tile__photo"
+                    style="
+                      background-image: url('https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=800&q=80');
+                    "
+                  ></div>
+                  <div class="leaf-tile__scrim"></div>
+                  <div class="leaf-tile__body">
+                    <span class="leaf-tile__icon"><i data-lucide="shirt" size="14"></i></span>
+                    <strong>Hiking pants</strong>
+                    <span>Durable &amp; stretch</span>
+                  </div>
+                </a>
+                <a class="leaf-tile" href="catalog-listing.html">
+                  <div
+                    class="leaf-tile__photo"
+                    style="
+                      background-image: url('https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?auto=format&fit=crop&w=800&q=80');
+                    "
+                  ></div>
+                  <div class="leaf-tile__scrim"></div>
+                  <div class="leaf-tile__body">
+                    <span class="leaf-tile__icon"><i data-lucide="cloud-rain" size="14"></i></span>
+                    <strong>Jackets &amp; shells</strong>
+                    <span>Weather protection</span>
+                  </div>
+                </a>
+                <a class="leaf-tile" href="catalog-listing.html">
+                  <div
+                    class="leaf-tile__photo"
+                    style="
+                      background-image: url('https://images.unsplash.com/photo-1434389677669-e08b4cac3105?auto=format&fit=crop&w=800&q=80');
+                    "
+                  ></div>
+                  <div class="leaf-tile__scrim"></div>
+                  <div class="leaf-tile__body">
+                    <span class="leaf-tile__icon"><i data-lucide="thermometer" size="14"></i></span>
+                    <strong>Midlayers &amp; fleece</strong>
+                    <span>Warmth without bulk</span>
+                  </div>
+                </a>
+                <a class="leaf-tile" href="catalog-listing.html">
+                  <div
+                    class="leaf-tile__photo"
+                    style="
+                      background-image: url('https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&w=800&q=80');
+                    "
+                  ></div>
+                  <div class="leaf-tile__scrim"></div>
+                  <div class="leaf-tile__body">
+                    <span class="leaf-tile__icon"><i data-lucide="activity" size="14"></i></span>
+                    <strong>Shorts &amp; tights</strong>
+                    <span>Run &amp; fast hike</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </section>
+
+          <!-- Footwear -->
+          <section class="category-band category-band--flip" aria-labelledby="band-footwear">
+            <div
+              class="category-band__photo"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1520639884443-5d26e07e1e0a?auto=format&fit=crop&w=1800&q=80');
+              "
+              role="img"
+              aria-label="Hiking boots on rocky alpine terrain"
+            ></div>
+            <div class="category-band__scrim"></div>
+            <div class="category-band__inner">
+              <div class="category-band__copy">
+                <span class="category-band__eyebrow">
+                  <i data-lucide="footprints" size="14" aria-hidden="true"></i>
+                  Footwear
+                </span>
+                <h2 id="band-footwear" class="category-band__title">
+                  Trust every step on uncertain ground
+                </h2>
+                <p class="category-band__description">
+                  From supportive boots on scree to responsive trail runners on singletrack — grip,
+                  fit, and confidence built in.
+                </p>
+                <a class="category-band__browse" href="catalog-listing.html">
+                  Browse all footwear
+                  <i data-lucide="arrow-right" size="18" aria-hidden="true"></i>
+                </a>
+              </div>
+              <div class="leaf-grid">
+                <a class="leaf-tile" href="catalog-listing.html">
+                  <div
+                    class="leaf-tile__photo"
+                    style="
+                      background-image: url('https://images.unsplash.com/photo-1606107557195-0a29cbf1f61b?auto=format&fit=crop&w=800&q=80');
+                    "
+                  ></div>
+                  <div class="leaf-tile__scrim"></div>
+                  <div class="leaf-tile__body">
+                    <span class="leaf-tile__icon"><i data-lucide="footprints" size="14"></i></span>
+                    <strong>Hiking boots</strong>
+                    <span>Ankle support &amp; grip</span>
+                  </div>
+                </a>
+                <a class="leaf-tile" href="catalog-listing.html">
+                  <div
+                    class="leaf-tile__photo"
+                    style="
+                      background-image: url('https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=800&q=80');
+                    "
+                  ></div>
+                  <div class="leaf-tile__scrim"></div>
+                  <div class="leaf-tile__body">
+                    <span class="leaf-tile__icon"><i data-lucide="zap" size="14"></i></span>
+                    <strong>Trail runners</strong>
+                    <span>Light &amp; fast</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </section>
+
+          <!-- Ski -->
+          <section class="category-band" aria-labelledby="band-ski">
+            <div
+              class="category-band__photo"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1551524559-8af4e1647978?auto=format&fit=crop&w=1800&q=80');
+              "
+              role="img"
+              aria-label="Skier carving fresh powder in the Alps"
+            ></div>
+            <div class="category-band__scrim"></div>
+            <div class="category-band__inner">
+              <div class="category-band__copy">
+                <span class="category-band__eyebrow">
+                  <i data-lucide="mountain-snow" size="14" aria-hidden="true"></i>
+                  Ski
+                </span>
+                <h2 id="band-ski" class="category-band__title">
+                  Chase the line through cold air and deep snow
+                </h2>
+                <p class="category-band__description">
+                  All-mountain skis, piste chargers, boots that transfer power, and the small kit
+                  that keeps you on the mountain all day.
+                </p>
+                <a class="category-band__browse" href="catalog-listing.html">
+                  Browse all ski
+                  <i data-lucide="arrow-right" size="18" aria-hidden="true"></i>
+                </a>
+              </div>
+              <div class="leaf-grid">
+                <a class="leaf-tile" href="catalog-listing.html">
+                  <div
+                    class="leaf-tile__photo"
+                    style="
+                      background-image: url('https://images.unsplash.com/photo-1551698652-bbd043968b30?auto=format&fit=crop&w=800&q=80');
+                    "
+                  ></div>
+                  <div class="leaf-tile__scrim"></div>
+                  <div class="leaf-tile__body">
+                    <span class="leaf-tile__icon"><i data-lucide="mountain" size="14"></i></span>
+                    <strong>All mountain</strong>
+                    <span>One-quiver daily drivers</span>
+                  </div>
+                </a>
+                <a class="leaf-tile" href="catalog-listing.html">
+                  <div
+                    class="leaf-tile__photo"
+                    style="
+                      background-image: url('https://images.unsplash.com/photo-1605540436563-f1cb445f8213?auto=format&fit=crop&w=800&q=80');
+                    "
+                  ></div>
+                  <div class="leaf-tile__scrim"></div>
+                  <div class="leaf-tile__body">
+                    <span class="leaf-tile__icon"><i data-lucide="snowflake" size="14"></i></span>
+                    <strong>Piste &amp; freeride skis</strong>
+                    <span>Groomed to off-piste</span>
+                  </div>
+                </a>
+                <a class="leaf-tile" href="catalog-listing.html">
+                  <div
+                    class="leaf-tile__photo"
+                    style="
+                      background-image: url('https://images.unsplash.com/photo-1518176258769-f227c798150e?auto=format&fit=crop&w=800&q=80');
+                    "
+                  ></div>
+                  <div class="leaf-tile__scrim"></div>
+                  <div class="leaf-tile__body">
+                    <span class="leaf-tile__icon"><i data-lucide="boot" size="14"></i></span>
+                    <strong>Ski boots</strong>
+                    <span>Fit &amp; flex</span>
+                  </div>
+                </a>
+                <a class="leaf-tile" href="catalog-listing.html">
+                  <div
+                    class="leaf-tile__photo"
+                    style="
+                      background-image: url('https://images.unsplash.com/photo-1519904981063-b0cf448d479e?auto=format&fit=crop&w=800&q=80');
+                    "
+                  ></div>
+                  <div class="leaf-tile__scrim"></div>
+                  <div class="leaf-tile__body">
+                    <span class="leaf-tile__icon"><i data-lucide="glasses" size="14"></i></span>
+                    <strong>Ski accessories</strong>
+                    <span>Poles &amp; protection</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <aside class="design-spec" aria-labelledby="design-spec-title">
+          <h2 id="design-spec-title">Design direction (for implementation)</h2>
+          <p>
+            Interactive preview above on the standard <strong>light page canvas</strong> (#fafafa,
+            same as Home and Catalog). Root bands use a <strong>light stone scrim</strong> with dark
+            copy; leaf tiles keep a dark bottom gradient. Use the mockup bar to preview gradient
+            side. Below: what to build in the app and API.
+          </p>
+
+          <h3>Layout — keep the vertical stack</h3>
+          <ul>
+            <li>
+              Preserve today's <code>/categories</code> structure: one section per <strong>root</strong>
+              category, leaves in a grid inside each section.
+            </li>
+            <li>
+              Upgrade each section into a <strong>full-bleed photo band</strong> (~22–28rem tall) with a
+              <strong>light side gradient scrim</strong> (≈40–55% width) holding copy + leaf tiles.
+            </li>
+            <li>
+              Alternate gradient side per band for rhythm; storefront decides layout — not stored on
+              the category record.
+            </li>
+            <li>
+              Root <code>titleI18n</code> is display copy only (not a link). Primary navigation to the
+              root PLP is the <strong>Browse all</strong> pill CTA.
+            </li>
+            <li>
+              On mobile: stack copy above tiles; scrim becomes bottom-weighted so text stays readable.
+            </li>
+          </ul>
+
+          <h3>Photography</h3>
+          <ul>
+            <li>
+              <strong>Root <code>image</code>:</strong> one wide landscape per root category (1800px+
+              source). Kayaks example uses
+              <a href="https://unsplash.com/photos/zK049OFP4uI">Unsplash zK049OFP4uI</a>.
+            </li>
+            <li>
+              <strong>Leaf <code>image</code>:</strong> smaller crop per subcategory — thematic, not
+              product packshots. Bottom gradient on tiles (dark → transparent top).
+            </li>
+            <li>
+              Serve via CDN or <code>/img/categories/{code}.webp</code> after local optimization.
+            </li>
+            <li>
+              Subtle Ken Burns on hover on root photo only; respect
+              <code>prefers-reduced-motion</code>.
+            </li>
+          </ul>
+
+          <h3>Typography &amp; color</h3>
+          <ul>
+            <li>
+              Eyebrow pill: existing <code>nameI18n</code> (e.g. &ldquo;Kayaks&rdquo;) + category icon.
+            </li>
+            <li>
+              Root <code>titleI18n</code>: longer motivational headline (Fraunces). Root
+              <code>descriptionI18n</code>: longer supporting paragraph.
+            </li>
+            <li>
+              Leaf <code>titleI18n</code>: short tile headline. Leaf <code>descriptionI18n</code>: short
+              hint line under the title.
+            </li>
+            <li>
+              Light scrim on root bands: stone-50 gradient → dark text + orange <strong>Browse all</strong>
+              pill. Leaf tiles: dark bottom scrim + light text.
+            </li>
+          </ul>
+
+          <h3>Category model — root (add to existing fields)</h3>
+          <pre>{
+  "code": "kayaks",
+  "nameI18n": { "en": "Kayaks", "de": "Kajaks" },
+  "icon": "sailboat",
+  "image": {
+    "url": "/img/categories/kayaks.webp",
+    "altTextI18n": { "en": "…", "de": "…" }
+  },
+  "titleI18n": {
+    "en": "Follow the line where water meets horizon",
+    "de": "Folge der Linie, wo Wasser und Horizont sich treffen"
+  },
+  "descriptionI18n": {
+    "en": "From glassy lakes to whitewater — find the hull, paddle, and kit that match your next put-in.",
+    "de": "…"
+  }
+}</pre>
+
+          <h3>Category model — leaf (add to existing fields)</h3>
+          <pre>{
+  "code": "touring-kayaks",
+  "nameI18n": { "en": "Touring kayaks", "de": "Touring Kajaks" },
+  "parentCategory": "…",
+  "icon": "sailboat",
+  "image": {
+    "url": "/img/categories/touring-kayaks.webp",
+    "altTextI18n": { "en": "…", "de": "…" }
+  },
+  "titleI18n": {
+    "en": "Touring kayaks",
+    "de": "Touring Kajaks"
+  },
+  "descriptionI18n": {
+    "en": "Distance & overnight",
+    "de": "Distanz & Übernachtung"
+  }
+}</pre>
+
+          <h3>Page intro copy</h3>
+          <p>
+            The page-level <code>h1</code> + lead paragraph stay in storefront i18n (not on the category
+            model) — see mockup for tone.
+          </p>
+
+          <h3>Accessibility</h3>
+          <ul>
+            <li>Meaningful <code>image.altTextI18n</code> on root and leaf photos.</li>
+            <li>Ensure 4.5:1 contrast for title and description over the light scrim.</li>
+            <li>Focus ring on leaf tiles and Browse all CTA; entire leaf tile remains one link.</li>
+          </ul>
+
+          <h3>Out of scope for v1</h3>
+          <ul>
+            <li>Parallax scroll, video backgrounds, or per-user seasonal themes.</li>
+            <li>Product counts on tiles (optional later if API exposes counts cheaply).</li>
+          </ul>
+
+          <p class="photo-credit">
+            Demo photography from
+            <a href="https://unsplash.com/">Unsplash</a> (mockup only — replace with licensed or
+            owned assets for production). Kayak hero:
+            <a href="https://unsplash.com/photos/zK049OFP4uI">Filip Mroz</a>.
+          </p>
+        </aside>
+      </div>
+    </main>
+
+    <script>
+      lucide.createIcons()
+
+      const body = document.body
+
+      function setActiveGroup(buttons, activeButton) {
+        buttons.forEach((button) => {
+          const isActive = button === activeButton
+          button.classList.toggle('is-active', isActive)
+          button.setAttribute('aria-selected', isActive ? 'true' : 'false')
+        })
+      }
+
+      document.querySelectorAll('[data-gradient-mode]').forEach((button) => {
+        button.addEventListener('click', () => {
+          setActiveGroup(document.querySelectorAll('[data-gradient-mode]'), button)
+          body.dataset.gradient = button.dataset.gradientMode
+        })
+      })
+    </script>
+  </body>
+</html>

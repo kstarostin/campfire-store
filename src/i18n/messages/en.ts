@@ -144,6 +144,7 @@ export const en = {
     allCategoriesDescription: 'Kayaks to skis, tents to trail bikes — pick your aisle and go.',
     shopCategory: 'Shop this category',
     browseSubcategories: 'Browse subcategories',
+    browseAllCategory: 'Browse all {name}',
     categoryLoading: 'Loading category…',
     categoryError: 'This category could not be loaded. Please try again.',
     productCount: '{count} products',
@@ -406,6 +407,9 @@ export const en = {
     homeHint: 'Kayaks, bikes, camping, and trail gear.',
     allCategories: 'All categories',
     allCategoriesHint: 'Browse the full category tree.',
+    categoriesTitle: 'Where will you go next?',
+    categoriesLead:
+      "Some trips start with a map. Others start with a paddle, a pack, or a pair of boots. Pick your door — we'll meet you on the other side.",
     category: 'Category',
     allProducts: 'All products',
     allProductsHint: 'Browse the full catalog with filters and sorting.',

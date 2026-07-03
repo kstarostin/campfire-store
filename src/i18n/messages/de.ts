@@ -150,6 +150,7 @@ export const de: Messages = {
     allCategoriesDescription: 'Vom Kajak bis zum Ski — wähl deine Abteilung und leg los.',
     shopCategory: 'Diese Kategorie shoppen',
     browseSubcategories: 'Unterkategorien durchsuchen',
+    browseAllCategory: 'Alle {name} entdecken',
     categoryLoading: 'Kategorie wird geladen…',
     categoryError: 'Diese Kategorie konnte nicht geladen werden. Bitte erneut versuchen.',
     productCount: '{count} Produkte',
@@ -418,6 +419,9 @@ export const de: Messages = {
     homeHint: 'Kajaks, Fahrräder, Camping und Trail-Ausrüstung.',
     allCategories: 'Alle Kategorien',
     allCategoriesHint: 'Durchstöbere den gesamten Kategoriebaum.',
+    categoriesTitle: 'Wohin geht die nächste Tour?',
+    categoriesLead:
+      'Manche Touren beginnen mit einer Karte. Andere mit einem Paddel, einem Rucksack oder einem Paar Schuhen. Wähl deine Tür — wir sehen uns auf der anderen Seite.',
     category: 'Kategorie',
     allProducts: 'Alle Produkte',
     allProductsHint: 'Durchstöbere den gesamten Katalog mit Filtern und Sortierung.',

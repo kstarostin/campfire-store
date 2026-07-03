@@ -80,11 +80,28 @@ export interface Product {
   badges?: ProductBadgeAssignment[]
 }
 
+export interface CategoryImageSize {
+  url?: string
+  mimeType?: string
+  altText?: string
+  altTextI18n?: I18nString
+}
+
+export interface CategoryImage {
+  large?: CategoryImageSize
+  small?: CategoryImageSize
+}
+
 export interface Category {
   _id: string
   code?: string
   name: string
   icon?: string
+  image?: CategoryImage
+  title?: string
+  titleI18n?: I18nString
+  description?: string
+  descriptionI18n?: I18nString
   parentCategory?: string | null
   subCategories?: Category[]
 }

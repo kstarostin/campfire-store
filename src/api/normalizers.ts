@@ -7,6 +7,7 @@ import type {
   CartEntry,
   CartEntryDocumentResponse,
   Category,
+  CategoryImageSize,
   Language,
   Order,
   OrderDocumentResponse,
@@ -51,12 +52,29 @@ export interface PriceQuickFilter {
   count: number
 }
 
+interface ApiCategoryImageSize {
+  url?: string
+  mimeType?: string
+  altText?: string
+  altTextI18n?: Partial<Record<Language, string>>
+}
+
+interface ApiCategoryImage {
+  large?: ApiCategoryImageSize
+  small?: ApiCategoryImageSize
+}
+
 interface ApiCategoryDocument {
   _id: string
   code?: string
   icon?: string
   name?: string
   nameI18n?: Partial<Record<Language, string>>
+  image?: ApiCategoryImage
+  title?: string
+  titleI18n?: Partial<Record<Language, string>>
+  description?: string
+  descriptionI18n?: Partial<Record<Language, string>>
   parentCategory?: string | null
   root?: boolean
   subCategories?: ApiCategoryDocument[]
@@ -96,6 +114,40 @@ function localizedName(
   return nameI18n?.[language] ?? nameI18n?.en ?? fallback ?? 'Untitled'
 }
 
+function localizedCategoryImageSize(
+  size: ApiCategoryImageSize | undefined,
+  language: Language,
+): CategoryImageSize | undefined {
+  if (!size) {
+    return undefined
+  }
+
+  return {
+    url: size.url,
+    mimeType: size.mimeType,
+    altText: localizedName(size.altTextI18n, language, size.altText),
+    altTextI18n: size.altTextI18n,
+  }
+}
+
+function localizedCategoryImage(
+  image: ApiCategoryImage | undefined,
+  language: Language,
+): Category['image'] | undefined {
+  if (!image) {
+    return undefined
+  }
+
+  const large = localizedCategoryImageSize(image.large, language)
+  const small = localizedCategoryImageSize(image.small, language)
+
+  if (!large && !small) {
+    return undefined
+  }
+
+  return { large, small }
+}
+
 export function normalizeCategory(
   document: ApiCategoryDocument,
   language: Language,
@@ -105,6 +157,15 @@ export function normalizeCategory(
     code: document.code,
     icon: document.icon,
     name: localizedName(document.nameI18n, language, document.name),
+    image: localizedCategoryImage(document.image, language),
+    title: localizedName(document.titleI18n, language, document.title),
+    titleI18n: document.titleI18n,
+    description: localizedName(
+      document.descriptionI18n,
+      language,
+      document.description,
+    ),
+    descriptionI18n: document.descriptionI18n,
     parentCategory: document.parentCategory ?? null,
     subCategories: document.subCategories?.map((subcategory) =>
       normalizeCategory(subcategory, language),
