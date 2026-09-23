@@ -18,9 +18,10 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-    "baseUrl": ".",
+    // No baseUrl: it is deprecated in TypeScript 6 and removed in 7. `paths`
+    // entries resolve relative to this file, so the alias needs no base.
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src"]
