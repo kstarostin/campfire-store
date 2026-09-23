@@ -3,7 +3,7 @@
   publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "22"
+  NODE_VERSION = "24"
   VITE_API_BASE_URL = "https://campfire-store-api.onrender.com/api/v1"
   VITE_API_ORIGIN = "https://campfire-store-api.onrender.com"
 

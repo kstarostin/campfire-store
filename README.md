@@ -18,7 +18,7 @@ It is a single-page app for browsing outdoor gear, managing a cart and wishlist,
 
 ## Requirements
 
-- [Node.js](https://nodejs.org/) 20 or newer
+- [Node.js](https://nodejs.org/) 22 or newer (the repo pins 24 via `.nvmrc`)
 - A running [Campfire Store API](https://github.com/kstarostin/campfire-store-api) instance (local or deployed)
 
 ## Configuration
