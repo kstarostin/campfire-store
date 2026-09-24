@@ -53,7 +53,9 @@ export function MobileNav({ open, onClose, returnFocusRef }: MobileNavProps) {
         className="fixed inset-y-0 right-0 z-50 flex h-dvh max-h-dvh w-[min(100%,20rem)] flex-col overflow-hidden border-l border-header-border bg-header-bg text-header-text md:hidden"
       >
         <div className="flex shrink-0 items-center justify-between border-b border-header-border px-4 py-4">
-          <span className="font-display text-lg font-semibold">{t('nav.menu')}</span>
+          <span className="font-display text-[2.25rem] font-bold uppercase leading-none tracking-[0.03em]">
+            {t('nav.menu')}
+          </span>
           <button
             type="button"
             className="header-icon-btn inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full"
@@ -66,7 +68,7 @@ export function MobileNav({ open, onClose, returnFocusRef }: MobileNavProps) {
         </div>
 
         <div className="mobile-nav-body min-h-0 flex-1 overflow-y-auto overscroll-y-contain px-4 py-4">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-[#a8a29e]">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-[#8e9a9a]">
             {t('nav.categories')}
           </p>
 
@@ -104,7 +106,7 @@ export function MobileNav({ open, onClose, returnFocusRef }: MobileNavProps) {
                         <button
                           type="button"
                           className={`header-icon-btn inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-md ${
-                            isExpanded ? 'text-[#fdba74]' : ''
+                            isExpanded ? 'text-[#ff7a33]' : ''
                           }`}
                           aria-expanded={isExpanded}
                           aria-controls={panelId}
@@ -167,7 +169,7 @@ export function MobileNav({ open, onClose, returnFocusRef }: MobileNavProps) {
             <li>
               <LocaleLink
                 to={isAuthenticated ? '/account' : '/login'}
-                className="block rounded-md px-2 py-2 hover:bg-white/10 hover:text-[#fdba74]"
+                className="block rounded-md px-2 py-2 hover:bg-white/10 hover:text-[#ff7a33]"
                 onClick={onClose}
               >
                 {isAuthenticated ? t('nav.account') : t('nav.signIn')}

@@ -10,9 +10,9 @@ export function AuthLayout() {
 
   return (
     <div className="flex min-h-screen flex-col bg-bg text-text">
-      <header className="border-b border-header-border bg-[rgb(28_25_23/96%)] text-header-text">
+      <header className="border-b border-header-border bg-[rgb(10_50_72/96%)] text-header-text">
         <Container wide>
-          <div className="flex min-h-[var(--header-height)] items-center">
+          <div className="flex min-h-[var(--header-height)] items-center justify-center">
             <LocaleLink
               to="/"
               className="flex leading-none"

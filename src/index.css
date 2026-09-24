@@ -1,46 +1,46 @@
 @import 'tailwindcss';
 
 @theme {
-  /* Typography */
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-display: 'Fraunces', Georgia, serif;
+  /* Typography — Agdasima (condensed display) over Geist (UI sans) */
+  --font-sans: 'Geist', system-ui, sans-serif;
+  --font-display: 'Agdasima', 'Geist', system-ui, sans-serif;
 
-  /* Colors */
-  --color-bg: #fafafa;
-  --color-header-bg: #1c1917;
-  --color-header-border: #292524;
-  --color-footer-bg: #f0f0f0;
+  /* Colors — deep petrol + sage neutrals + a single terracotta accent */
+  --color-bg: #eef2f2;
+  --color-header-bg: #0a3248;
+  --color-header-border: #14455f;
+  --color-footer-bg: #0a3248;
   --color-surface: #ffffff;
-  --color-surface-muted: #f5f5f5;
-  --color-border: #e5e5e5;
-  --color-text: #171717;
-  --color-text-muted: #737373;
-  --color-primary: #ea580c;
-  --color-primary-hover: #c2410c;
-  --color-primary-subtle: #fff7ed;
-  --color-accent: #f59e0b;
-  --color-secondary: #047857;
-  --color-secondary-hover: #065f46;
-  --color-secondary-subtle: #e8f7f0;
-  --color-secondary-muted: #d1ebe0;
+  --color-surface-muted: #e4eaea;
+  --color-border: #d2d9d9;
+  --color-text: #313432;
+  --color-text-muted: #595c66;
+  --color-primary: #ff7a33;
+  --color-primary-hover: #e85f18;
+  --color-primary-subtle: #fff0e6;
+  --color-accent: #529cb0;
+  --color-secondary: #223d44;
+  --color-secondary-hover: #0a3248;
+  --color-secondary-subtle: #e3eceb;
+  --color-secondary-muted: #d2d9d9;
 
-  /* Supporting oranges */
-  --color-orange-100: #fed7aa;
-  --color-orange-50: #fffbeb;
-  --color-yellow-200: #fde68a;
-  --color-orange-300: #fdba74;
+  /* Supporting terracotta tints (formerly the orange ramp) */
+  --color-orange-100: #eec4b2;
+  --color-orange-50: #faf1ec;
+  --color-yellow-200: #e8d3b8;
+  --color-orange-300: #ff7a33;
 
   /* Header text */
-  --color-header-text: #f5f5f4;
+  --color-header-text: #eef2f2;
 
   /* Layout */
-  --max-width-content: 72rem;
+  --max-width-content: 78rem;
   --header-height: 4.75rem;
 
-  /* Radii */
-  --radius-sm: 0.5rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1rem;
+  /* Radii — squared off, matching the reference's 4/6/8px scale */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
 
   /* Shadows */
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 6%);
@@ -49,35 +49,69 @@
 
 @layer base {
   :root {
-    --font-sans: 'Inter', system-ui, sans-serif;
-    --font-display: 'Fraunces', Georgia, serif;
+    --font-sans: 'Geist', system-ui, sans-serif;
+    --font-display: 'Agdasima', 'Geist', system-ui, sans-serif;
 
-    --color-bg: #fafafa;
-    --color-header-bg: #1c1917;
-    --color-header-border: #292524;
-    --color-footer-bg: #f0f0f0;
+    --color-bg: #eef2f2;
+    --color-header-bg: #0a3248;
+    --color-header-border: #14455f;
+    --color-footer-bg: #0a3248;
     --color-surface: #ffffff;
-    --color-surface-muted: #f5f5f5;
-    --color-border: #e5e5e5;
-    --color-text: #171717;
-    --color-text-muted: #737373;
-    --color-primary: #ea580c;
-    --color-primary-hover: #c2410c;
-    --color-primary-subtle: #fff7ed;
-    --color-accent: #f59e0b;
-    --color-secondary: #047857;
-    --color-secondary-hover: #065f46;
-    --color-secondary-subtle: #e8f7f0;
-    --color-secondary-muted: #d1ebe0;
+    --color-surface-muted: #e4eaea;
+    --color-border: #d2d9d9;
+    --color-text: #313432;
+    --color-text-muted: #595c66;
+    --color-primary: #ff7a33;
+    --color-primary-hover: #e85f18;
+    --color-primary-subtle: #fff0e6;
+    --color-accent: #529cb0;
+    --color-secondary: #223d44;
+    --color-secondary-hover: #0a3248;
+    --color-secondary-subtle: #e3eceb;
+    --color-secondary-muted: #d2d9d9;
 
-    --radius-sm: 0.5rem;
-    --radius-md: 0.75rem;
-    --radius-lg: 1rem;
+    --color-orange-100: #eec4b2;
+    --color-orange-50: #faf1ec;
+    --color-yellow-200: #e8d3b8;
+    --color-orange-300: #ff7a33;
+
+    --radius-sm: 0.25rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
     --shadow-sm: 0 1px 2px rgb(0 0 0 / 6%);
     --shadow-md: 0 10px 28px rgb(0 0 0 / 8%);
     --header-height: 4.75rem;
-    --max-width: 72rem;
+    --header-control-height: 2.625rem;
+    /* Section rhythm. Applied to both edges like the reference, so the gap
+       between two sections is double this. */
+    --section-spacing: 2rem;
+    --max-width: 78rem;
     --page-gutter: 1.25rem;
+
+    /* Display type scale.
+       Agdasima is condensed, so it reads smaller than the previous serif at the
+       same px and takes larger sizes to carry equal weight. Tracking tightens
+       and leading drops as size grows, which is what gives the reference design
+       its editorial feel.
+
+       Deliberately capped far below the reference's 150-172px hero: this is a
+       shop, and headings sit above product grids, filters and forms rather than
+       full-bleed photography. */
+    --text-display-hero: clamp(3.5rem, 10.5vw, 8.75rem);
+    --text-display-band: clamp(2rem, 4.2vw, 3rem);
+    --text-display-page: clamp(2.25rem, 5vw, 3.25rem);
+    /* Section headings follow the reference's h2 ramp: 42px small → 70px wide. */
+    --text-display-section: clamp(2.625rem, 5vw, 4.375rem);
+    /* Entity titles (PDP) keep the smaller step — they sit in narrow columns. */
+    --text-display-title: clamp(1.75rem, 3.2vw, 2.5rem);
+
+    --tracking-display-xl: -0.035em;
+    --tracking-display: -0.025em;
+    --tracking-display-sm: -0.015em;
+
+    --leading-display-xl: 0.9;
+    --leading-display: 1;
+    --leading-display-sm: 1.08;
   }
 
   *,
@@ -116,11 +150,29 @@
   h2,
   h3 {
     font-family: var(--font-display);
+    line-height: var(--leading-display-sm);
+    letter-spacing: var(--tracking-display-sm);
   }
 
+  /* Section titles: bold caps in the display face, matching the reference.
+     Caps take positive tracking, so this overrides the negative value the
+     h1/h2/h3 rule above sets for lowercase display text. */
   h2 {
     font-size: 1.5rem;
-    letter-spacing: -0.02em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  /* Not section titles — product names, dialog and empty-state copy keep
+     sentence case. */
+  .cart-line__title,
+  .wishlist-line__title,
+  .confirm-dialog__title,
+  .empty-state__title {
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: var(--tracking-display-sm);
   }
 }
 
@@ -165,12 +217,26 @@
     }
   }
 
+  .mega-menu {
+    background-color: var(--color-header-bg);
+    border-top-color: var(--color-header-border);
+  }
+
+  /* Over the hero the panel becomes darkened glass, so the photograph reads
+     through it rather than being covered by a solid slab. */
+  .site-header--overlay .mega-menu {
+    background-color: rgb(6 30 44 / 72%);
+    backdrop-filter: blur(20px) saturate(120%);
+    -webkit-backdrop-filter: blur(20px) saturate(120%);
+    border-top-color: rgb(255 255 255 / 14%);
+  }
+
   .mega-menu-link {
     position: relative;
     display: inline-flex;
     align-items: center;
     max-width: 100%;
-    color: #a8a29e;
+    color: #8e9a9a;
     transition: color 0.15s ease;
   }
 
@@ -185,8 +251,9 @@
     scale: 0.75;
     pointer-events: none;
     flex-shrink: 0;
-    color: #fdba74;
-    fill: rgb(245 158 11 / 40%);
+    color: #ff7a33;
+    /* Solid, not a washed tint — the flame reads as a filled mark. */
+    fill: currentColor;
     transition:
       opacity 0.15s ease,
       scale 0.15s ease;
@@ -199,20 +266,29 @@
   }
 
   .mega-menu-link:hover {
-    color: #fdba74;
+    color: #ff7a33;
   }
 
   .mega-menu-link--title {
+    /* Agdasima is condensed, so top-level categories need more size than a
+       16px UI face to carry the same weight against their child lists.
+       Uppercase takes positive tracking — the display scale's negative values
+       are tuned for lowercase and would jam the caps together. */
+    font-size: 1.5rem;
+    line-height: 1.1;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
     color: var(--color-header-text);
   }
 
   .mega-menu-link--title .mega-menu-link__fire {
-    width: 0.875rem;
-    height: 0.875rem;
+    width: 1.125rem;
+    height: 1.125rem;
+    translate: calc(-100% - 0.625rem) -50%;
   }
 
   .mega-menu-link--title:hover {
-    color: #fdba74;
+    color: #ff7a33;
   }
 
   .mega-menu-link--view-all {
@@ -220,7 +296,7 @@
   }
 
   .mega-menu-link--view-all:hover {
-    color: var(--color-secondary);
+    color: #ff7a33;
   }
 
   .mobile-nav-body .mega-menu-link {
@@ -232,13 +308,290 @@
     translate: calc(-100% - 0.5rem) -50%;
   }
 
+  /* ---- Footer -------------------------------------------------------- */
+
+  /* Matches the header's wider container, but keeps the page gutter — the
+     header's tighter 12px inline padding is for its edge-hugging icons. */
+  .footer-container {
+    padding-inline: var(--page-gutter);
+    /* Named query container so the bottom row can switch all three sections at
+       once, based on the footer's own width rather than the viewport. */
+    container: footer / inline-size;
+  }
+
+  /* Each title fills its own column, so the column is the query container. */
+  .footer-intro,
+  .footer-news {
+    container-type: inline-size;
+  }
+
+  /* Measured in Agdasima bold caps at 0.02em tracking: "Get in touch" renders
+     488px wide per 100px of font-size, "Stay up to date" 616px. Dividing the
+     column's inline size by those gives the multipliers below, so each fills
+     its own column despite the different character counts. */
+  .footer-fill-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 0.92;
+    white-space: nowrap;
+  }
+
+  .footer-fill-title--contact {
+    font-size: 20.4cqi;
+  }
+
+  .footer-fill-title--news {
+    font-size: 16.2cqi;
+  }
+
+  .site-footer {
+    position: relative;
+    margin-top: var(--section-spacing);
+    padding-block: 4rem 0;
+    overflow: hidden;
+    background: var(--color-footer-bg);
+    color: var(--color-header-text);
+  }
+
+  .footer-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2.5rem 4rem;
+    padding-bottom: 3.5rem;
+  }
+
+  .footer-intro {
+    flex: 1 1 22rem;
+    min-width: 0;
+  }
+
+  .footer-intro p {
+    margin: 1.25rem 0 0;
+    color: rgb(238 242 242 / 72%);
+    font-size: 1.125rem;
+    letter-spacing: -0.03em;
+  }
+
+  .footer-form {
+    display: flex;
+    flex: 1 1 26rem;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: 0;
+  }
+
+  .footer-form__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-form__row .footer-field {
+    flex: 1 1 12rem;
+  }
+
+  /* Underline fields, as in the reference — no boxes on the dark ground. */
+  .footer-field {
+    width: 100%;
+    min-width: 0;
+    padding: 0.75rem 0;
+    border: 0;
+    border-bottom: 1px solid rgb(238 242 242 / 34%);
+    background: transparent;
+    color: var(--color-header-text);
+    font: inherit;
+    transition: border-color 0.15s ease;
+  }
+
+  .footer-field::placeholder {
+    color: rgb(238 242 242 / 52%);
+  }
+
+  .footer-field:focus {
+    outline: none;
+    border-bottom-color: #ff7a33;
+  }
+
+  .footer-submit {
+    align-self: flex-start;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius-sm);
+    background: var(--color-primary);
+    color: #ffffff;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .footer-submit:hover {
+    border-color: var(--color-primary-hover);
+    background: var(--color-primary-hover);
+  }
+
+  .footer-divider {
+    height: 1px;
+    background: rgb(238 242 242 / 14%);
+  }
+
+  /* Three sections: newsletter, wordmark, links + socials.
+     Flex rather than fixed grid tracks so wrapping is driven by each section's
+     own min width (flex-basis) instead of a breakpoint — and a section that
+     wraps onto its own row grows to fill the full width. */
+  .footer-bottom {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: center;
+    gap: 2.5rem 3rem;
+    padding-block: 3.5rem;
+  }
+
+  /* All three drop together rather than one at a time: below three columns'
+     worth of min width (3 x 19rem + 2 x 3rem gaps) the row becomes a single
+     column and every section fills it. */
+  @container footer (max-width: 63rem) {
+    .footer-bottom {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  .footer-news {
+    min-width: 0;
+  }
+
+  .footer-news__form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+
+  .footer-news__form .footer-field {
+    flex: 1 1 14rem;
+  }
+
+  .footer-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2.5rem 3rem;
+    min-width: 0;
+  }
+
+  .site-footer h3 {
+    margin: 0 0 1rem;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .footer-news p {
+    margin: 1.25rem 0 0;
+    color: rgb(238 242 242 / 72%);
+  }
+
+  .footer-links ul,
+  .footer-social ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .footer-links ul {
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .footer-social ul {
+    gap: 0.75rem;
+  }
+
+  .footer-social__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid rgb(238 242 242 / 24%);
+    border-radius: 999px;
+    color: var(--color-header-text);
+    transition:
+      color 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .footer-social__icon:hover {
+    color: #ff7a33;
+    border-color: #ff7a33;
+  }
+
+  .footer-copyright {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+    margin: 0;
+    padding-bottom: 1.5rem;
+    color: rgb(238 242 242 / 60%);
+    font-size: 0.8125rem;
+  }
+
+  .footer-wordmark {
+    display: block;
+    justify-self: center;
+    width: min(100%, 22rem);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* NOTE: .footer-news is a query container (container-type: inline-size), so
+     its width must never be derived from its contents — any shrink-to-fit
+     sizing (justify-items/align-items: center, width: fit-content) collapses it
+     to ~0 and the cqi-sized title vanishes. flex-basis keeps it definite. */
+
   .footer-link {
-    color: var(--color-text-muted);
+    color: rgb(238 242 242 / 76%);
     transition: color 0.15s ease;
   }
 
   .footer-link:hover {
-    color: var(--color-secondary);
+    color: var(--color-primary);
+  }
+
+  /* The solid bar drops in when it takes over from the transparent overlay. */
+  .site-header--revealed {
+    animation: site-header-drop 0.26s ease-out;
+  }
+
+  @keyframes site-header-drop {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-header--revealed {
+      animation: none;
+    }
   }
 
   .header-icon-btn {
@@ -249,7 +602,7 @@
   }
 
   .header-icon-btn:hover {
-    color: #fdba74;
+    color: #ff7a33;
     background-color: rgb(255 255 255 / 8%);
   }
 
@@ -268,13 +621,115 @@
     justify-content: center;
     font-size: 0.75rem;
     font-weight: 700;
-    color: #fdba74;
+    color: #ff7a33;
     background: rgb(255 255 255 / 12%);
   }
 
-  .header-locale-pill {
+  /* Over the hero the header is transparent, so its controls drop their fill
+     and read as outlines against the photograph. */
+  .site-header--overlay .header-search-box,
+  .site-header--overlay .header-locale-pill {
+    background-color: transparent;
+    border-color: rgb(255 255 255 / 38%);
+  }
+
+  .site-header--overlay .header-search-box:focus-within,
+  .site-header--overlay .header-locale-pill:hover,
+  .site-header--overlay .header-locale-pill[aria-expanded='true'] {
+    border-color: rgb(255 255 255 / 68%);
+  }
+
+  /* Search clear button, and suppressing the UA's own on WebKit so there is
+     only one affordance. */
+  .header-search-input::-webkit-search-cancel-button,
+  .header-search-input::-webkit-search-decoration {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .header-search-clear {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #8e9a9a;
+    transition: color 0.15s ease;
+  }
+
+  .header-search-clear:hover {
     color: var(--color-header-text);
-    border-color: #44403c;
+  }
+
+  /* Locale panel mirrors the Explore menu: solid petrol normally, darkened
+     glass while the header overlays the hero. */
+  .locale-panel {
+    background-color: var(--color-header-bg);
+    border-color: var(--color-header-border);
+    color: var(--color-header-text);
+  }
+
+  .site-header--overlay .locale-panel {
+    background-color: rgb(6 30 44 / 72%);
+    backdrop-filter: blur(20px) saturate(120%);
+    -webkit-backdrop-filter: blur(20px) saturate(120%);
+    border-color: rgb(255 255 255 / 14%);
+  }
+
+  .locale-panel__legend {
+    color: rgb(238 242 242 / 62%);
+  }
+
+  /* Divider is its own element rather than a border on the fieldset: a <legend>
+     is laid out on its fieldset's top border, so the rule ran straight through
+     the CURRENCY label. */
+  .locale-panel__divider {
+    height: 1px;
+    margin-block: 1rem;
+    background: rgb(238 242 242 / 16%);
+  }
+
+  .locale-option {
+    padding: 0.375rem 0.5rem;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--color-header-text);
+    font: inherit;
+    font-size: 0.875rem;
+    text-align: left;
+    cursor: pointer;
+    transition:
+      color 0.15s ease,
+      background-color 0.15s ease;
+  }
+
+  .locale-option:hover {
+    background: rgb(255 255 255 / 10%);
+    color: #ff7a33;
+  }
+
+  .locale-option.is-active {
+    background: rgb(255 255 255 / 12%);
+    color: #ff7a33;
+    font-weight: 600;
+  }
+
+  .header-search-box {
+    height: var(--header-control-height);
+    background-color: #14455f;
+    border-color: #2c4f60;
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .header-locale-pill {
+    height: var(--header-control-height);
+    color: var(--color-header-text);
+    background-color: #14455f;
+    border-color: #2c4f60;
     transition:
       color 0.15s ease,
       border-color 0.15s ease,
@@ -283,52 +738,168 @@
 
   .header-locale-pill:hover,
   .header-locale-pill[aria-expanded='true'] {
-    color: #fdba74;
-    border-color: rgb(253 186 116 / 45%);
+    color: #ff7a33;
+    border-color: rgb(224 154 125 / 45%);
   }
 
-  /* Home — hero (fire emblem palette: yellow tips → orange → red-orange, softened) */
+  /* Home — hero.
+     Full-viewport sunset ridgeline. The black top gradient does double duty:
+     it seats the white display type, and it carries the transparent header
+     that overlays the hero until the section is scrolled past. */
   .hero {
-    padding: 2.75rem 0 2.5rem;
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    min-height: 100svh;
+    padding: calc(var(--header-height) + 3rem) 0 4rem;
     background-color: var(--color-bg);
+    /* The photograph is hosted by the API, so its URL is only knowable at
+       runtime: Hero.tsx sets --hero-image-lg/-md/-sm on the element from
+       imageUrl() for the current time of day, and each breakpoint below picks
+       the width it wants. The `none` fallbacks matter — an undefined custom
+       property makes the whole background-image invalid, which would take the
+       gradient down with it.
+
+       --hero-fallback is a bundled 900px copy layered *underneath* the API
+       image. A background layer that fails to load is simply not painted, so
+       this needs no JS: the API is asleep or unreachable and the local copy
+       shows; the API answers and its larger photograph paints over the top.
+       That also covers Render's 30–60s cold start, where the hero would
+       otherwise sit empty until the first response. */
+    --hero-fallback: url('./assets/hero-fallback.webp');
     background-image:
-      linear-gradient(180deg, transparent 0%, transparent 48%, rgb(250 250 250 / 72%) 78%, var(--color-bg) 100%),
-      radial-gradient(ellipse 78% 62% at 80% -10%, rgb(255 214 51 / 32%), transparent 58%),
-      radial-gradient(ellipse 68% 58% at 12% 4%, rgb(255 140 0 / 26%), transparent 54%),
-      radial-gradient(ellipse 52% 44% at 62% 22%, rgb(255 87 34 / 16%), transparent 62%),
       linear-gradient(
         180deg,
-        #fff3cc 0%,
-        #ffe8c4 22%,
-        #fff2d9 48%,
-        #f7f7f7 82%,
-        var(--color-bg) 100%
-      );
+        rgb(0 0 0 / 92%) 0%,
+        rgb(0 0 0 / 74%) 16%,
+        rgb(0 0 0 / 50%) 34%,
+        rgb(0 0 0 / 26%) 52%,
+        rgb(0 0 0 / 8%) 70%,
+        transparent 84%
+      ),
+      var(--hero-image-lg, none),
+      var(--hero-fallback);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+
+  .hero-container {
+    display: flex;
+    width: 100%;
+  }
+
+  .hero-inner {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    /* Eyebrow + heading ride the top; .hero-foot is pushed to the base by its
+       own auto margin, so the two ends anchor the frame. */
+    align-items: flex-start;
+  }
+
+  .hero-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem 3rem;
+    width: 100%;
+    /* auto top margin pins it low; the bottom margin lifts it clear of the
+       base so it sits over the ridgeline rather than the very edge. */
+    margin-top: auto;
+    margin-bottom: 5.5rem;
+    padding-top: 1.25rem;
+  }
+
+  .hero-foot__lead {
+    max-width: 34rem;
+    min-width: 0;
+    color: #ffffff;
+  }
+
+  /* Short viewports (13" laptops) can't carry a 140px three-line heading plus a
+     lifted foot row inside 100svh — the buttons would fall below the fold. */
+  @media (min-width: 768px) and (max-height: 860px) {
+    :root {
+      --text-display-hero: clamp(3rem, 7vw, 5.5rem);
+    }
+
+    .hero-foot {
+      margin-bottom: 2.5rem;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .hero-foot {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.75rem;
+      padding-top: 2rem;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      background-image:
+        linear-gradient(
+          180deg,
+          rgb(0 0 0 / 93%) 0%,
+          rgb(0 0 0 / 76%) 18%,
+          rgb(0 0 0 / 54%) 36%,
+          rgb(0 0 0 / 28%) 54%,
+          rgb(0 0 0 / 10%) 72%,
+          transparent 86%
+        ),
+        var(--hero-image-md, none),
+        var(--hero-fallback);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .hero {
+      background-image:
+        linear-gradient(
+          180deg,
+          rgb(0 0 0 / 94%) 0%,
+          rgb(0 0 0 / 78%) 20%,
+          rgb(0 0 0 / 58%) 38%,
+          rgb(0 0 0 / 32%) 56%,
+          rgb(0 0 0 / 12%) 74%,
+          transparent 88%
+        ),
+        var(--hero-image-sm, none),
+        var(--hero-fallback);
+    }
   }
 
   .hero-eyebrow {
     margin: 0;
-    font-size: 0.8125rem;
+    font-size: 0.9375rem;
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--color-primary-hover);
+    color: #ff7a33;
   }
 
   .hero h1 {
-    margin: 0.625rem 0 0;
+    margin: 0.75rem 0 0;
+    max-width: 15ch;
     font-family: var(--font-display);
-    font-size: clamp(2.125rem, 5.5vw, 3.5rem);
-    line-height: 1.06;
-    letter-spacing: -0.025em;
+    font-size: var(--text-display-hero);
+    line-height: var(--leading-display-xl);
+    letter-spacing: var(--tracking-display-xl);
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
   }
 
   .hero-lead {
-    max-width: 36rem;
+    max-width: 34rem;
     margin: 1rem 0 0;
-    color: var(--color-text-muted);
-    font-size: 1.0625rem;
-    line-height: 1.55;
+    font-size: clamp(1.1875rem, 1.9vw, 1.5rem);
+    line-height: 1.45;
   }
 
   .hero-actions {
@@ -339,9 +910,8 @@
   }
 
   .hero-highlights {
-    margin: 1.25rem 0 0;
-    font-size: 0.875rem;
-    color: var(--color-text-muted);
+    margin: 1.125rem 0 0;
+    font-size: 1.0625rem;
     letter-spacing: 0.01em;
   }
 
@@ -359,9 +929,17 @@
     padding: 2rem 0;
     background-color: var(--color-bg);
     background-image:
-      radial-gradient(ellipse 70% 55% at 50% 0%, rgb(255 214 51 / 22%), transparent 62%),
-      radial-gradient(ellipse 48% 40% at 82% 18%, rgb(255 140 0 / 14%), transparent 58%),
-      linear-gradient(180deg, #fff6e8 0%, var(--color-bg) 42%, var(--color-bg) 100%);
+      radial-gradient(
+        ellipse 70% 55% at 50% 0%,
+        rgb(217 160 106 / 22%),
+        transparent 62%
+      ),
+      radial-gradient(
+        ellipse 48% 40% at 82% 18%,
+        rgb(218 111 77 / 14%),
+        transparent 58%
+      ),
+      linear-gradient(180deg, #f9efe8 0%, var(--color-bg) 42%, var(--color-bg) 100%);
   }
 
   .not-found-page .site-container {
@@ -396,10 +974,10 @@
     color: transparent;
     background: linear-gradient(
       180deg,
-      #c2410c 0%,
-      #ea580c 38%,
-      #f97316 68%,
-      #fbbf24 100%
+      #e85f18 0%,
+      #ff7a33 38%,
+      #ff7a33 68%,
+      #f5a35e 100%
     );
     background-clip: text;
     -webkit-background-clip: text;
@@ -418,7 +996,7 @@
     width: clamp(7.25rem, 29vw, 11.25rem);
     height: clamp(7.25rem, 29vw, 11.25rem);
     border-radius: 999px;
-    background: radial-gradient(circle, rgb(249 115 22 / 28%) 0%, transparent 70%);
+    background: radial-gradient(circle, rgb(218 111 77 / 28%) 0%, transparent 70%);
     animation: not-found-glow 2.8s ease-in-out infinite;
   }
 
@@ -472,16 +1050,21 @@
     width: auto;
   }
 
+  /* Buttons share one voice site-wide: uppercase display type, as on the
+     footer's submit buttons. */
   .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0.75rem 1.125rem;
+    padding: 0.75rem 1.25rem;
     border: 0;
-    border-radius: 999px;
-    font-size: 0.9375rem;
-    font-weight: 600;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
     cursor: pointer;
     text-decoration: none;
     transition:
@@ -506,29 +1089,36 @@
   }
 
   .btn-secondary:hover {
-    border-color: #d4d4d4;
+    border-color: #c3cccc;
     background: var(--color-surface-muted);
   }
 
   @media (min-width: 768px) {
-    .hero {
-      padding: 3.25rem 0 3rem;
+    :root {
+      --section-spacing: 2.5rem;
     }
 
-    .hero-lead {
-      font-size: 1.125rem;
+    .hero {
+      /* Must still clear the overlaying header — a bare padding here previously
+         tucked the eyebrow underneath it. */
+      padding: calc(var(--header-height) + 4rem) 0 4.5rem;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    :root {
+      --section-spacing: 3rem;
     }
   }
 
   /* Home — sections */
   .section {
-    padding: 1.25rem 0 2rem;
+    padding-block: var(--section-spacing);
   }
 
   .section--band {
-    padding: 1.75rem 0 2.25rem;
+    padding-block: var(--section-spacing);
     background: var(--color-bg);
-    border-block: 1px solid var(--color-border);
   }
 
   .section-head {
@@ -542,14 +1132,21 @@
   .section-head h2 {
     margin: 0;
     font-family: var(--font-display);
-    font-size: 1.5rem;
-    letter-spacing: -0.02em;
+    font-size: var(--text-display-section);
+    line-height: var(--leading-display);
+    letter-spacing: 0.015em;
   }
 
+  /* Matches the reference's .paragraph-large: 18px, regular weight, with the
+     slight negative tracking its body face carries. Line-height stays at the
+     app's 1.5 rather than the reference's tighter 1.3 — these sit above dense
+     product grids and need to stay easy to scan. */
   .section-head p {
-    margin: 0.25rem 0 0;
+    margin: 0.5rem 0 0;
     color: var(--color-text-muted);
-    font-size: 0.9375rem;
+    font-size: 1.125rem;
+    font-weight: 400;
+    letter-spacing: -0.03em;
   }
 
   .section--categories .link-view-all {
@@ -557,9 +1154,12 @@
     align-items: center;
     padding: 0.5rem 0.875rem;
     border: 1px solid var(--color-secondary-muted);
-    border-radius: 999px;
-    font-size: 0.875rem;
-    font-weight: 600;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
     color: var(--color-secondary);
     background: var(--color-surface);
     transition:
@@ -645,7 +1245,7 @@
   .chip {
     padding: 0.5rem 0.875rem;
     border: 1px solid var(--color-border);
-    border-radius: 999px;
+    border-radius: var(--radius-sm);
     font-size: 0.8125rem;
     font-weight: 500;
     background: var(--color-surface);
@@ -695,7 +1295,7 @@
     margin-left: auto;
     padding: 0.5rem 0.875rem;
     border: 1px solid var(--color-border);
-    border-radius: 999px;
+    border-radius: var(--radius-sm);
     background: var(--color-surface);
     font: inherit;
     font-size: 0.8125rem;
@@ -723,7 +1323,7 @@
   .product-card:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
-    border-color: #fdba74;
+    border-color: #ff7a33;
   }
 
   .product-card__link {
@@ -777,12 +1377,12 @@
   }
 
   .product-card-quick-actions__btn:hover {
-    border-color: #fdba74;
+    border-color: #ff7a33;
     color: var(--color-primary);
   }
 
   .product-card-quick-actions__btn.is-active {
-    border-color: #fdba74;
+    border-color: #ff7a33;
     color: var(--color-primary);
     background: var(--color-primary-subtle);
   }
@@ -968,7 +1568,7 @@
   .product-media {
     aspect-ratio: 1;
     padding: 1rem;
-    background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
+    background: linear-gradient(180deg, #ffffff 0%, #e4eaea 100%);
   }
 
   .product-media img {
@@ -983,7 +1583,7 @@
     justify-content: center;
     width: 100%;
     height: 100%;
-    background: linear-gradient(180deg, #ffffff 0%, #f7f7f7 100%);
+    background: linear-gradient(180deg, #ffffff 0%, #e8eded 100%);
   }
 
   .product-media-placeholder__icon {
@@ -999,7 +1599,7 @@
   }
 
   .section--products .product-media-placeholder {
-    background: linear-gradient(180deg, #ffffff 0%, #f7f7f7 100%);
+    background: linear-gradient(180deg, #ffffff 0%, #e8eded 100%);
   }
 
   .product-body {
@@ -1025,14 +1625,14 @@
 
   .badge {
     padding: 0.125rem 0.5rem;
-    border-radius: 999px;
+    border-radius: var(--radius-sm);
     font-weight: 600;
-    color: #92400e;
-    background: #fdecc8;
+    color: #8a4a32;
+    background: var(--color-primary-subtle);
   }
 
   .badge--forest {
-    color: #065f46;
+    color: #0a3248;
     background: var(--color-secondary-muted);
   }
 
@@ -1074,7 +1674,7 @@
     border-radius: var(--radius-lg);
     color: white;
     border: 1px solid rgb(255 255 255 / 10%);
-    background: linear-gradient(135deg, #064e3b 0%, #047857 48%, #065f46 100%);
+    background: linear-gradient(135deg, #0a3248 0%, #223d44 48%, #0a3248 100%);
     box-shadow: var(--shadow-md);
   }
 
@@ -1123,7 +1723,7 @@
   .promo-point-icon {
     flex-shrink: 0;
     margin-top: 0.125rem;
-    color: #6ee7b7;
+    color: #8fbac4;
   }
 
   .promo-actions {
@@ -1157,7 +1757,7 @@
     font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: #6ee7b7;
+    color: #8fbac4;
   }
 
   .promo-aside-hint {
@@ -1263,15 +1863,15 @@
   }
 
   .catalog-breadcrumb__sep {
-    color: #d4d4d4;
+    color: #c3cccc;
   }
 
   .catalog-page-header h1 {
     margin: 0;
     font-family: var(--font-display);
-    font-size: clamp(1.625rem, 4vw, 2rem);
-    line-height: 1.12;
-    letter-spacing: -0.02em;
+    font-size: var(--text-display-page);
+    line-height: var(--leading-display);
+    letter-spacing: var(--tracking-display);
   }
 
   .catalog-query-term {
@@ -1324,9 +1924,12 @@
     margin-bottom: 0.75rem;
     padding: 0.5rem 0.875rem;
     border: 1px solid var(--color-border);
-    border-radius: 999px;
-    font-size: 0.8125rem;
-    font-weight: 600;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
     background: var(--color-surface);
     cursor: pointer;
     transition:
@@ -1380,7 +1983,7 @@
     min-width: 1.25rem;
     height: 1.25rem;
     padding: 0 0.375rem;
-    border-radius: 999px;
+    border-radius: var(--radius-sm);
     font-family: var(--font-sans);
     font-size: 0.6875rem;
     font-weight: 600;
@@ -1456,7 +2059,7 @@
   .catalog-price-range input:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 2px rgb(234 88 12 / 15%);
+    box-shadow: 0 0 0 2px rgb(218 111 77 / 15%);
   }
 
   .catalog-price-quick-filters {
@@ -1529,7 +2132,7 @@
   }
 
   .catalog-pagination button:hover:not(.is-disabled) {
-    border-color: #d4d4d4;
+    border-color: #c3cccc;
     background: var(--color-surface-muted);
   }
 
@@ -1601,7 +2204,7 @@
       145deg,
       var(--color-secondary-subtle) 0%,
       var(--color-surface-muted) 48%,
-      #e7e5e4 100%
+      #d2d9d9 100%
     );
   }
 
@@ -1610,7 +2213,7 @@
       -145deg,
       var(--color-primary-subtle) 0%,
       var(--color-surface-muted) 48%,
-      #e7e5e4 100%
+      #d2d9d9 100%
     );
   }
 
@@ -1619,20 +2222,20 @@
     inset: 0;
     background: linear-gradient(
       105deg,
-      rgb(250 250 249 / 96%) 0%,
-      rgb(250 250 249 / 88%) 40%,
-      rgb(250 250 249 / 35%) 68%,
-      rgb(250 250 249 / 10%) 100%
+      rgb(238 242 242 / 96%) 0%,
+      rgb(238 242 242 / 88%) 40%,
+      rgb(238 242 242 / 35%) 68%,
+      rgb(238 242 242 / 10%) 100%
     );
   }
 
   .category-band--flip .category-band__scrim {
     background: linear-gradient(
       -105deg,
-      rgb(250 250 249 / 96%) 0%,
-      rgb(250 250 249 / 88%) 40%,
-      rgb(250 250 249 / 35%) 68%,
-      rgb(250 250 249 / 10%) 100%
+      rgb(238 242 242 / 96%) 0%,
+      rgb(238 242 242 / 88%) 40%,
+      rgb(238 242 242 / 35%) 68%,
+      rgb(238 242 242 / 10%) 100%
     );
   }
 
@@ -1650,7 +2253,7 @@
     flex-direction: column;
     justify-content: flex-end;
     gap: 0.75rem;
-    color: #1c1917;
+    color: #0a3248;
   }
 
   .category-band__eyebrow {
@@ -1659,22 +2262,22 @@
     gap: 0.5rem;
     width: fit-content;
     padding: 0.3rem 0.65rem;
-    border: 1px solid rgb(28 25 23 / 12%);
-    border-radius: 999px;
-    background: rgb(28 25 23 / 6%);
+    border: 1px solid rgb(10 50 72 / 12%);
+    border-radius: var(--radius-sm);
+    background: rgb(10 50 72 / 6%);
     font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: #44403c;
+    color: #2c4f60;
   }
 
   .category-band__title {
     margin: 0;
     font-family: var(--font-display);
-    font-size: clamp(1.5rem, 3.5vw, 2.125rem);
-    line-height: 1.08;
-    letter-spacing: -0.02em;
+    font-size: var(--text-display-band);
+    line-height: var(--leading-display);
+    letter-spacing: var(--tracking-display);
   }
 
   .category-band__description {
@@ -1682,7 +2285,7 @@
     margin: 0;
     font-size: 0.9375rem;
     line-height: 1.55;
-    color: #57534e;
+    color: #4a5356;
   }
 
   .category-band__browse {
@@ -1692,13 +2295,16 @@
     width: fit-content;
     margin-top: 0.25rem;
     padding: 0.6875rem 1.25rem;
-    border-radius: 999px;
+    border-radius: var(--radius-sm);
     background: var(--color-primary);
     color: #ffffff;
-    font-size: 0.9375rem;
-    font-weight: 600;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
     line-height: 1;
-    box-shadow: 0 4px 14px rgb(234 88 12 / 28%);
+    box-shadow: 0 4px 14px rgb(218 111 77 / 28%);
     transition:
       background 0.15s ease,
       transform 0.15s ease,
@@ -1708,7 +2314,7 @@
   .category-band__browse:hover {
     background: var(--color-primary-hover);
     transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgb(234 88 12 / 32%);
+    box-shadow: 0 6px 18px rgb(218 111 77 / 32%);
   }
 
   .category-band__browse:focus-visible {
@@ -1758,7 +2364,7 @@
   }
 
   .category-leaf-tile__canvas {
-    background: linear-gradient(180deg, #fafaf9 0%, var(--color-surface-muted) 100%);
+    background: linear-gradient(180deg, #eef2f2 0%, var(--color-surface-muted) 100%);
   }
 
   .category-leaf-tile__scrim {
@@ -1766,9 +2372,9 @@
     inset: 0;
     background: linear-gradient(
       180deg,
-      rgb(12 10 9 / 0%) 0%,
-      rgb(12 10 9 / 42%) 58%,
-      rgb(12 10 9 / 78%) 100%
+      rgb(10 50 72 / 0%) 0%,
+      rgb(10 50 72 / 42%) 58%,
+      rgb(10 50 72 / 78%) 100%
     );
   }
 
@@ -1784,7 +2390,9 @@
     color: var(--color-text);
   }
 
-  .category-leaf-tile:has(.category-leaf-tile__canvas) .category-leaf-tile__body span:last-child {
+  .category-leaf-tile:has(.category-leaf-tile__canvas)
+    .category-leaf-tile__body
+    span:last-child {
     color: var(--color-text-muted);
   }
 
@@ -1802,7 +2410,7 @@
     gap: 0.2rem;
     min-height: 7.25rem;
     padding: 0.75rem;
-    color: #fafaf9;
+    color: #eef2f2;
   }
 
   .category-leaf-tile__icon {
@@ -1824,7 +2432,7 @@
 
   .category-leaf-tile span {
     font-size: 0.6875rem;
-    color: rgb(245 245 244 / 72%);
+    color: rgb(228 234 234 / 72%);
   }
 
   .category-band--skeleton .category-band__canvas {
@@ -1838,7 +2446,7 @@
   .category-band__eyebrow-skeleton {
     width: 6.5rem;
     height: 1.5rem;
-    border-radius: 999px;
+    border-radius: var(--radius-sm);
   }
 
   .category-band__title-skeleton {
@@ -1856,7 +2464,7 @@
   .category-band__browse-skeleton {
     width: 9.5rem;
     height: 2.5rem;
-    border-radius: 999px;
+    border-radius: var(--radius-sm);
   }
 
   .category-leaf-tile-skeleton {
@@ -2007,7 +2615,7 @@
     padding: clamp(1rem, 3vw, 2rem);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    background: linear-gradient(165deg, #ffffff 0%, #f3f3f3 100%);
+    background: linear-gradient(165deg, #ffffff 0%, #e4eaea 100%);
     box-shadow: var(--shadow-sm);
     cursor: grab;
     touch-action: pan-y;
@@ -2081,9 +2689,11 @@
   .pdp-product-title {
     margin: 0;
     font-family: var(--font-display);
-    font-size: clamp(1.625rem, 3.5vw, 2.125rem);
-    line-height: 1.1;
-    letter-spacing: -0.025em;
+    /* Held well below the section scale: this sits in the narrow buy column
+       beside the gallery, so long product names would wrap badly at 70px. */
+    font-size: var(--text-display-title);
+    line-height: var(--leading-display);
+    letter-spacing: var(--tracking-display);
   }
 
   .pdp-product-tagline {
@@ -2175,12 +2785,12 @@
   }
 
   .pdp-wishlist-btn:hover {
-    border-color: #fdba74;
+    border-color: #ff7a33;
     color: var(--color-primary);
   }
 
   .pdp-wishlist-btn.is-active {
-    border-color: #fdba74;
+    border-color: #ff7a33;
     color: var(--color-primary);
     background: var(--color-primary-subtle);
   }
@@ -2209,8 +2819,9 @@
     --pdp-field-note-line-gap: 0.125rem;
     --pdp-field-note-line-height: 1.35;
     --pdp-field-note-icon-size: calc(
-      var(--pdp-field-note-label-size) * var(--pdp-field-note-line-height) + var(--pdp-field-note-line-gap) +
-        var(--pdp-field-note-value-size) * var(--pdp-field-note-line-height)
+      var(--pdp-field-note-label-size) * var(--pdp-field-note-line-height) +
+        var(--pdp-field-note-line-gap) + var(--pdp-field-note-value-size) *
+        var(--pdp-field-note-line-height)
     );
     margin-bottom: 2.5rem;
     padding: 1.25rem 1.25rem 0.25rem;
@@ -2266,8 +2877,8 @@
   }
 
   .pdp-field-note__icon[data-highlight-group='build'] {
-    color: #78716c;
-    background: #f5f5f4;
+    color: #6b7676;
+    background: #eef2f2;
   }
 
   .pdp-field-note__icon[data-highlight-group='fit'] {
@@ -2321,7 +2932,7 @@
     margin: 0 0 1rem;
     font-size: var(--story-font-size);
     line-height: var(--story-leading);
-    color: #404040;
+    color: #3c4442;
   }
 
   .pdp-story__dropcap {
@@ -2527,28 +3138,110 @@
 
   /* Auth */
   .auth-page {
-    width: min(100%, 28rem);
+    width: min(100%, 30rem);
+    position: relative;
+    /* Drives both the mark's size and how far it tucks under the card. */
+    --auth-mark-size: clamp(21rem, 60vw, 28rem);
+  }
+
+  /* Oversized flame behind the welcome text, its lower half hidden by the card
+     that follows — the card is opaque and sits above it in the stack. */
+  .auth-intro {
+    position: relative;
+    z-index: 0;
+    /* Query container so the title can be sized to fill this column. */
+    container-type: inline-size;
+    margin-bottom: 0.75rem;
+    padding-top: calc(var(--auth-mark-size) * 0.34);
+    text-align: center;
+  }
+
+  .auth-intro__mark {
+    position: absolute;
+    left: 50%;
+    bottom: calc(var(--auth-mark-size) * -0.36);
+    translate: -50% 0;
+    width: var(--auth-mark-size);
+    height: auto;
+    /* Brand flame carries its own gradient, so this is opacity only. */
+    opacity: 0.5;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .auth-intro__text {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Title fills the intro column. Measured in Agdasima bold caps at 0.02em:
+     "Welcome" renders 342px per 100px of font-size, "Willkommen" 466px — so
+     each language needs its own multiplier to reach the same width. */
+  .auth-intro h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 29.2cqi;
+    font-weight: 700;
+    line-height: var(--leading-display);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    color: var(--color-primary);
+  }
+
+  :root[lang='de'] .auth-intro h1 {
+    font-size: 21.4cqi;
+  }
+
+  .auth-intro p {
+    margin: 0.5rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 1.0625rem;
+    letter-spacing: -0.03em;
   }
 
   .auth-card {
-    padding: 1.5rem;
+    position: relative;
+    z-index: 1;
+    padding: 2rem;
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-sm);
     background: var(--color-surface);
     box-shadow: var(--shadow-sm);
   }
 
-  .auth-card__head h1 {
-    margin: 0;
+  /* Uppercase display labels, as on the reference's contact form.
+     Scoped through .field so it outranks the shared `.field label` rule
+     declared later in this file. */
+  .auth-form .field label {
+    display: block;
+    margin-bottom: 0.5rem;
     font-family: var(--font-display);
-    font-size: 1.75rem;
-    letter-spacing: -0.02em;
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text);
   }
 
-  .auth-card__head p {
-    margin: 0.375rem 0 0;
-    color: var(--color-text-muted);
-    font-size: 0.9375rem;
+  .auth-form .field input {
+    width: 100%;
+    height: 3.25rem;
+    padding: 0.75rem 0.9375rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font: inherit;
+    transition:
+      border-color 0.15s ease,
+      background-color 0.15s ease;
+  }
+
+  .auth-form .field input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    background: var(--color-surface);
   }
 
   .auth-return-note {
@@ -2650,7 +3343,7 @@
 
   .field input:focus,
   .field textarea:focus {
-    outline: 2px solid #a7f3d0;
+    outline: 2px solid #c2d6d8;
     outline-offset: 1px;
     border-color: var(--color-secondary);
   }
@@ -3061,7 +3754,7 @@
     gap: 0.25rem;
     padding: 0.25rem;
     border: 1px solid var(--color-border);
-    border-radius: 999px;
+    border-radius: var(--radius-sm);
     background: var(--color-surface-muted);
     flex-shrink: 0;
   }
@@ -3069,7 +3762,7 @@
   .address-tabs button {
     padding: 0.4375rem 0.875rem;
     border: 0;
-    border-radius: 999px;
+    border-radius: var(--radius-sm);
     font-size: 0.8125rem;
     font-weight: 600;
     color: var(--color-text-muted);
@@ -3107,7 +3800,7 @@
     padding: 1rem;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
-    background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+    background: linear-gradient(180deg, #ffffff 0%, #eef2f2 100%);
   }
 
   .address-card__body {
@@ -3140,7 +3833,7 @@
     align-items: center;
     gap: 0.375rem;
     padding: 0.2rem 0.5rem;
-    border-radius: 999px;
+    border-radius: var(--radius-sm);
     font-size: 0.6875rem;
     font-weight: 700;
     letter-spacing: 0.04em;
@@ -3208,8 +3901,8 @@
   }
 
   .address-card--add:hover {
-    border-color: #fdba74;
-    background: #fff7ed;
+    border-color: #ff7a33;
+    background: #f9ece6;
   }
 
   .address-card--add span {
@@ -3305,7 +3998,7 @@
     border-radius: var(--radius-md);
     text-align: left;
     color: inherit;
-    background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+    background: linear-gradient(180deg, #ffffff 0%, #eef2f2 100%);
     cursor: pointer;
     transition:
       border-color 0.15s ease,
@@ -3313,13 +4006,13 @@
   }
 
   .order-row:hover {
-    border-color: #d4d4d4;
+    border-color: #c3cccc;
   }
 
   .order-row.is-selected {
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 1px rgb(234 88 12 / 20%);
-    background: #fffaf5;
+    box-shadow: 0 0 0 1px rgb(218 111 77 / 20%);
+    background: #fbf4f0;
   }
 
   .order-row:focus-visible {
@@ -3383,7 +4076,7 @@
     align-items: center;
     gap: 0.3125rem;
     padding: 0.1875rem 0.5rem;
-    border-radius: 999px;
+    border-radius: var(--radius-sm);
     font-size: 0.6875rem;
     font-weight: 700;
     letter-spacing: 0.04em;
@@ -3889,7 +4582,11 @@
   .wishlist-line__media-placeholder {
     display: block;
     aspect-ratio: 1;
-    background: linear-gradient(135deg, var(--color-surface-muted), var(--color-border));
+    background: linear-gradient(
+      135deg,
+      var(--color-surface-muted),
+      var(--color-border)
+    );
   }
 
   .wishlist-line__body {
@@ -4136,7 +4833,7 @@
     padding: 0.625rem 0.875rem;
     border: 2px solid var(--color-border);
     border-radius: var(--radius-md);
-    background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+    background: linear-gradient(180deg, #ffffff 0%, #eef2f2 100%);
     transition:
       border-color 0.15s ease,
       box-shadow 0.15s ease;
@@ -4144,7 +4841,7 @@
 
   .address-option input:checked + .address-option__card {
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 1px rgb(234 88 12 / 20%);
+    box-shadow: 0 0 0 1px rgb(218 111 77 / 20%);
   }
 
   .address-option input:focus-visible + .address-option__card {
@@ -4187,7 +4884,7 @@
     flex-shrink: 0;
     align-items: center;
     padding: 0.125rem 0.4375rem;
-    border-radius: 999px;
+    border-radius: var(--radius-sm);
     font-size: 0.625rem;
     font-weight: 700;
     letter-spacing: 0.04em;
@@ -4202,7 +4899,7 @@
   }
 
   .address-option .address-sep {
-    color: #d4d4d4;
+    color: #c3cccc;
     user-select: none;
   }
 

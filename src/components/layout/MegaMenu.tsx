@@ -20,11 +20,13 @@ export function MegaMenu({ open, id }: MegaMenuProps) {
       id={id}
       aria-label={t('nav.exploreMenu')}
       aria-hidden={!open}
-      className={`absolute inset-x-0 top-full border-t border-header-border bg-header-bg shadow-md ${
+      className={`mega-menu absolute inset-x-0 top-full border-t shadow-md ${
         open ? 'block' : 'hidden'
       }`}
     >
-      <Container wide className="py-5 pb-4">
+      {/* px-4 overrides .site-container--header's 12px gutter for this panel
+          only — the header bar itself keeps the tighter inline padding. */}
+      <Container wide className="px-4 py-5 pb-4">
         {categories.isLoading ? (
           <LoadingState label={t('home.categoriesLoading')} />
         ) : null}
@@ -41,10 +43,10 @@ export function MegaMenu({ open, id }: MegaMenuProps) {
             <div className="grid grid-cols-2 gap-x-6 gap-y-5 md:grid-cols-3">
               {categories.data.map((category) => (
                 <div key={category._id}>
-                  <h3 className="m-0 mb-2.5 font-display text-base font-semibold tracking-tight">
+                  <h3 className="m-0 mb-3 font-display font-semibold tracking-tight">
                     <MegaMenuLink
                       to={categoryPath(category)}
-                      className="mega-menu-link--title cursor-pointer text-base font-semibold"
+                      className="mega-menu-link--title cursor-pointer font-semibold"
                     >
                       {category.name}
                     </MegaMenuLink>
@@ -65,7 +67,7 @@ export function MegaMenu({ open, id }: MegaMenuProps) {
               ))}
             </div>
 
-            <div className="mt-4 border-t border-header-border pt-3.5">
+            <div className="mt-7">
               <MegaMenuLink
                 to="/categories"
                 showFire={false}

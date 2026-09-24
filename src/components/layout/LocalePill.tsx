@@ -51,7 +51,7 @@ export function LocalePill() {
     <div ref={rootRef} className="relative hidden md:block">
       <button
         type="button"
-        className="header-locale-pill inline-flex cursor-pointer items-center gap-1.5 rounded-full border bg-[#292524] px-3 py-1.5 text-[0.8125rem] font-medium"
+        className="header-locale-pill inline-flex cursor-pointer items-center gap-1.5 rounded-sm border px-3 py-1.5 text-[0.8125rem] font-medium"
         aria-expanded={open}
         aria-haspopup="dialog"
         onClick={() => setOpen((value) => !value)}
@@ -64,10 +64,10 @@ export function LocalePill() {
         <div
           role="dialog"
           aria-label={t('nav.languageCurrency')}
-          className="absolute right-0 top-[calc(100%+0.5rem)] z-50 min-w-[14rem] rounded-lg border border-border bg-surface p-4 text-text shadow-md"
+          className="locale-panel absolute right-0 top-[calc(100%+0.5rem)] z-50 min-w-[14rem] rounded-sm border p-4 shadow-md"
         >
           <fieldset className="m-0 border-0 p-0">
-            <legend className="mb-2 text-xs font-semibold uppercase tracking-wide text-text-muted">
+            <legend className="locale-panel__legend mb-2 text-xs font-semibold uppercase tracking-wide">
               {t('nav.language')}
             </legend>
             <div className="flex flex-col gap-1">
@@ -75,11 +75,7 @@ export function LocalePill() {
                 <button
                   key={item.value}
                   type="button"
-                  className={`cursor-pointer rounded-md px-2 py-1.5 text-left text-sm transition-colors ${
-                    language === item.value
-                      ? 'bg-primary-subtle font-semibold text-primary-hover'
-                      : 'hover:bg-surface-muted hover:text-primary-hover'
-                  }`}
+                  className={`locale-option ${language === item.value ? 'is-active' : ''}`}
                   onClick={() => switchLanguage(item.value)}
                 >
                   {t(item.labelKey)}
@@ -88,8 +84,10 @@ export function LocalePill() {
             </div>
           </fieldset>
 
-          <fieldset className="m-0 mt-4 border-0 border-t border-border p-0 pt-4">
-            <legend className="mb-2 text-xs font-semibold uppercase tracking-wide text-text-muted">
+          <div className="locale-panel__divider" />
+
+          <fieldset className="m-0 border-0 p-0">
+            <legend className="locale-panel__legend mb-2 text-xs font-semibold uppercase tracking-wide">
               {t('nav.currency')}
             </legend>
             <div className="flex flex-col gap-1">
@@ -97,11 +95,7 @@ export function LocalePill() {
                 <button
                   key={item.value}
                   type="button"
-                  className={`cursor-pointer rounded-md px-2 py-1.5 text-left text-sm transition-colors ${
-                    currency === item.value
-                      ? 'bg-primary-subtle font-semibold text-primary-hover'
-                      : 'hover:bg-surface-muted hover:text-primary-hover'
-                  }`}
+                  className={`locale-option ${currency === item.value ? 'is-active' : ''}`}
                   onClick={() => setCurrency(item.value)}
                 >
                   {t(item.labelKey)}

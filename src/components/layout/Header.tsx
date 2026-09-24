@@ -1,5 +1,6 @@
 import { ChevronDown, Heart, Menu, ShoppingCart, User } from 'lucide-react'
 import { useEffect, useId, useRef, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { LocaleLink } from '@/components/ui/LocaleLink'
 import { Container } from '@/components/layout/Container'
 import { LocalePill } from '@/components/layout/LocalePill'
@@ -9,6 +10,7 @@ import { SearchField } from '@/components/layout/SearchField'
 import { useCartItemCount } from '@/hooks/useCart'
 import { useTranslation } from '@/i18n'
 import { userPhotoUrl } from '@/lib/imageUrl'
+import { stripLangPrefix } from '@/lib/localePath'
 import { useAuthStore, useIsAuthenticated } from '@/store/authStore'
 
 function HeaderAccountIcon() {
@@ -51,6 +53,39 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const isAuthenticated = useIsAuthenticated()
   const cartCount = useCartItemCount()
+  const location = useLocation()
+
+  // Pages with a full-height hero let the header overlay it transparently; the
+  // solid bar only takes over once the hero has scrolled fully out of view.
+  const overlaysHero = stripLangPrefix(location.pathname) === '/'
+  const [revealed, setRevealed] = useState(!overlaysHero)
+
+  useEffect(() => {
+    if (!overlaysHero) {
+      setRevealed(true)
+      return
+    }
+
+    let frame = 0
+    const update = () => {
+      frame = 0
+      const hero = document.querySelector('.hero')
+      // No hero rendered (loading/error state) — fall back to the solid bar.
+      setRevealed(hero ? hero.getBoundingClientRect().bottom <= 0 : true)
+    }
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update)
+    }
+
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (frame) cancelAnimationFrame(frame)
+    }
+  }, [overlaysHero, location.pathname])
 
   useEffect(() => {
     if (!megaOpen) return
@@ -76,33 +111,29 @@ export function Header() {
     <>
       <header
         ref={headerRef}
-        className={`sticky top-0 z-30 border-b bg-[rgb(28_25_23/96%)] text-header-text backdrop-blur-[10px] ${
-          megaOpen ? 'border-transparent' : 'border-header-border'
-        }`}
+        className={[
+          'z-30 border-b text-header-text',
+          overlaysHero
+            ? revealed
+              ? 'site-header--revealed fixed inset-x-0 top-0 bg-[rgb(10_50_72/96%)] backdrop-blur-[10px]'
+              : 'site-header--overlay absolute inset-x-0 top-0 border-transparent bg-transparent'
+            : 'sticky top-0 bg-[rgb(10_50_72/96%)] backdrop-blur-[10px]',
+          megaOpen || (overlaysHero && !revealed) ? 'border-transparent' : 'border-header-border',
+        ].join(' ')}
         onMouseLeave={() => setMegaOpen(false)}
       >
         <Container wide>
-          <div className="flex min-h-[var(--header-height)] items-center gap-2 md:gap-4">
-            <LocaleLink
-              to="/"
-              className="flex leading-none"
-              aria-label={t('common.homeAria')}
-            >
-              <img
-                src="/img/campfire_logo_light.png"
-                alt={t('common.storeName')}
-                className="block h-9 w-auto -translate-y-[0.3rem] md:h-12 md:-translate-y-[0.4rem]"
-              />
-            </LocaleLink>
-
+          {/* Three groups on one row: the outer two flex-1 so the brand between
+              them lands optically centred regardless of their differing widths. */}
+          <div className="relative flex min-h-[var(--header-height)] items-center gap-2 md:gap-4">
             <nav
-              className="ml-4 hidden items-center gap-5 text-[0.9375rem] font-medium md:flex"
+              className="hidden min-w-0 flex-1 items-center gap-5 text-[0.9375rem] font-medium md:flex"
               aria-label={t('nav.main')}
             >
               <button
                 type="button"
-                className={`inline-flex cursor-pointer items-center gap-1 border-0 bg-transparent p-0 font-inherit font-medium text-inherit hover:text-[#fdba74] ${
-                  megaOpen ? 'text-[#fdba74]' : ''
+                className={`inline-flex cursor-pointer items-center gap-1 border-0 bg-transparent p-0 font-inherit font-semibold uppercase tracking-[0.06em] text-inherit hover:text-[#ff7a33] ${
+                  megaOpen ? 'text-[#ff7a33]' : ''
                 }`}
                 aria-expanded={megaOpen}
                 aria-controls={megaMenuId}
@@ -121,9 +152,20 @@ export function Header() {
               </button>
             </nav>
 
-            <SearchField />
+            <LocaleLink
+              to="/"
+              className="flex shrink-0 leading-none md:absolute md:left-1/2 md:-translate-x-1/2"
+              aria-label={t('common.homeAria')}
+            >
+              <img
+                src="/img/campfire_logo_light.png"
+                alt={t('common.storeName')}
+                className="block h-9 w-auto -translate-y-[0.3rem] md:h-12 md:-translate-y-[0.4rem]"
+              />
+            </LocaleLink>
 
-            <div className="ml-auto flex shrink-0 items-center gap-1">
+            <div className="ml-auto flex min-w-0 flex-1 items-center justify-end gap-2 md:max-w-[calc(50%-7rem)]">
+              <SearchField />
               <LocalePill />
 
               {isAuthenticated ? (

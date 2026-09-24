@@ -5,7 +5,8 @@ import { ToastStack } from '@/components/ui/ToastStack'
 
 export function AppLayout() {
   return (
-    <div className="flex min-h-screen flex-col bg-bg text-text">
+    // relative: the header positions against this when it overlays a hero.
+    <div className="relative flex min-h-screen flex-col bg-bg text-text">
       <Header />
       <main className="flex-1">
         <Outlet />

@@ -64,11 +64,20 @@ export function AuthForm({ initialRegisterMode = false, returnUrl }: AuthFormPro
   }
 
   return (
-    <div className="auth-card">
-      <div className="auth-card__head">
-        <h1>{t('auth.welcomeTitle')}</h1>
-        <p>{t('auth.welcomeSubtitle')}</p>
+    <>
+      {/* Flame sits behind, heading layered in front — the reference's
+          title-over-backdrop treatment. */}
+      <div className="auth-intro">
+        <img src="/img/fire.png" alt="" aria-hidden className="auth-intro__mark" />
+        <div className="auth-intro__text">
+          <h1>{t('auth.welcomeTitle')}</h1>
+          <p>{t('auth.welcomeSubtitle')}</p>
+        </div>
+      </div>
+
+      <div className="auth-card">
         {returnUrl ? (
+        <div className="auth-card__head">
           <div className="auth-return-note" role="status">
             <ArrowLeft size={16} aria-hidden />
             <span>
@@ -77,8 +86,8 @@ export function AuthForm({ initialRegisterMode = false, returnUrl }: AuthFormPro
               })}
             </span>
           </div>
+        </div>
         ) : null}
-      </div>
 
       <form className="auth-form" onSubmit={handleSubmit}>
         {registerMode ? (
@@ -178,6 +187,7 @@ export function AuthForm({ initialRegisterMode = false, returnUrl }: AuthFormPro
       <p className="demo-hint">
         <strong>{t('auth.demoHintTitle')}</strong> {t('auth.demoHintBody')}
       </p>
-    </div>
+      </div>
+    </>
   )
 }
