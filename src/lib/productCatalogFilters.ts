@@ -3,14 +3,14 @@ import type { Currency } from '@/api/types'
 export type CatalogSort = 'newest' | 'priceAsc' | 'priceDesc' | 'relevance'
 
 export interface CatalogFilterState {
-  manufacturer: string | null
+  manufacturers: string[]
   priceMin: number | null
   priceMax: number | null
   priceQuickMax: number | null
 }
 
 export const DEFAULT_CATALOG_FILTERS: CatalogFilterState = {
-  manufacturer: null,
+  manufacturers: [],
   priceMin: null,
   priceMax: null,
   priceQuickMax: null,
@@ -42,8 +42,10 @@ export function buildApiFilter(
 ): Record<string, unknown> | undefined {
   const parts: Record<string, unknown>[] = []
 
-  if (state.manufacturer) {
-    parts.push({ manufacturer: state.manufacturer })
+  if (state.manufacturers.length === 1) {
+    parts.push({ manufacturer: state.manufacturers[0] })
+  } else if (state.manufacturers.length > 1) {
+    parts.push({ manufacturer: { $in: state.manufacturers } })
   }
 
   const priceKey = `priceI18n.${currency}`
@@ -73,7 +75,7 @@ export function buildApiFilter(
 
 export function countActiveCatalogFilters(state: CatalogFilterState): number {
   let count = 0
-  if (state.manufacturer) count += 1
+  count += state.manufacturers.length
   if (state.priceQuickMax != null && state.priceQuickMax > 0) count += 1
   if (state.priceQuickMax == null && state.priceMin != null && state.priceMin > 0) count += 1
   if (state.priceQuickMax == null && state.priceMax != null && state.priceMax > 0) count += 1

@@ -10,7 +10,8 @@ interface EmptyStateAction {
 }
 
 interface EmptyStateProps {
-  icon: LucideIcon
+  /** Omit for the flatter, typographic treatment used by the catalog. */
+  icon?: LucideIcon
   title: string
   description: string
   action?: EmptyStateAction
@@ -30,9 +31,11 @@ export function EmptyState({
 }: EmptyStateProps) {
   return (
     <div className={`empty-state ${className}`.trim()}>
-      <div className="empty-state__icon" aria-hidden>
-        <Icon size={28} />
-      </div>
+      {Icon ? (
+        <div className="empty-state__icon" aria-hidden>
+          <Icon size={28} />
+        </div>
+      ) : null}
       <h2 className="empty-state__title">{title}</h2>
       <p className="empty-state__description">{description}</p>
       {children}

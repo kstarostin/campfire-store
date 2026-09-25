@@ -14,7 +14,7 @@ export function ProductBadges({ badges, max = 2 }: ProductBadgesProps) {
   return (
     <span className="product-badges">
       {visible.map(({ badge }) => (
-        <span key={badge._id} className={badgeStyleClassName(badge.style)}>
+        <span key={badge._id} className={badgeStyleClassName(badge.code)}>
           {badge.name}
         </span>
       ))}

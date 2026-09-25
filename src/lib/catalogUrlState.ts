@@ -43,18 +43,23 @@ export function parseCatalogUrlState(
   const under = parsePositiveInt(searchParams.get('under'))
   const min = parsePositiveInt(searchParams.get('min'))
   const max = parsePositiveInt(searchParams.get('max'))
-  const brand = searchParams.get('brand')?.trim() || null
+  // Repeated params rather than one comma-joined value: manufacturer names are
+  // free text and a comma in one would silently split it into two filters.
+  const brands = searchParams
+    .getAll('brand')
+    .map((value) => value.trim())
+    .filter(Boolean)
 
   const filters: CatalogFilterState =
     under != null
       ? {
           ...DEFAULT_CATALOG_FILTERS,
-          manufacturer: brand,
+          manufacturers: brands,
           priceQuickMax: under,
         }
       : {
           ...DEFAULT_CATALOG_FILTERS,
-          manufacturer: brand,
+          manufacturers: brands,
           priceMin: min,
           priceMax: max,
         }
@@ -87,8 +92,8 @@ export function buildCatalogSearchParams(
     next.set('sort', state.sort)
   }
 
-  if (state.filters.manufacturer) {
-    next.set('brand', state.filters.manufacturer)
+  for (const brand of state.filters.manufacturers) {
+    next.append('brand', brand)
   }
 
   if (state.filters.priceQuickMax != null && state.filters.priceQuickMax > 0) {

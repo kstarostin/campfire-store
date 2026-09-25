@@ -1,10 +1,10 @@
 import { useMemo, useState } from 'react'
 import { SlidersHorizontal } from 'lucide-react'
+import { ProductFilterBar } from '@/components/catalog/ProductFilterBar'
 import { Container } from '@/components/layout/Container'
 import { ProductCard } from '@/components/product/ProductCard'
 import { ProductGrid } from '@/components/product/ProductGrid'
 import { ProductGridSkeleton } from '@/components/product/ProductGridSkeleton'
-import { Chip } from '@/components/ui/Chip'
 import { EmptyState } from '@/components/ui/EmptyState'
 import { ErrorState } from '@/components/ui/ErrorState'
 import { SectionHead } from '@/components/ui/SectionHead'
@@ -13,6 +13,10 @@ import { useTranslation, type TranslationKey } from '@/i18n'
 import { getManufacturerFilterValues } from '@/api/normalizers'
 import { useLocale } from '@/hooks/useLocale'
 import { useFeaturedProducts } from '@/hooks/useProducts'
+
+/** The one budget cut this section offers, mirroring the catalog's facets. */
+const UNDER_BUDGET = 500
+const UNDER_BUDGET_FILTERS = [{ max: UNDER_BUDGET, count: 0 }]
 
 function priceForCurrency(
   priceI18n: { USD?: number; EUR?: number } | undefined,
@@ -24,7 +28,7 @@ function priceForCurrency(
 export function FeaturedProducts() {
   const { t } = useTranslation()
   const { currency } = useLocale()
-  const [manufacturer, setManufacturer] = useState<string | null>(null)
+  const [manufacturers, setManufacturers] = useState<string[]>([])
   const [underBudget, setUnderBudget] = useState(false)
   const [sort, setSort] = useState('featureOrder')
 
@@ -38,15 +42,12 @@ export function FeaturedProducts() {
     { labelKey: 'home.sortPriceDesc', value: '-priceI18n.USD' },
   ]
 
-  const underBudgetLabel =
-    currency === 'EUR' ? t('home.underBudgetEur') : t('home.underBudgetUsd')
-
   const productsQuery = useFeaturedProducts({
     limit: 24,
     sort: sortField,
   })
 
-  const manufacturers = useMemo(() => {
+  const manufacturerOptions = useMemo(() => {
     const fromFilters = getManufacturerFilterValues(productsQuery.data?.filters ?? [])
     if (fromFilters.length > 0) {
       return [...fromFilters].sort((a, b) => a.localeCompare(b))
@@ -62,19 +63,21 @@ export function FeaturedProducts() {
   const filteredProducts = useMemo(() => {
     let items = productsQuery.data?.products ?? []
 
-    if (manufacturer) {
-      items = items.filter((product) => product.manufacturer === manufacturer)
+    if (manufacturers.length > 0) {
+      items = items.filter(
+        (product) => product.manufacturer && manufacturers.includes(product.manufacturer),
+      )
     }
 
     if (underBudget) {
       items = items.filter((product) => {
         const price = priceForCurrency(product.priceI18n, currency)
-        return price !== undefined && price < 500
+        return price !== undefined && price < UNDER_BUDGET
       })
     }
 
     return items.slice(0, 8)
-  }, [productsQuery.data?.products, manufacturer, underBudget, currency])
+  }, [productsQuery.data?.products, manufacturers, underBudget, currency])
 
   return (
     <section className="section section--band section--products" id="products">
@@ -84,54 +87,26 @@ export function FeaturedProducts() {
           description={t('home.featuredDescription')}
         />
 
-        <div className="toolbar">
-          <div className="chip-row">
-            <Chip
-              active={manufacturer === null && !underBudget}
-              onClick={() => {
-                setManufacturer(null)
-                setUnderBudget(false)
-              }}
-            >
-              {t('common.all')}
-            </Chip>
-            {manufacturers.slice(0, 4).map((name) => (
-              <Chip
-                key={name}
-                active={manufacturer === name}
-                onClick={() => {
-                  setManufacturer(name)
-                  setUnderBudget(false)
-                }}
-              >
-                {name}
-              </Chip>
-            ))}
-            <Chip
-              forest
-              active={underBudget}
-              onClick={() => {
-                setUnderBudget((value) => !value)
-                setManufacturer(null)
-              }}
-            >
-              {underBudgetLabel}
-            </Chip>
-          </div>
-
-          <select
-            className="sort-select"
-            aria-label={t('home.sortAria')}
-            value={sort}
-            onChange={(event) => setSort(event.target.value)}
-          >
-            {sortOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {t(option.labelKey)}
-              </option>
-            ))}
-          </select>
-        </div>
+        {/* Same bar as the catalog pages, with price range and clear switched
+            off — this section filters in memory over a fixed set of featured
+            products rather than through the URL. */}
+        <ProductFilterBar
+          show={['manufacturer', 'priceQuick', 'sort']}
+          manufacturers={manufacturerOptions}
+          selectedManufacturers={manufacturers}
+          onManufacturersChange={setManufacturers}
+          priceQuickFilters={UNDER_BUDGET_FILTERS}
+          priceQuickMax={underBudget ? UNDER_BUDGET : null}
+          onPriceQuickChange={(max) => setUnderBudget(max != null)}
+          currency={currency}
+          sort={sort}
+          sortOptions={sortOptions.map((option) => ({
+            value: option.value,
+            label: t(option.labelKey),
+          }))}
+          sortLabel={t('home.sortAria')}
+          onSortChange={setSort}
+        />
 
         {productsQuery.isLoading ? (
           <ProductGridSkeleton count={8} label={t('home.productsLoading')} />
@@ -153,7 +128,7 @@ export function FeaturedProducts() {
             action={{
               label: t('common.all'),
               onClick: () => {
-                setManufacturer(null)
+                setManufacturers([])
                 setUnderBudget(false)
               },
             }}

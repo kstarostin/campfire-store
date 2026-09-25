@@ -149,6 +149,7 @@ export const en = {
     refineResults: 'Refine results',
     clearAll: 'Clear all',
     manufacturer: 'Manufacturer',
+    allManufacturers: 'All manufacturers',
     price: 'Price',
     priceMin: 'Min',
     priceMax: 'Max',

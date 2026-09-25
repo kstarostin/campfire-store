@@ -44,13 +44,11 @@ export interface ProductImage {
   thumbnail?: ProductImageSize
 }
 
-export type BadgeStyle = 'primary' | 'forest' | 'neutral'
 
 export interface ProductBadge {
   _id: string
   code: string
   name: string
-  style: BadgeStyle
 }
 
 export interface ProductBadgeAssignment {

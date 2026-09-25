@@ -1,4 +1,3 @@
-import { Filter, Search, Tent } from 'lucide-react'
 import { EmptyState } from '@/components/ui/EmptyState'
 import { useTranslation } from '@/i18n'
 
@@ -21,7 +20,6 @@ export function CatalogProductsEmpty({
     return (
       <EmptyState
         className="catalog-products-empty"
-        icon={Filter}
         title={t('catalog.filtersEmptyTitle')}
         description={t('catalog.filtersEmptyBody')}
         action={
@@ -38,11 +36,10 @@ export function CatalogProductsEmpty({
     return (
       <EmptyState
         className="catalog-products-empty"
-        icon={Search}
         title={t('catalog.searchNoResultsTitle', { query })}
         description={t('catalog.searchNoResultsBody')}
         action={{ label: t('catalog.browseAllProducts'), to: '/products' }}
-        secondaryAction={{ label: t('nav.categories'), to: '/categories' }}
+        secondaryAction={{ label: t('nav.categories'), to: '/#categories' }}
       />
     )
   }
@@ -50,11 +47,10 @@ export function CatalogProductsEmpty({
   return (
     <EmptyState
       className="catalog-products-empty"
-      icon={Tent}
       title={t('catalog.categoryEmptyTitle')}
       description={t('catalog.categoryEmptyBody')}
       action={{ label: t('catalog.browseAllProducts'), to: '/products' }}
-      secondaryAction={{ label: t('nav.categories'), to: '/categories' }}
+      secondaryAction={{ label: t('nav.categories'), to: '/#categories' }}
     />
   )
 }

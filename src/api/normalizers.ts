@@ -1,7 +1,6 @@
 import type {
   Address,
   AuthResponse,
-  BadgeStyle,
   Cart,
   CartDocumentResponse,
   CartEntry,
@@ -84,7 +83,6 @@ interface ApiBadgeDocument {
   _id: string
   code: string
   nameI18n?: Partial<Record<Language, string>>
-  style?: BadgeStyle
 }
 
 interface ApiProductBadgeAssignment {
@@ -190,7 +188,6 @@ function normalizeBadge(
     _id: document._id,
     code: document.code,
     name: localizedName(document.nameI18n, language),
-    style: document.style ?? 'primary',
   }
 }
 

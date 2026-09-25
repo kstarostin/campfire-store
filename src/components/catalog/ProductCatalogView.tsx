@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, type ReactNode } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Container } from '@/components/layout/Container'
-import { CatalogFilters } from '@/components/catalog/CatalogFilters'
+import { ProductFilterBar } from '@/components/catalog/ProductFilterBar'
 import {
   CatalogResultsBar,
   Pagination,
@@ -21,12 +21,7 @@ import { useProducts } from '@/hooks/useProducts'
 import { useSearch } from '@/hooks/useSearch'
 import { useTranslation } from '@/i18n'
 import { useLocale } from '@/hooks/useLocale'
-import {
-  buildCatalogSearchParams,
-  defaultCatalogSort,
-  hasCatalogUrlState,
-  parseCatalogUrlState,
-} from '@/lib/catalogUrlState'
+import { buildCatalogSearchParams, parseCatalogUrlState } from '@/lib/catalogUrlState'
 import {
   buildApiFilter,
   catalogSortToApi,
@@ -70,15 +65,6 @@ export function ProductCatalogView(props: ProductCatalogViewProps) {
   const { filters, sort, page } = useMemo(
     () => parseCatalogUrlState(searchParams, variant),
     [searchParams, variant],
-  )
-
-  const filtersOpenByDefault = useMemo(
-    () =>
-      hasCatalogUrlState(searchParams) ||
-      countActiveCatalogFilters(filters) > 0 ||
-      sort !== defaultCatalogSort(variant) ||
-      page > 1,
-    [searchParams, variant, filters, sort, page],
   )
 
   const updateCatalogUrl = useCallback(
@@ -144,6 +130,25 @@ export function ProductCatalogView(props: ProductCatalogViewProps) {
   }, [sourceKey, variant, setSearchParams])
 
   const apiFilter = useMemo(() => buildApiFilter(filters, currency), [filters, currency])
+
+  /*
+   * A facet must not be narrowed by its own filter. The API recomputes facets
+   * against whatever filter it is given, so once one manufacturer is picked the
+   * manufacturer facet comes back containing only that one — you could never
+   * add a second. This asks for the facets again with every other filter still
+   * applied but the manufacturer one removed.
+   *
+   * It runs unconditionally rather than only while a brand is selected. Its key
+   * does not contain the manufacturer filter, so picking a brand cannot put it
+   * into a loading state — which previously collapsed the option list for a
+   * moment, flipped the control from menu to chips and unmounted the open
+   * panel mid-click. On page one with no brand chosen its key matches the main
+   * query exactly and React Query serves both from one request.
+   */
+  const facetFilter = useMemo(
+    () => buildApiFilter({ ...filters, manufacturers: [] }, currency),
+    [filters, currency],
+  )
   const apiSort = catalogSortToApi(sort, currency)
 
   const queryParams = {
@@ -152,6 +157,8 @@ export function ProductCatalogView(props: ProductCatalogViewProps) {
     sort: apiSort,
     filter: apiFilter,
   }
+
+  const facetParams = { ...queryParams, page: 1, filter: facetFilter }
 
   const categoryProductsQuery = useCategoryProducts(
     variant === 'category' ? props.categoryCode : undefined,
@@ -171,6 +178,16 @@ export function ProductCatalogView(props: ProductCatalogViewProps) {
     enabled: variant === 'all',
   })
 
+  const categoryFacetsQuery = useCategoryProducts(
+    variant === 'category' ? props.categoryCode : undefined,
+    { ...facetParams, enabled: variant === 'category' },
+  )
+  const searchFacetsQuery = useSearch(searchParams.get('q')?.trim() ?? '', {
+    ...facetParams,
+    enabled: variant === 'search',
+  })
+  const allFacetsQuery = useProducts({ ...facetParams, enabled: variant === 'all' })
+
   const productsQuery =
     variant === 'category'
       ? categoryProductsQuery
@@ -186,28 +203,54 @@ export function ProductCatalogView(props: ProductCatalogViewProps) {
         : t('catalog.productCount', { count: productsQuery.data.total })
       : undefined)
 
+  const facetsQuery =
+    variant === 'category'
+      ? categoryFacetsQuery
+      : variant === 'search'
+        ? searchFacetsQuery
+        : allFacetsQuery
+
+  const facetSource = facetsQuery.data ?? productsQuery.data
+
   const manufacturers = useMemo(() => {
-    const fromFilters = getManufacturerFilterValues(productsQuery.data?.filters ?? [])
+    const fromFilters = getManufacturerFilterValues(facetSource?.filters ?? [])
     if (fromFilters.length > 0) {
       return [...fromFilters].sort((a, b) => a.localeCompare(b))
     }
 
     const names = new Set<string>()
-    for (const product of productsQuery.data?.products ?? []) {
+    for (const product of facetSource?.products ?? []) {
       if (product.manufacturer) names.add(product.manufacturer)
     }
     return Array.from(names).sort((a, b) => a.localeCompare(b))
-  }, [productsQuery.data?.filters, productsQuery.data?.products])
+  }, [facetSource])
 
   const priceQuickFilters = useMemo(
-    () => getPriceQuickFilters(productsQuery.data?.filters ?? []),
-    [productsQuery.data?.filters],
+    () => getPriceQuickFilters(facetSource?.filters ?? []),
+    [facetSource],
   )
+
+  // Relevance only means anything against a query.
+  const sortOptions: { value: CatalogSort; label: string }[] =
+    variant === 'search'
+      ? [
+          { value: 'relevance', label: t('catalog.sortRelevance') },
+          { value: 'newest', label: t('catalog.sortNewest') },
+          { value: 'priceAsc', label: t('catalog.sortPriceAsc') },
+          { value: 'priceDesc', label: t('catalog.sortPriceDesc') },
+        ]
+      : [
+          { value: 'newest', label: t('catalog.sortNewest') },
+          { value: 'priceAsc', label: t('catalog.sortPriceAsc') },
+          { value: 'priceDesc', label: t('catalog.sortPriceDesc') },
+        ]
 
   const catalogData = productsQuery.data
   const hasActiveFilters = countActiveCatalogFilters(filters) > 0
-  const showFilters =
-    Boolean(catalogData) && ((catalogData?.total ?? 0) > 0 || hasActiveFilters)
+  // Not gated on catalogData: that goes undefined while the next query loads,
+  // which unmounted the whole bar on every change — closing an open menu
+  // mid-selection, so a second brand could never be ticked.
+  const showFilters = hasActiveFilters || (catalogData ? catalogData.total > 0 : false)
   const isEmptyCatalog = Boolean(catalogData && catalogData.products.length === 0)
 
   return (
@@ -227,16 +270,26 @@ export function ProductCatalogView(props: ProductCatalogViewProps) {
         ) : null}
 
         {showFilters ? (
-          <CatalogFilters
+          <ProductFilterBar
             manufacturers={manufacturers}
+            selectedManufacturers={filters.manufacturers}
+            onManufacturersChange={(next) => setFilters({ ...filters, manufacturers: next })}
+            priceMin={filters.priceMin}
+            priceMax={filters.priceMax}
+            onPriceChange={(min, max) =>
+              setFilters({ ...filters, priceQuickMax: null, priceMin: min, priceMax: max })
+            }
             priceQuickFilters={priceQuickFilters}
-            filters={filters}
-            sort={sort}
+            priceQuickMax={filters.priceQuickMax}
+            onPriceQuickChange={(max) =>
+              setFilters({ ...filters, priceQuickMax: max, priceMin: null, priceMax: null })
+            }
             currency={currency}
-            variant={variant}
+            sort={sort}
+            sortOptions={sortOptions}
+            sortLabel={t('catalog.sortAria')}
             activeSummary={activeSummary}
-            defaultOpen={filtersOpenByDefault}
-            onFiltersChange={setFilters}
+            activeCount={countActiveCatalogFilters(filters)}
             onSortChange={setSort}
             onClear={clearFilters}
           />

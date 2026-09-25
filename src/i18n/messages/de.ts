@@ -156,6 +156,7 @@ export const de: Messages = {
     refineResults: 'Ergebnisse eingrenzen',
     clearAll: 'Alle zurücksetzen',
     manufacturer: 'Hersteller',
+    allManufacturers: 'Alle Hersteller',
     price: 'Preis',
     priceMin: 'Min',
     priceMax: 'Max',
