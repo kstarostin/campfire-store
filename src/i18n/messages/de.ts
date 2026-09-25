@@ -33,7 +33,6 @@ export const de: Messages = {
   },
   documentTitle: {
     home: 'Startseite',
-    categories: 'Kategorien',
     category: '{name}',
     products: 'Alle Produkte',
     search: 'Suche',
@@ -83,12 +82,11 @@ export const de: Messages = {
     shopByCategory: 'Nach Kategorie shoppen',
     shopByCategoryDescription:
       'Vom Kajak bis zum Kocher — finde die passende Ausrüstung für dein nächstes Abenteuer.',
-    viewAll: 'Alle anzeigen',
+    expandCategories: 'Alle {count} Kategorien',
+    collapseCategories: 'Weniger anzeigen',
     categoriesLoading: 'Kategorien werden geladen…',
     categoriesError:
       'Kategorien konnten nicht geladen werden. Bitte versuche es gleich erneut.',
-    oneSubcategory: '1 Unterkategorie',
-    nSubcategories: '{count} Unterkategorien',
     featuredProducts: 'Empfohlene Produkte',
     featuredDescription:
       'Frische Highlights aus unserem Katalog — filtere nach Marke oder Budget.',
@@ -107,21 +105,6 @@ export const de: Messages = {
     featuredEmptyTitle: 'Keine passenden Highlights',
     featuredEmptyBody:
       'Hebe den Marken- oder Budgetfilter auf, um mehr Produkte aus dem Katalog zu sehen.',
-    promoEyebrow: 'Vor dem Wochenende',
-    promoTitle: 'Pack nur Ausrüstung ein, die ihren Platz im Rucksack verdient.',
-    promoLead:
-      'Vom Tourenkajak bis zum Kocher — finde Ausrüstung für Trail, Wasser und Straße.',
-    promoPointWater: 'Touren-, Wildwasser- und Aufblas-Kajaks für Seen und Flüsse',
-    promoPointBikes: 'Renn-, Gravel- und Mountainbikes von Marken, die wir führen',
-    promoPointCamp: 'Zelte, Rucksäcke und Wanderbekleidung für Nächte unter freiem Himmel',
-    promoBrowseGear: 'Gesamtes Sortiment',
-    promoExploreCategories: 'Kategorien entdecken',
-    promoDemoLabel: 'Demo-Konto',
-    promoDemoHint:
-      'Melde dich mit diesem Testnutzer an, um Warenkorb, Checkout und Bestellhistorie auszuprobieren.',
-    promoDemoEmail: 'E-Mail',
-    promoDemoPassword: 'Passwort',
-    promoSignIn: 'Anmelden und testen',
   },
   footer: {
     blurb:
@@ -160,10 +143,10 @@ export const de: Messages = {
   catalog: {
     allCategoriesDescription: 'Vom Kajak bis zum Ski — wähl deine Abteilung und leg los.',
     shopCategory: 'Diese Kategorie shoppen',
-    browseSubcategories: 'Unterkategorien durchsuchen',
     browseAllCategory: 'Alle {name} entdecken',
     categoryLoading: 'Kategorie wird geladen…',
     categoryError: 'Diese Kategorie konnte nicht geladen werden. Bitte erneut versuchen.',
+    oneProduct: '1 Produkt',
     productCount: '{count} Produkte',
     searchMatches:
       '{count} Produkte passen zu Name, Marke, Beschreibung und Kategorien',
@@ -430,9 +413,6 @@ export const de: Messages = {
     homeHint: 'Kajaks, Fahrräder, Camping und Trail-Ausrüstung.',
     allCategories: 'Alle Kategorien',
     allCategoriesHint: 'Durchstöbere den gesamten Kategoriebaum.',
-    categoriesTitle: 'Wohin geht die nächste Tour?',
-    categoriesLead:
-      'Manche Touren beginnen mit einer Karte. Andere mit einem Paddel, einem Rucksack oder einem Paar Schuhen. Wähl deine Tür — wir sehen uns auf der anderen Seite.',
     category: 'Kategorie',
     allProducts: 'Alle Produkte',
     allProductsHint: 'Durchstöbere den gesamten Katalog mit Filtern und Sortierung.',

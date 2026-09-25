@@ -152,7 +152,7 @@ export function MobileNav({ open, onClose, returnFocusRef }: MobileNavProps) {
 
               <li className="pt-1">
                 <MegaMenuLink
-                  to="/categories"
+                  to="/#categories"
                   showFire={false}
                   className="mega-menu-link--view-all w-full rounded-md py-2 text-sm font-semibold"
                   onClick={onClose}

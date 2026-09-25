@@ -7,7 +7,6 @@ import { RootRedirect } from '@/components/routing/RootRedirect'
 import { UnlocalizedPathRedirect } from '@/components/routing/UnlocalizedPathRedirect'
 import { AccountPage } from '@/pages/AccountPage'
 import { CartPage } from '@/pages/CartPage'
-import { CategoriesPage } from '@/pages/CategoriesPage'
 import { CategoryDetailPage } from '@/pages/CategoryDetailPage'
 import { CheckoutPage } from '@/pages/CheckoutPage'
 import { HomePage } from '@/pages/HomePage'
@@ -27,7 +26,9 @@ export function AppRouter() {
       <Route path="/:lang" element={<LocaleRoute />}>
         <Route element={<AppLayout />}>
           <Route index element={<HomePage />} />
-          <Route path="categories" element={<CategoriesPage />} />
+          {/* The categories page was merged into the home page; the route
+              survives so existing links and bookmarks land on that section. */}
+          <Route path="categories" element={<Navigate to="..#categories" replace />} />
           <Route path="categories/:categoryCode" element={<CategoryDetailPage />} />
           <Route path="products" element={<ProductsPage />} />
           <Route path="products/:id" element={<ProductDetailPage />} />

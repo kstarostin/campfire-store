@@ -7,7 +7,9 @@ import {
   Pagination,
 } from '@/components/catalog/CatalogResultsBar'
 import { CatalogPageHeader } from '@/components/catalog/CatalogPageHeader'
-import { CategorySubcategoryStrip } from '@/components/catalog/CategorySubcategoryStrip'
+import { CategorySubcategoryGrid } from '@/components/catalog/CategorySubcategoryGrid'
+import { CategoryToggle } from '@/components/catalog/CategoryToggle'
+import { useCollapsibleCategories } from '@/hooks/useCollapsibleCategories'
 import { ProductCard } from '@/components/product/ProductCard'
 import { ProductGrid } from '@/components/product/ProductGrid'
 import { ProductGridSkeleton } from '@/components/product/ProductGridSkeleton'
@@ -53,6 +55,10 @@ type ProductCatalogViewProps = ProductCatalogViewBaseProps &
 
 export function ProductCatalogView(props: ProductCatalogViewProps) {
   const { variant, title, subtitle, breadcrumb, activeSummary, subcategories } = props
+  const hasSubcategories = !!subcategories && subcategories.length > 0
+  // Held here rather than inside the grid so the toggle can sit in the page
+  // header alongside the title and its paragraph.
+  const subcategoryList = useCollapsibleCategories(subcategories ?? [])
   const { t } = useTranslation()
   const { currency } = useLocale()
   const [searchParams, setSearchParams] = useSearchParams()
@@ -211,10 +217,13 @@ export function ProductCatalogView(props: ProductCatalogViewProps) {
           breadcrumb={breadcrumb}
           title={title}
           subtitle={resolvedSubtitle}
+          action={hasSubcategories ? <CategoryToggle list={subcategoryList} /> : null}
         />
 
-        {subcategories && subcategories.length > 0 ? (
-          <CategorySubcategoryStrip subcategories={subcategories} />
+        {hasSubcategories ? (
+          <div className="catalog-subcategory-grid">
+            <CategorySubcategoryGrid list={subcategoryList} />
+          </div>
         ) : null}
 
         {showFilters ? (

@@ -30,7 +30,6 @@ export const en = {
   },
   documentTitle: {
     home: 'Home',
-    categories: 'Categories',
     category: '{name}',
     products: 'All products',
     search: 'Search',
@@ -80,11 +79,10 @@ export const en = {
     shopByCategory: 'Shop by category',
     shopByCategoryDescription:
       'From kayaks to camp stoves — find the right gear for your next adventure.',
-    viewAll: 'View all',
+    expandCategories: 'All {count} categories',
+    collapseCategories: 'Show less',
     categoriesLoading: 'Loading categories…',
     categoriesError: 'Categories could not be loaded. Please try again in a moment.',
-    oneSubcategory: '1 subcategory',
-    nSubcategories: '{count} subcategories',
     featuredProducts: 'Featured products',
     featuredDescription:
       'Fresh picks from our catalog — filter by brand or keep it under budget.',
@@ -103,21 +101,6 @@ export const en = {
     featuredEmptyTitle: 'No featured picks match',
     featuredEmptyBody:
       'Try clearing the brand or budget filter to see more products from the catalog.',
-    promoEyebrow: 'Before the weekend',
-    promoTitle: 'Pack gear that earns its place in the bag.',
-    promoLead:
-      'From touring kayaks to camp stoves — find gear for the trail, the water, and the road.',
-    promoPointWater: 'Touring, whitewater, and inflatable kayaks for lakes and rivers',
-    promoPointBikes: 'Road, gravel, and mountain bikes from brands we stock',
-    promoPointCamp: 'Tents, backpacks, and hiking layers for nights off the grid',
-    promoBrowseGear: 'Browse all gear',
-    promoExploreCategories: 'Explore categories',
-    promoDemoLabel: 'Demo account',
-    promoDemoHint:
-      'Sign in with this test user to try cart, checkout, and order history end to end.',
-    promoDemoEmail: 'Email',
-    promoDemoPassword: 'Password',
-    promoSignIn: 'Sign in to try',
   },
   footer: {
     blurb:
@@ -154,10 +137,10 @@ export const en = {
   catalog: {
     allCategoriesDescription: 'Kayaks to skis, tents to trail bikes — pick your aisle and go.',
     shopCategory: 'Shop this category',
-    browseSubcategories: 'Browse subcategories',
     browseAllCategory: 'Browse all {name}',
     categoryLoading: 'Loading category…',
     categoryError: 'This category could not be loaded. Please try again.',
+    oneProduct: '1 product',
     productCount: '{count} products',
     searchMatches: '{count} products matched across name, brand, description, and categories',
     filters: 'Filters',
@@ -418,9 +401,6 @@ export const en = {
     homeHint: 'Kayaks, bikes, camping, and trail gear.',
     allCategories: 'All categories',
     allCategoriesHint: 'Browse the full category tree.',
-    categoriesTitle: 'Where will you go next?',
-    categoriesLead:
-      "Some trips start with a map. Others start with a paddle, a pack, or a pair of boots. Pick your door — we'll meet you on the other side.",
     category: 'Category',
     allProducts: 'All products',
     allProductsHint: 'Browse the full catalog with filters and sorting.',

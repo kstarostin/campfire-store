@@ -2,8 +2,11 @@ import { Outlet } from 'react-router-dom'
 import { Footer } from '@/components/layout/Footer'
 import { Header } from '@/components/layout/Header'
 import { ToastStack } from '@/components/ui/ToastStack'
+import { useHashScroll } from '@/hooks/useHashScroll'
 
 export function AppLayout() {
+  useHashScroll()
+
   return (
     // relative: the header positions against this when it overlays a hero.
     <div className="relative flex min-h-screen flex-col bg-bg text-text">

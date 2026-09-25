@@ -45,14 +45,29 @@ interface CatalogPageHeaderProps {
   breadcrumb?: ReactNode
   title: ReactNode
   subtitle?: string
+  /** Control shown on the title's line, at the right edge. */
+  action?: ReactNode
 }
 
-export function CatalogPageHeader({ breadcrumb, title, subtitle }: CatalogPageHeaderProps) {
+export function CatalogPageHeader({
+  breadcrumb,
+  title,
+  subtitle,
+  action,
+}: CatalogPageHeaderProps) {
   return (
     <header className="catalog-page-header">
       {breadcrumb}
-      <h1>{title}</h1>
-      {subtitle ? <p>{subtitle}</p> : null}
+      {/* Same .section-head as the home page sections, so the title, the
+          paragraph under it and the control beside it are one shared rule
+          rather than two sets of values kept in step by hand. */}
+      <div className="section-head">
+        <div>
+          <h1>{title}</h1>
+          {subtitle ? <p>{subtitle}</p> : null}
+        </div>
+        {action}
+      </div>
     </header>
   )
 }

@@ -1,7 +1,6 @@
-import { CategoryRow } from '@/components/home/CategoryRow'
+import { CategoryShowcase } from '@/components/home/CategoryShowcase'
 import { FeaturedProducts } from '@/components/home/FeaturedProducts'
 import { Hero } from '@/components/home/Hero'
-import { PromoStrip } from '@/components/home/PromoStrip'
 import { usePageTitle } from '@/hooks/usePageTitle'
 
 export function HomePage() {
@@ -9,9 +8,8 @@ export function HomePage() {
   return (
     <>
       <Hero />
-      <CategoryRow />
+      <CategoryShowcase />
       <FeaturedProducts />
-      <PromoStrip />
     </>
   )
 }

@@ -69,7 +69,7 @@ export function MegaMenu({ open, id }: MegaMenuProps) {
 
             <div className="mt-7">
               <MegaMenuLink
-                to="/categories"
+                to="/#categories"
                 showFire={false}
                 className="mega-menu-link--view-all cursor-pointer text-sm font-semibold"
               >

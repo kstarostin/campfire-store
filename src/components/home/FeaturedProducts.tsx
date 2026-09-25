@@ -77,7 +77,7 @@ export function FeaturedProducts() {
   }, [productsQuery.data?.products, manufacturer, underBudget, currency])
 
   return (
-    <section className="section section--band section--products">
+    <section className="section section--band section--products" id="products">
       <Container>
         <SectionHead
           title={t('home.featuredProducts')}

@@ -52,7 +52,7 @@ export function Hero() {
                 {t('hero.shopBestsellers')}
                 <ArrowRight size={18} aria-hidden />
               </Button>
-              <Button to="/categories" variant="secondary">
+              <Button to="/#categories" variant="secondary">
                 {t('hero.browseCategories')}
               </Button>
             </div>
