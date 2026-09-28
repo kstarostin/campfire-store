@@ -95,102 +95,110 @@ export function ProductFilterBar<TSort extends string>({
 
   return (
     <div className="product-filter-bar">
-      {showManufacturer ? (
-        asChips ? (
-          <div className="product-filter-bar__chips">
-            <Chip
-              active={selectedManufacturers.length === 0}
-              onClick={() => onManufacturersChange?.([])}
-            >
-              {t('common.all')}
-            </Chip>
-            {manufacturers.map((name) => (
+      <div className="product-filter-bar__filters">
+        {showManufacturer ? (
+          asChips ? (
+            <div className="product-filter-bar__chips">
               <Chip
-                key={name}
-                active={selectedManufacturers.includes(name)}
-                onClick={() => toggleManufacturer(name)}
+                active={selectedManufacturers.length === 0}
+                onClick={() => onManufacturersChange?.([])}
               >
-                {name}
+                {t('common.all')}
+              </Chip>
+              {manufacturers.map((name) => (
+                <Chip
+                  key={name}
+                  active={selectedManufacturers.includes(name)}
+                  onClick={() => toggleManufacturer(name)}
+                >
+                  {name}
+                </Chip>
+              ))}
+            </div>
+          ) : (
+            <MultiSelectMenu
+              label={t('catalog.manufacturer')}
+              options={manufacturers}
+              selected={selectedManufacturers}
+              onChange={(next) => onManufacturersChange?.(next)}
+              allLabel={t('catalog.allManufacturers')}
+            />
+          )
+        ) : null}
+
+        {visible('price') && onPriceChange ? (
+          <div className="product-filter-bar__price">
+            <label>
+              <span className="sr-only">{t('catalog.priceMin')}</span>
+              <input
+                type="text"
+                inputMode="numeric"
+                autoComplete="off"
+                pattern="[0-9]*"
+                placeholder={t('catalog.priceMin')}
+                aria-label={t('catalog.priceMin')}
+                value={formatCatalogPriceInput(priceMin)}
+                disabled={priceQuickMax != null}
+                onChange={(event) =>
+                  onPriceChange(parseCatalogPriceInput(event.target.value), priceMax)
+                }
+              />
+            </label>
+            <span aria-hidden>–</span>
+            <label>
+              <span className="sr-only">{t('catalog.priceMax')}</span>
+              <input
+                type="text"
+                inputMode="numeric"
+                autoComplete="off"
+                pattern="[0-9]*"
+                placeholder={t('catalog.priceMax')}
+                aria-label={t('catalog.priceMax')}
+                value={formatCatalogPriceInput(priceMax)}
+                disabled={priceQuickMax != null}
+                onChange={(event) =>
+                  onPriceChange(priceMin, parseCatalogPriceInput(event.target.value))
+                }
+              />
+            </label>
+          </div>
+        ) : null}
+
+        {visible('priceQuick') && priceQuickFilters.length > 0 ? (
+          <div className="product-filter-bar__chips">
+            {priceQuickFilters.map((quickFilter) => (
+              <Chip
+                key={quickFilter.max}
+                forest
+                active={priceQuickMax === quickFilter.max}
+                onClick={() =>
+                  onPriceQuickChange?.(
+                    priceQuickMax === quickFilter.max ? null : quickFilter.max,
+                  )
+                }
+              >
+                {t('catalog.underPrice', {
+                  price: formatPrice(
+                    { [currency]: quickFilter.max },
+                    currency,
+                    formatLocale,
+                  ),
+                })}
               </Chip>
             ))}
           </div>
-        ) : (
-          <MultiSelectMenu
-            label={t('catalog.manufacturer')}
-            options={manufacturers}
-            selected={selectedManufacturers}
-            onChange={(next) => onManufacturersChange?.(next)}
-            allLabel={t('catalog.allManufacturers')}
-          />
-        )
-      ) : null}
+        ) : null}
 
-      {visible('price') && onPriceChange ? (
-        <div className="product-filter-bar__price">
-          <label>
-            <span className="sr-only">{t('catalog.priceMin')}</span>
-            <input
-              type="text"
-              inputMode="numeric"
-              autoComplete="off"
-              pattern="[0-9]*"
-              placeholder={t('catalog.priceMin')}
-              aria-label={t('catalog.priceMin')}
-              value={formatCatalogPriceInput(priceMin)}
-              disabled={priceQuickMax != null}
-              onChange={(event) =>
-                onPriceChange(parseCatalogPriceInput(event.target.value), priceMax)
-              }
-            />
-          </label>
-          <span aria-hidden>–</span>
-          <label>
-            <span className="sr-only">{t('catalog.priceMax')}</span>
-            <input
-              type="text"
-              inputMode="numeric"
-              autoComplete="off"
-              pattern="[0-9]*"
-              placeholder={t('catalog.priceMax')}
-              aria-label={t('catalog.priceMax')}
-              value={formatCatalogPriceInput(priceMax)}
-              disabled={priceQuickMax != null}
-              onChange={(event) =>
-                onPriceChange(priceMin, parseCatalogPriceInput(event.target.value))
-              }
-            />
-          </label>
-        </div>
-      ) : null}
+        {activeSummary ? (
+          <span className="product-filter-bar__summary">{activeSummary}</span>
+        ) : null}
 
-      {visible('priceQuick') && priceQuickFilters.length > 0 ? (
-        <div className="product-filter-bar__chips">
-          {priceQuickFilters.map((quickFilter) => (
-            <Chip
-              key={quickFilter.max}
-              forest
-              active={priceQuickMax === quickFilter.max}
-              onClick={() =>
-                onPriceQuickChange?.(priceQuickMax === quickFilter.max ? null : quickFilter.max)
-              }
-            >
-              {t('catalog.underPrice', {
-                price: formatPrice({ [currency]: quickFilter.max }, currency, formatLocale),
-              })}
-            </Chip>
-          ))}
-        </div>
-      ) : null}
-
-      {activeSummary ? (
-        <span className="product-filter-bar__summary">{activeSummary}</span>
-      ) : null}
-
-      {activeCount > 0 && onClear ? (
-        <button type="button" className="catalog-text-link" onClick={onClear}>
-          {t('catalog.clearAll')}
-        </button>
-      ) : null}
+        {activeCount > 0 && onClear ? (
+          <button type="button" className="catalog-text-link" onClick={onClear}>
+            {t('catalog.clearAll')}
+          </button>
+        ) : null}
+      </div>
 
       {visible('sort') ? (
         <SortMenu
