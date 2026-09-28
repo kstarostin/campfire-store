@@ -1876,12 +1876,24 @@
     background: var(--badge-neutral-bg);
   }
 
+  .badge--nature {
+    background: var(--badge-nature-bg);
+  }
+
+  .badge--sun {
+    background: var(--badge-sun-bg);
+  }
+
   .badge--text-light {
     color: var(--badge-text-light);
   }
 
   .badge--text-dark {
     color: var(--badge-text-dark);
+  }
+
+  .badge--text-warm {
+    color: var(--badge-text-warm);
   }
 
   .product-body h3 {

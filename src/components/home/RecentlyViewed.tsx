@@ -26,6 +26,7 @@ export function RecentlyViewed() {
           products={products}
           currency={currency}
           label={t('home.recentlyViewed')}
+          showActions={false}
         />
       </Container>
     </section>

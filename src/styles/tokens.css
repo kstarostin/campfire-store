@@ -69,12 +69,23 @@
      4.5:1 to meet AA. Measured:
        accent  + text-light   2.60  (deliberate — brand orange, below AA)
        info    + text-dark   10.70
-       neutral + text-dark   11.04  */
+       neutral + text-dark   11.04
+       nature  + text-dark   10.81
+       sun     + text-warm     8.56  */
   --badge-accent-bg: var(--color-primary);
   --badge-info-bg: var(--color-info-subtle);
   --badge-neutral-bg: var(--color-surface-muted);
+  /* A leaf tint of the sage neutrals, for badges about materials. */
+  --badge-nature-bg: #d8ecd6;
+  /* Gold, for badges about scarcity — the one warm fill that is not the
+     terracotta accent, so it reads as its own thing next to a Bestseller. */
+  --badge-sun-bg: #ffd966;
   --badge-text-light: #ffffff;
   --badge-text-dark: var(--color-header-bg);
+  /* The sun fill's own hue, darkened. The petrol text-dark is a cool
+     blue-green and turned the gold murky; a dark shade of the fill itself
+     keeps the badge reading as one warm colour. */
+  --badge-text-warm: #473600;
 
   /* Supporting terracotta tints (formerly the orange ramp) */
   --color-orange-100: #eec4b2;

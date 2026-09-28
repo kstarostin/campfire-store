@@ -8,9 +8,18 @@ import { Price } from '@/components/product/Price'
 interface ProductCardProps {
   product: Product
   currency: Currency
+  /**
+   * Quick actions are dropped where the card is a way back to a product
+   * rather than a place to buy it, as in the recently viewed rail.
+   */
+  showActions?: boolean
 }
 
-export function ProductCard({ product, currency }: ProductCardProps) {
+export function ProductCard({
+  product,
+  currency,
+  showActions = true,
+}: ProductCardProps) {
   const productPath = `/products/${product._id}`
 
   return (
@@ -28,8 +37,12 @@ export function ProductCard({ product, currency }: ProductCardProps) {
         </div>
       </LocaleLink>
       <div className="product-card__footer">
-        <Price priceI18n={product.priceI18n} currency={currency} className="product-card__price" />
-        <ProductCardQuickActions product={product} />
+        <Price
+          priceI18n={product.priceI18n}
+          currency={currency}
+          className="product-card__price"
+        />
+        {showActions ? <ProductCardQuickActions product={product} /> : null}
       </div>
     </article>
   )

@@ -7,8 +7,8 @@
  * A code with no entry falls back to the neutral pill, so a badge added to the
  * catalogue still renders sensibly before anyone styles it here.
  */
-type BadgeFill = 'accent' | 'info' | 'neutral'
-type BadgeText = 'light' | 'dark'
+type BadgeFill = 'accent' | 'info' | 'neutral' | 'nature' | 'sun'
+type BadgeText = 'light' | 'dark' | 'warm'
 
 interface BadgeAppearance {
   fill: BadgeFill
@@ -18,6 +18,8 @@ interface BadgeAppearance {
 const BADGE_APPEARANCE: Record<string, BadgeAppearance> = {
   bestseller: { fill: 'accent', text: 'light' },
   new: { fill: 'info', text: 'dark' },
+  eco: { fill: 'nature', text: 'dark' },
+  limited: { fill: 'sun', text: 'warm' },
 }
 
 const FALLBACK_APPEARANCE: BadgeAppearance = { fill: 'neutral', text: 'dark' }
@@ -26,11 +28,14 @@ const fillClass: Record<BadgeFill, string> = {
   accent: 'badge--accent',
   info: 'badge--info',
   neutral: 'badge--neutral',
+  nature: 'badge--nature',
+  sun: 'badge--sun',
 }
 
 const textClass: Record<BadgeText, string> = {
   light: 'badge--text-light',
   dark: 'badge--text-dark',
+  warm: 'badge--text-warm',
 }
 
 export function badgeStyleClassName(code: string): string {
