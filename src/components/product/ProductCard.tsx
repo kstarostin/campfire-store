@@ -15,7 +15,7 @@ export function ProductCard({ product, currency }: ProductCardProps) {
 
   return (
     <article className="product-card">
-      <LocaleLink to={productPath} className="product-card__link block text-inherit">
+      <LocaleLink to={productPath} className="product-card__link text-inherit">
         <div className="product-media">
           <ProductCardMedia product={product} />
         </div>

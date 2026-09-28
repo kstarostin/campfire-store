@@ -1,6 +1,25 @@
 @import 'tailwindcss';
 
 @theme {
+  /* Layout tiers. One scale for both the `md:`-style utilities and the media
+     queries in styles/breakpoints.css.
+
+       small mobile           < 400    base
+       mobile          400 –  767    xs   (custom)
+       vertical tablet   768 – 1023    md
+       horizontal tablet 1024 – 1279    lg
+       desktop          >= 1280        xl
+
+     sm (640) and 2xl (1536) are removed rather than left dangling: they are
+     not tiers here, and leaving them would let `sm:` quietly reintroduce a
+     sixth boundary. */
+  --breakpoint-xs: 25rem;
+  --breakpoint-sm: initial;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+  --breakpoint-2xl: initial;
+
   /* Typography — Agdasima (condensed display) over Geist (UI sans) */
   --font-sans: 'Geist', system-ui, sans-serif;
   --font-display: 'Agdasima', 'Geist', system-ui, sans-serif;
@@ -233,32 +252,6 @@
     padding-inline: 0.75rem;
   }
 
-  @media (max-width: 767px) {
-    .site-container {
-      width: 100%;
-      max-width: none;
-      padding-inline: var(--page-gutter);
-    }
-
-    .site-container--header {
-      width: 100%;
-      max-width: none;
-      padding-inline: 0.75rem;
-    }
-  }
-
-  @media (min-width: 768px) {
-    .site-container {
-      padding-inline: 1rem;
-      width: min(100% - 2rem, var(--max-width));
-    }
-
-    .site-container--header {
-      padding-inline: 0.75rem;
-      width: min(100% - 1.5rem, calc(var(--max-width) + 12rem));
-    }
-  }
-
   .mega-menu {
     background-color: var(--color-header-bg);
     border-top-color: var(--color-header-border);
@@ -355,10 +348,17 @@
   /* Matches the header's wider container, but keeps the page gutter — the
      header's tighter 12px inline padding is for its edge-hugging icons. */
   .footer-container {
-    padding-inline: var(--page-gutter);
     /* Named query container so the bottom row can switch all three sections at
        once, based on the footer's own width rather than the viewport. */
     container: footer / inline-size;
+  }
+
+  /* Compound on purpose: the footer wants the page gutter, not the header's
+     narrower one, and both .site-container--header and .footer-container are
+     single-class. This used to win only by being declared later in the file,
+     which broke the moment the breakpoints moved to their own sheet. */
+  .site-container--header.footer-container {
+    padding-inline: var(--page-gutter);
   }
 
   /* Each title fills its own column, so the column is the query container. */
@@ -527,7 +527,10 @@
   .footer-meta {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    /* Pushed apart rather than centred, so the API links and the social row
+       keep the column's full width between them. The gap stays as the floor
+       for when the two wrap onto separate lines. */
+    justify-content: space-between;
     gap: 2.5rem 3rem;
     min-width: 0;
   }
@@ -544,6 +547,13 @@
   .footer-news p {
     margin: 1.25rem 0 0;
     color: rgb(238 242 242 / 72%);
+  }
+
+  /* A little breathing room at the column's edges, so space-between does not
+     push either block hard against the footer's outer bounds. */
+  .footer-links,
+  .footer-social {
+    padding-inline: 0.75rem;
   }
 
   .footer-links ul,
@@ -627,12 +637,6 @@
     }
     to {
       transform: translateY(0);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .site-header--revealed {
-      animation: none;
     }
   }
 
@@ -819,15 +823,20 @@
         rgb(0 0 0 / 8%) 70%,
         transparent 84%
       ),
-      var(--hero-image-lg, none),
-      var(--hero-fallback);
+      var(--hero-image-lg, none), var(--hero-fallback);
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
   }
 
+  /* Compound for the same reason as .footer-container: the hero runs its
+     container full width, and that only beat the breakpoint rule by being
+     declared later in the file. */
   .hero-container {
     display: flex;
+  }
+
+  .site-container.hero-container {
     width: 100%;
   }
 
@@ -858,61 +867,6 @@
     max-width: 34rem;
     min-width: 0;
     color: #ffffff;
-  }
-
-  /* Short viewports (13" laptops) can't carry a 140px three-line heading plus a
-     lifted foot row inside 100svh — the buttons would fall below the fold. */
-  @media (min-width: 768px) and (max-height: 860px) {
-    :root {
-      --text-display-hero: clamp(3rem, 7vw, 5.5rem);
-    }
-
-    .hero-foot {
-      margin-bottom: 2.5rem;
-    }
-  }
-
-  @media (max-width: 720px) {
-    .hero-foot {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1.75rem;
-      padding-top: 2rem;
-    }
-  }
-
-  @media (max-width: 900px) {
-    .hero {
-      background-image:
-        linear-gradient(
-          180deg,
-          rgb(0 0 0 / 93%) 0%,
-          rgb(0 0 0 / 76%) 18%,
-          rgb(0 0 0 / 54%) 36%,
-          rgb(0 0 0 / 28%) 54%,
-          rgb(0 0 0 / 10%) 72%,
-          transparent 86%
-        ),
-        var(--hero-image-md, none),
-        var(--hero-fallback);
-    }
-  }
-
-  @media (max-width: 560px) {
-    .hero {
-      background-image:
-        linear-gradient(
-          180deg,
-          rgb(0 0 0 / 94%) 0%,
-          rgb(0 0 0 / 78%) 20%,
-          rgb(0 0 0 / 58%) 38%,
-          rgb(0 0 0 / 32%) 56%,
-          rgb(0 0 0 / 12%) 74%,
-          transparent 88%
-        ),
-        var(--hero-image-sm, none),
-        var(--hero-fallback);
-    }
   }
 
   .hero-eyebrow {
@@ -1066,13 +1020,6 @@
     }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .not-found-page__flame::before {
-      animation: none;
-      opacity: 0.8;
-    }
-  }
-
   .not-found-page__message {
     margin: 1.5rem 0 0;
     font-size: clamp(1.0625rem, 2.8vw, 1.25rem);
@@ -1133,24 +1080,6 @@
   .btn-secondary:hover {
     border-color: #c3cccc;
     background: var(--color-surface-muted);
-  }
-
-  @media (min-width: 768px) {
-    :root {
-      --section-spacing: 2.5rem;
-    }
-
-    .hero {
-      /* Must still clear the overlaying header — a bare padding here previously
-         tucked the eyebrow underneath it. */
-      padding: calc(var(--header-height) + 4rem) 0 4.5rem;
-    }
-  }
-
-  @media (min-width: 1200px) {
-    :root {
-      --section-spacing: 3rem;
-    }
   }
 
   /* Home — sections */
@@ -1229,22 +1158,6 @@
 
   .catalog-subcategory-grid {
     margin-bottom: 2rem;
-  }
-
-  /* Under ~640px the toggle would take half the row and force the section
-     title into an extra line or two, so it drops beneath instead. */
-  @media (max-width: 40rem) {
-    .section-head {
-      flex-wrap: wrap;
-    }
-
-    .section-head > div {
-      flex: 1 1 100%;
-    }
-
-    .category-toggle {
-      margin-top: 0;
-    }
   }
 
   .category-toggle:hover {
@@ -1432,40 +1345,6 @@
   .category-card:focus-visible .category-card__cta {
     opacity: 1;
     transform: none;
-  }
-
-  /* Touch has no hover state to reveal it with. */
-  @media (hover: none) {
-    .category-card__cta {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  @media (min-width: 40rem) {
-    .category-grid {
-      --category-gap: 1.5rem;
-      --category-columns: 2;
-    }
-  }
-
-  @media (min-width: 64rem) {
-    .category-grid {
-      --category-gap: 1.875rem;
-      --category-columns: 3;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .category-card__photo,
-    .category-card__cta {
-      transition: opacity 0.25s ease;
-      transform: none;
-    }
-
-    .category-card:hover .category-card__photo {
-      transform: none;
-    }
   }
 
   /* One wrapping line of controls, sort pushed to the right edge and always
@@ -1756,14 +1635,6 @@
     gap: 0.875rem;
   }
 
-  /* Two up below 768px, but under 400px the card is too narrow to hold a
-     price and both quick actions on one line, so it goes single file. */
-  @media (max-width: 399px) {
-    .product-grid {
-      grid-template-columns: minmax(0, 1fr);
-    }
-  }
-
   /* Borderless and photo-led, like the category cards: the image runs to the
      card edge and the hover is a lift plus a slow push on the photograph
      rather than a coloured outline. */
@@ -1792,6 +1663,7 @@
   }
 
   .product-card__link {
+    display: block;
     text-decoration: none;
   }
 
@@ -1808,9 +1680,12 @@
     -webkit-line-clamp: 2;
   }
 
+  /* The price holds its size and sits on the row's baseline; when the card is
+     too narrow the two quick actions stack instead of the whole group dropping
+     below the price, which kept the row tidier at two-up mobile widths. */
   .product-card__footer {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
     gap: 0.5rem;
     margin-top: auto;
@@ -1818,14 +1693,59 @@
   }
 
   .product-card__price {
-    min-width: 0;
+    /* Never shrinks — the actions give way first. */
+    flex: none;
   }
 
   .product-card-quick-actions {
     display: flex;
-    flex-shrink: 0;
-    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-end;
     gap: 0.375rem;
+  }
+
+  /* Cards share four row tracks with their neighbours — media, meta, title,
+     footer — so whatever is tallest in a row sets the height for all of it: a
+     wrapped badge row, a three-line product name, a stacked pair of quick
+     actions. The fallback above keeps the flex column and the fixed two-line
+     title, which is why the title's clamp lives there rather than here.
+
+     row-gap: 0 on each subgrid is required: a subgrid inherits the parent's
+     gutters, so without it the grid's 0.875rem row gap would be injected
+     between the media, the copy and the footer inside every card. */
+  @supports (grid-template-rows: subgrid) {
+    /* Scoped to .product-grid: the card is also used in the PDP's related
+       rail, which is a flex scroller with no track structure to inherit.
+       Unscoped, subgrid resolved against nothing there and collapsed the
+       cards to 113px. */
+    .product-grid .product-card {
+      display: grid;
+      grid-row: span 4;
+      grid-template-rows: subgrid;
+      row-gap: 0;
+    }
+
+    .product-grid .product-card__link {
+      display: grid;
+      grid-row: span 3;
+      grid-template-rows: subgrid;
+      row-gap: 0;
+    }
+
+    .product-grid .product-body {
+      display: grid;
+      grid-row: span 2;
+      grid-template-rows: subgrid;
+      row-gap: 0;
+    }
+
+    /* Sized by its row track now, not by a hardcoded two lines. */
+    .product-grid .product-card__title {
+      display: block;
+      min-height: 0;
+      overflow: visible;
+      -webkit-line-clamp: none;
+    }
   }
 
   .product-card-quick-actions__btn {
@@ -1879,12 +1799,6 @@
 
     50% {
       opacity: 0.55;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .skeleton--pulse {
-      animation: none;
     }
   }
 
@@ -2115,7 +2029,12 @@
   .product-meta {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    /* Top, not centre: the row's tallest meta sets this track's height, so a
+       card with no badges would otherwise float its brand down the middle of
+       the space its neighbour needs. align-content handles the wrapped lines,
+       align-items the brand and badges sharing one. */
+    align-items: flex-start;
+    align-content: flex-start;
     justify-content: space-between;
     gap: 0.375rem 0.5rem;
     margin-bottom: 0.5rem;
@@ -2181,43 +2100,6 @@
     font-weight: 700;
   }
 
-  /* Mobile scaling. Placed after the base rules on purpose: a media query adds
-     no specificity, so declaring these earlier in the sheet lost to them. */
-  @media (max-width: 767px) {
-    .product-card__price.product-price {
-      font-size: 1.125rem;
-    }
-
-    .product-card-quick-actions__btn {
-      width: 2.125rem;
-      height: 2.125rem;
-    }
-
-    .product-card-skeleton__action {
-      width: 2.125rem;
-      height: 2.125rem;
-    }
-
-    /* Buys back the width a long price needs — "$169.95" on a two-up card at
-       412px was clipping by 3px even after the type came down. */
-    .product-body {
-      padding: 0.75rem 0.75rem 0.5rem;
-    }
-
-    .product-card__footer {
-      /* Wraps rather than clips: a longer format such as EUR's "1.234,56 €"
-         drops the actions to their own line instead of running under them. */
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      padding: 0 0.75rem 0.75rem;
-    }
-
-    .product-card-quick-actions {
-      gap: 0.25rem;
-    }
-  }
-
-
   .product-price {
     margin: 0.5rem 0 0;
     font-size: 1.0625rem;
@@ -2229,17 +2111,6 @@
     font-size: 0.875rem;
     font-weight: 500;
     color: var(--color-text-muted);
-  }
-
-  @media (min-width: 768px) {
-    .product-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 1rem;
-    }
-
-    .catalog-category-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
   }
 
   /* Catalog listing + search */
@@ -2308,12 +2179,14 @@
     margin-top: 1.5rem;
   }
 
+  /* Same 2.375rem square as the card's quick actions, so every small round
+     control in the catalog matches. */
   .catalog-pagination button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 2.25rem;
-    height: 2.25rem;
+    min-width: 2.375rem;
+    height: 2.375rem;
     padding: 0 0.5rem;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-sm);
@@ -2372,30 +2245,6 @@
     color: var(--color-text-muted);
   }
 
-  .catalog-category-grid {
-    display: grid;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-    gap: 0.75rem;
-    margin-top: 0.875rem;
-  }
-
-  @media (min-width: 480px) {
-    .catalog-category-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  @media (min-width: 768px) {
-    .catalog-category-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .product-filter-bar > .sort-menu--toolbar,
-    .product-filter-bar > .sort-menu--toolbar .sort-menu__trigger {
-      width: auto;
-    }
-  }
-
   /* Product detail (Trailhead sheet) */
   .pdp-page {
     --pdp-buy-col: 17.5rem;
@@ -2408,41 +2257,6 @@
     display: grid;
     gap: 1.5rem;
     margin-bottom: 1.25rem;
-  }
-
-  @media (min-width: 900px) {
-    .pdp-page {
-      padding-bottom: 2.5rem;
-    }
-
-    .pdp-hero {
-      grid-template-columns: minmax(0, 1fr) minmax(15rem, var(--pdp-buy-col));
-      gap: 2rem var(--pdp-buy-gap);
-      align-items: start;
-    }
-
-    .pdp-buy-slot {
-      min-width: 0;
-      align-self: start;
-    }
-
-    .pdp-buy:not(.is-pinned) {
-      max-height: calc(100vh - var(--header-height) - 2rem);
-      overflow-y: auto;
-    }
-
-    .pdp-buy.is-pinned {
-      max-height: calc(100vh - var(--header-height) - 2rem);
-      overflow-y: auto;
-    }
-
-    .pdp-below-section {
-      transition: margin-right 0.2s ease;
-    }
-
-    .pdp-below-section.is-squeezed {
-      margin-right: calc(var(--pdp-buy-col) + var(--pdp-buy-gap));
-    }
   }
 
   .pdp-below-hero {
@@ -2470,12 +2284,6 @@
 
   .pdp-hero-stage.is-dragging {
     cursor: grabbing;
-  }
-
-  @media (min-width: 900px) {
-    .pdp-hero-stage {
-      min-height: min(52vh, 36rem);
-    }
   }
 
   .pdp-hero-stage img {
@@ -2610,12 +2418,6 @@
     width: 100%;
   }
 
-  @media (max-width: 899px) {
-    .pdp-buy-actions__cart {
-      display: none;
-    }
-  }
-
   .pdp-wishlist-btn {
     display: inline-flex;
     align-items: center;
@@ -2687,18 +2489,6 @@
   .pdp-field-notes__grid {
     display: grid;
     gap: 1rem;
-  }
-
-  @media (min-width: 640px) {
-    .pdp-field-notes__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  @media (min-width: 900px) {
-    .pdp-field-notes__grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
   }
 
   .pdp-field-note {
@@ -2825,12 +2615,6 @@
     background: rgb(255 255 255 / 96%);
     backdrop-filter: blur(10px);
     box-shadow: 0 -4px 20px rgb(0 0 0 / 6%);
-  }
-
-  @media (min-width: 900px) {
-    .pdp-mobile-buy-bar {
-      display: none;
-    }
   }
 
   .pdp-mobile-buy-bar .product-price {
@@ -3255,14 +3039,6 @@
     gap: 1.25rem;
   }
 
-  @media (min-width: 900px) {
-    .account-shell {
-      grid-template-columns: 15.5rem minmax(0, 1fr);
-      gap: 2rem;
-      align-items: start;
-    }
-  }
-
   .account-sidebar {
     display: flex;
     flex-direction: column;
@@ -3436,32 +3212,6 @@
     background: #fef2f2;
   }
 
-  @media (min-width: 900px) {
-    .account-mobile-bar {
-      display: none;
-    }
-
-    .account-nav {
-      display: block;
-    }
-  }
-
-  @media (max-width: 899px) {
-    .account-page.has-mobile-nav {
-      padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
-    }
-
-    .account-nav,
-    .account-shortcuts,
-    .account-sign-out {
-      display: none;
-    }
-
-    .account-user-card {
-      order: -1;
-    }
-  }
-
   .account-main {
     min-width: 0;
   }
@@ -3501,13 +3251,6 @@
   .profile-layout {
     display: grid;
     gap: 1.5rem;
-  }
-
-  @media (min-width: 640px) {
-    .profile-layout {
-      grid-template-columns: auto minmax(0, 1fr);
-      align-items: start;
-    }
   }
 
   .profile-photo {
@@ -3626,12 +3369,6 @@
     display: grid;
     gap: 0.875rem;
     align-items: stretch;
-  }
-
-  @media (min-width: 640px) {
-    .address-list {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
   }
 
   .address-card,
@@ -3778,28 +3515,11 @@
     gap: 0.875rem;
   }
 
-  @media (min-width: 640px) {
-    .address-form__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .address-form__field--wide {
-      grid-column: 1 / -1;
-    }
-  }
-
   /* Orders */
   .orders-layout {
     display: grid;
     gap: 1.25rem;
     align-items: start;
-  }
-
-  @media (min-width: 900px) {
-    .orders-layout {
-      grid-template-columns: minmax(0, 19.8rem) minmax(0, 1fr);
-      gap: 1.5rem;
-    }
   }
 
   .orders-results-bar {
@@ -4129,13 +3849,6 @@
     align-items: start;
   }
 
-  @media (min-width: 900px) {
-    .cart-shell {
-      grid-template-columns: minmax(0, 1fr) 18.5rem;
-      gap: 2rem;
-    }
-  }
-
   .cart-items {
     display: flex;
     flex-direction: column;
@@ -4151,14 +3864,6 @@
     border-radius: var(--radius-lg);
     background: var(--color-surface);
     box-shadow: var(--shadow-sm);
-  }
-
-  @media (min-width: 640px) {
-    .cart-line {
-      grid-template-columns: 6.5rem minmax(0, 1fr);
-      gap: 1.25rem;
-      padding: 1.125rem 1.25rem;
-    }
   }
 
   .cart-line__media {
@@ -4307,13 +4012,6 @@
     padding: 0.25rem 0;
   }
 
-  @media (min-width: 900px) {
-    .cart-summary {
-      position: sticky;
-      top: calc(var(--header-height) + 1rem);
-    }
-  }
-
   .cart-summary h2 {
     margin: 0;
     font-family: var(--font-display);
@@ -4385,14 +4083,6 @@
     border-radius: var(--radius-lg);
     background: var(--color-surface);
     box-shadow: var(--shadow-sm);
-  }
-
-  @media (min-width: 640px) {
-    .wishlist-line {
-      grid-template-columns: 6.5rem minmax(0, 1fr);
-      gap: 1rem;
-      padding: 1rem;
-    }
   }
 
   .wishlist-line__media {
@@ -4513,12 +4203,6 @@
     box-shadow: 0 -4px 20px rgb(0 0 0 / 6%);
   }
 
-  @media (min-width: 900px) {
-    .cart-mobile-bar {
-      display: none;
-    }
-  }
-
   .cart-mobile-bar__total {
     font-family: var(--font-display);
     font-size: 1.25rem;
@@ -4530,17 +4214,6 @@
   .cart-mobile-bar .btn-primary {
     flex: 1;
     width: auto;
-  }
-
-  @media (max-width: 899px) {
-    .cart-page.has-items {
-      padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
-    }
-
-    .cart-summary .cart-summary__checkout,
-    .cart-summary .cart-summary__continue {
-      display: none;
-    }
   }
 
   /* Checkout */
@@ -4573,13 +4246,6 @@
     display: grid;
     gap: 1.5rem;
     align-items: start;
-  }
-
-  @media (min-width: 900px) {
-    .checkout-shell {
-      grid-template-columns: minmax(0, 1fr) 18.5rem;
-      gap: 2rem;
-    }
   }
 
   .checkout-main {
@@ -4741,29 +4407,6 @@
     color: var(--color-text-muted);
   }
 
-  @media (min-width: 640px) {
-    .address-option__body {
-      flex-wrap: nowrap;
-    }
-
-    .address-option .address-line {
-      flex: 1;
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .address-option .address-phone {
-      flex-shrink: 0;
-      margin-left: auto;
-    }
-
-    .address-option .address-sep:last-of-type {
-      display: none;
-    }
-  }
-
   .checkout-delivery-note {
     display: flex;
     flex-direction: column;
@@ -4839,13 +4482,6 @@
     padding: 0.25rem 0;
   }
 
-  @media (min-width: 900px) {
-    .checkout-summary {
-      position: sticky;
-      top: calc(var(--header-height) + 1rem);
-    }
-  }
-
   .checkout-summary h2 {
     margin: 0;
     font-family: var(--font-display);
@@ -4907,12 +4543,6 @@
     box-shadow: 0 -4px 20px rgb(0 0 0 / 6%);
   }
 
-  @media (min-width: 900px) {
-    .checkout-mobile-bar {
-      display: none;
-    }
-  }
-
   .checkout-mobile-bar__total {
     font-family: var(--font-display);
     font-size: 1.25rem;
@@ -4924,16 +4554,6 @@
   .checkout-mobile-bar .btn-primary {
     flex: 1;
     width: auto;
-  }
-
-  @media (max-width: 899px) {
-    .checkout-page.has-mobile-bar {
-      padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
-    }
-
-    .checkout-summary .checkout-summary__actions {
-      display: none;
-    }
   }
 
   .checkout-form-message {

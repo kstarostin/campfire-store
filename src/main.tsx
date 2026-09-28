@@ -2,6 +2,9 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+// After index.css on purpose: the breakpoint overrides must land at the end
+// of @layer components to beat the base rules they override.
+import './styles/breakpoints.css'
 import App from './App.tsx'
 import { migratePersistedStorageFromSession } from '@/lib/migratePersistedStorage'
 import { queryClient } from '@/lib/queryClient'
