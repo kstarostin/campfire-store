@@ -2045,16 +2045,17 @@
 
   /* Product detail (Trailhead sheet) */
   .pdp-page {
-    --pdp-buy-col: 17.5rem;
+    --pdp-buy-col: 21rem;
     --pdp-buy-gap: 2.5rem;
     --mobile-bar-safe-inset: env(safe-area-inset-bottom, 0px);
-    padding-block: 1rem calc(5.5rem + var(--mobile-bar-safe-inset));
+    /* Same rhythm around the breadcrumb as .catalog-page. */
+    padding-block: 1.25rem calc(5.5rem + var(--mobile-bar-safe-inset));
   }
 
   .pdp-hero {
     display: grid;
     gap: 1.5rem;
-    margin-bottom: 1.25rem;
+    margin-bottom: 2rem;
   }
 
   .pdp-below-hero {
@@ -2065,92 +2066,168 @@
     min-width: 0;
   }
 
-  .pdp-hero-stage {
+  /* Square stage, image edge to edge — no frame, no padding, matching the
+     reference's full-bleed media. */
+  .pdp-stage {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+
+  .pdp-stage__track {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: min(58vw, 22rem);
-    padding: clamp(1rem, 3vw, 2rem);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    background: linear-gradient(165deg, #ffffff 0%, #e4eaea 100%);
-    box-shadow: var(--shadow-sm);
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
     cursor: grab;
     touch-action: pan-y;
-    user-select: none;
   }
 
-  .pdp-hero-stage.is-dragging {
+  .pdp-stage__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pdp-stage__track.is-dragging {
     cursor: grabbing;
+    scroll-snap-type: none;
+    scroll-behavior: auto;
   }
 
-  .pdp-hero-stage img {
-    width: 100%;
-    max-height: min(52vh, 34rem);
-    object-fit: contain;
-  }
-
-  .pdp-filmstrip {
-    display: flex;
-    gap: 0.625rem;
-    margin-top: 0.75rem;
-    padding-bottom: 0.25rem;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-  }
-
-  .pdp-filmstrip button {
-    flex: 0 0 4.5rem;
-    height: 4.5rem;
-    padding: 0.375rem;
-    border: 2px solid var(--color-border);
-    border-radius: var(--radius-sm);
-    background: var(--color-surface);
-    cursor: pointer;
+  .pdp-stage__slide {
+    flex: 0 0 100%;
+    height: 100%;
     scroll-snap-align: start;
   }
 
-  .pdp-filmstrip button.is-active {
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 1px var(--color-primary);
-  }
-
-  .pdp-filmstrip button img {
+  .pdp-stage__slide img {
+    display: block;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
+    user-select: none;
   }
 
+  .pdp-stage__dots {
+    position: absolute;
+    right: 0;
+    bottom: 1rem;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .pdp-stage__dot {
+    width: 1rem;
+    height: 1rem;
+    padding: 0;
+    border: 1px solid rgb(10 50 72 / 35%);
+    border-radius: 999px;
+    background: rgb(255 255 255 / 75%);
+    cursor: pointer;
+    transition:
+      background 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .pdp-stage__dot:hover {
+    background: #ffffff;
+  }
+
+  .pdp-stage__dot.is-active {
+    border-color: var(--color-primary-deep);
+    background: var(--color-primary-deep);
+  }
+
+  /* No surface of its own: the panel sits straight on the page, so its copy
+     lines up with the column edges rather than being inset by a card. */
   .pdp-buy {
+    padding-block: 1.875rem;
+  }
+
+  .pdp-buy__content {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    gap: 1rem;
-    padding: 0.25rem 0;
+    gap: 1.25rem;
   }
 
+  /* Key rows. Icon and label share a line; the value sits beneath, indented
+     past the icon so the values line up as a column. */
+  .pdp-keys {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9375rem;
+  }
+
+  .pdp-key {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .pdp-key__title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-display);
+    /* Matches the icon box so the label and its icon stand the same, with the
+       line box tightened to the glyphs — at the default 1.5 the label's box was
+       36px against the icon's 24px, so centring the boxes still left the caps
+       sitting low against it. */
+    font-size: 1.5rem;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--color-secondary);
+  }
+
+  .pdp-key__icon {
+    flex: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--color-primary-deep);
+  }
+
+  .pdp-key__value {
+    margin: 0;
+    padding-left: 2.25rem;
+    font-size: 1.0625rem;
+    letter-spacing: -0.03em;
+    color: var(--color-text);
+  }
+
+  /* Brand and name carry the product card's treatment: the display face
+     uppercase for the brand, the sans for the name. */
   .pdp-product-eyebrow {
     margin: 0;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--color-text-muted);
   }
 
   .pdp-product-title {
     margin: 0;
-    font-family: var(--font-display);
+    font-family: var(--font-sans);
     /* Held well below the section scale: this sits in the narrow buy column
        beside the gallery, so long product names would wrap badly at 70px. */
     font-size: var(--text-display-title);
-    line-height: var(--leading-display);
-    letter-spacing: var(--tracking-display);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: normal;
   }
 
   .pdp-product-tagline {
     margin: 0.375rem 0 0;
-    font-size: 0.9375rem;
+    font-size: 1.125rem;
     line-height: 1.45;
     color: var(--color-text-muted);
   }
@@ -2161,7 +2238,7 @@
 
   .pdp-product-price {
     font-family: var(--font-display);
-    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    font-size: clamp(3.5rem, 8vw, 4.5rem);
     font-weight: 700;
     letter-spacing: -0.02em;
   }
@@ -2250,7 +2327,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.375rem;
-    font-size: 0.8125rem;
+    font-size: 1rem;
     font-weight: 500;
     color: var(--color-secondary);
   }
@@ -2259,114 +2336,32 @@
     color: var(--color-secondary-hover);
   }
 
-  .pdp-field-notes {
-    --pdp-field-note-label-size: 0.6875rem;
-    --pdp-field-note-value-size: 0.9375rem;
-    --pdp-field-note-line-gap: 0.125rem;
-    --pdp-field-note-line-height: 1.35;
-    --pdp-field-note-icon-size: calc(
-      var(--pdp-field-note-label-size) * var(--pdp-field-note-line-height) +
-        var(--pdp-field-note-line-gap) + var(--pdp-field-note-value-size) *
-        var(--pdp-field-note-line-height)
-    );
-    margin-bottom: 2.5rem;
-    padding: 1.25rem 1.25rem 0.25rem;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    background: var(--color-surface);
-    box-shadow: var(--shadow-sm);
-  }
-
-  .pdp-field-notes h2 {
-    margin: 0 0 1rem;
-    font-family: var(--font-display);
-    font-size: 1.125rem;
-    font-weight: 600;
-  }
-
-  .pdp-field-notes__grid {
-    display: grid;
-    gap: 1rem;
-  }
-
-  .pdp-field-note {
-    display: flex;
-    gap: 0.75rem;
-    padding-bottom: 1rem;
-  }
-
-  .pdp-field-note__icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: var(--pdp-field-note-icon-size);
-    height: var(--pdp-field-note-icon-size);
-    flex-shrink: 0;
-    border-radius: var(--radius-sm);
-  }
-
-  .pdp-field-note__icon[data-highlight-group='environment'] {
-    color: var(--color-secondary);
-    background: var(--color-secondary-subtle);
-  }
-
-  .pdp-field-note__icon[data-highlight-group='build'] {
-    color: #6b7676;
-    background: #eef2f2;
-  }
-
-  .pdp-field-note__icon[data-highlight-group='fit'] {
-    color: var(--color-primary-hover);
-    background: var(--color-primary-subtle);
-  }
-
-  .pdp-field-note__icon[data-highlight-group='featured'] {
-    color: var(--color-primary-hover);
-    background: var(--color-orange-50);
-  }
-
-  .pdp-field-note__icon svg {
-    width: 58%;
-    height: 58%;
-  }
-
-  .pdp-field-note strong {
-    display: block;
-    font-size: var(--pdp-field-note-label-size);
-    line-height: var(--pdp-field-note-line-height);
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--color-text-muted);
-  }
-
-  .pdp-field-note span {
-    display: block;
-    margin-top: var(--pdp-field-note-line-gap);
-    font-size: var(--pdp-field-note-value-size);
-    line-height: var(--pdp-field-note-line-height);
-    font-weight: 500;
-  }
-
   .pdp-story {
     margin-bottom: 2.5rem;
   }
 
-  .pdp-story h2 {
-    margin: 0 0 0.75rem;
+  /* Same treatment as .section-head on the home page. */
+  .pdp-story h2,
+  .pdp-related-rail h2 {
+    margin: 0 0 1rem;
     font-family: var(--font-display);
-    font-size: 1.375rem;
-    font-weight: 600;
+    font-size: var(--text-display-section);
+    font-weight: 700;
+    line-height: var(--leading-display);
+    letter-spacing: 0.015em;
+    text-transform: uppercase;
   }
 
   .pdp-story p {
-    --story-font-size: 1.0625rem;
+    --story-font-size: 1.125rem;
     --story-leading: 1.65;
     --story-line: calc(var(--story-font-size) * var(--story-leading));
     margin: 0 0 1rem;
     font-size: var(--story-font-size);
+    font-weight: 400;
     line-height: var(--story-leading);
-    color: #3c4442;
+    letter-spacing: -0.03em;
+    color: var(--color-text-muted);
   }
 
   .pdp-story__dropcap {
@@ -2379,13 +2374,6 @@
     color: var(--color-primary-hover);
   }
 
-  .pdp-related-rail h2 {
-    margin: 0 0 1rem;
-    font-family: var(--font-display);
-    font-size: 1.25rem;
-    font-weight: 600;
-  }
-
   .pdp-related-scroll {
     display: flex;
     gap: 1rem;
@@ -2393,6 +2381,15 @@
     padding-bottom: 0.5rem;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
+    cursor: grab;
+  }
+
+  /* Snapping is suspended mid-drag so the rail tracks the pointer instead of
+     fighting it back to the nearest card. */
+  .pdp-related-scroll.is-dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    scroll-behavior: auto;
   }
 
   .pdp-related-scroll .product-card {

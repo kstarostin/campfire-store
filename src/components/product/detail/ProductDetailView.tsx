@@ -3,7 +3,6 @@ import type { Category, Product } from '@/api/types'
 import { CatalogBreadcrumb, type CatalogBreadcrumbItem } from '@/components/catalog/CatalogPageHeader'
 import { ProductBuyPanel } from '@/components/product/detail/ProductBuyPanel'
 import { ProductDescription } from '@/components/product/detail/ProductDescription'
-import { ProductFieldNotes } from '@/components/product/detail/ProductFieldNotes'
 import { ProductGallery } from '@/components/product/detail/ProductGallery'
 import { ProductMobileBuyBar } from '@/components/product/detail/ProductMobileBuyBar'
 import { RelatedProductsRail } from '@/components/product/detail/RelatedProductsRail'
@@ -34,15 +33,10 @@ export function ProductDetailView({
   const pageRef = useRef<HTMLDivElement>(null)
   const buySlotRef = useRef<HTMLDivElement>(null)
   const buyRef = useRef<HTMLElement>(null)
-  const fieldNotesRef = useRef<HTMLDivElement>(null)
   const descriptionRef = useRef<HTMLDivElement>(null)
   const relatedRef = useRef<HTMLDivElement>(null)
   const belowSectionRefs = useMemo(
-    () => ({
-      fieldNotes: fieldNotesRef,
-      description: descriptionRef,
-      related: relatedRef,
-    }),
+    () => ({ description: descriptionRef, related: relatedRef }),
     [],
   )
   const { isBuyPinned, pinnedStyle, placeholderHeight, squeezedSections } =
@@ -58,10 +52,7 @@ export function ProductDetailView({
     }))
 
     if (category) {
-      items.push({
-        label: category.name,
-        to: categoryPath(category),
-      })
+      items.push({ label: category.name, to: categoryPath(category) })
     }
 
     items.push({ label: product.name })
@@ -93,13 +84,9 @@ export function ProductDetailView({
           </div>
         </div>
 
+        {/* Full width, and squeezed by the hook while the buy panel floats
+            beside them. */}
         <div className="pdp-below-hero">
-          <div
-            ref={fieldNotesRef}
-            className={`pdp-below-section${squeezedSections.fieldNotes ? ' is-squeezed' : ''}`}
-          >
-            <ProductFieldNotes product={product} />
-          </div>
           <div
             ref={descriptionRef}
             className={`pdp-below-section${squeezedSections.description ? ' is-squeezed' : ''}`}

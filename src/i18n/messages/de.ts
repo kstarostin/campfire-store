@@ -308,6 +308,7 @@ export const de: Messages = {
     loading: 'Produkt wird geladen…',
     error: 'Dieses Produkt konnte nicht geladen werden. Bitte versuche es erneut.',
     relatedError: 'Ähnliche Produkte konnten nicht geladen werden. Bitte versuche es erneut.',
+    goToImage: 'Bild {index} anzeigen',
     galleryLabel: 'Produktbilder',
     quantity: 'Menge',
     decreaseQuantity: 'Menge verringern',

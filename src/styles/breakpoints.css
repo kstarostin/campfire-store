@@ -155,10 +155,6 @@
       --category-columns: 2;
     }
 
-    .pdp-field-notes__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
     .profile-layout {
       grid-template-columns: auto minmax(0, 1fr);
       align-items: start;
@@ -264,7 +260,7 @@
     }
 
     .pdp-hero {
-      grid-template-columns: minmax(0, 1fr) minmax(15rem, var(--pdp-buy-col));
+      grid-template-columns: minmax(0, 1fr) minmax(17rem, var(--pdp-buy-col));
       gap: 2rem var(--pdp-buy-gap);
       align-items: start;
     }
@@ -274,11 +270,7 @@
       align-self: start;
     }
 
-    .pdp-buy:not(.is-pinned) {
-      max-height: calc(100vh - var(--header-height) - 2rem);
-      overflow-y: auto;
-    }
-
+    .pdp-buy:not(.is-pinned),
     .pdp-buy.is-pinned {
       max-height: calc(100vh - var(--header-height) - 2rem);
       overflow-y: auto;
@@ -288,16 +280,9 @@
       transition: margin-right 0.2s ease;
     }
 
+    /* Makes room for the panel while it floats beside these sections. */
     .pdp-below-section.is-squeezed {
       margin-right: calc(var(--pdp-buy-col) + var(--pdp-buy-gap));
-    }
-
-    .pdp-hero-stage {
-      min-height: min(52vh, 36rem);
-    }
-
-    .pdp-field-notes__grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
     .pdp-mobile-buy-bar {

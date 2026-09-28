@@ -2,6 +2,9 @@ import { useEffect, useState, type CSSProperties, type RefObject } from 'react'
 
 const PDP_DESKTOP_MIN_WIDTH = 900
 
+/** Clear space left between the pinned panel and whatever follows the page. */
+const PDP_BUY_BOTTOM_GAP = 32
+
 function readCssLength(element: HTMLElement, varName: string, fallbackPx: number): number {
   const raw = getComputedStyle(element).getPropertyValue(varName).trim()
   if (!raw) return fallbackPx
@@ -26,16 +29,14 @@ function rectsOverlapVertically(
   return a.top < b.bottom && a.bottom > b.top
 }
 
-export type PdpBelowSectionKey = 'fieldNotes' | 'description' | 'related'
+export type PdpBelowSectionKey = 'description' | 'related'
 
 export interface PdpBelowSectionRefs {
-  fieldNotes: RefObject<HTMLElement | null>
   description: RefObject<HTMLElement | null>
   related: RefObject<HTMLElement | null>
 }
 
 const EMPTY_SQUEEZED: Record<PdpBelowSectionKey, boolean> = {
-  fieldNotes: false,
   description: false,
   related: false,
 }
@@ -101,8 +102,13 @@ export function usePdpBuySticky(
       const stickyTop = headerHeight + 16
       const buyHeight = buy.offsetHeight
       const slotRect = buySlot.getBoundingClientRect()
-      // Follow the slot while the breadcrumb scrolls away, then lock under the header.
-      const pinnedTop = Math.max(stickyTop, slotRect.top)
+      // Follow the slot while the breadcrumb scrolls away, then lock under the
+      // header — but never past the foot of the page, or the panel rides on over
+      // the footer. Once the limit is below the locked position the panel
+      // scrolls away with the content, as a sticky element would.
+      const maxTop =
+        container.getBoundingClientRect().bottom - buyHeight - PDP_BUY_BOTTOM_GAP
+      const pinnedTop = Math.min(Math.max(stickyTop, slotRect.top), maxTop)
       const pinnedLeft = slotRect.left
       const pinnedWidth = slotRect.width
       const buyOverlapRect = { top: pinnedTop, bottom: pinnedTop + buyHeight }

@@ -1,109 +1,101 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { Product } from '@/api/types'
 import { ProductMediaPlaceholder } from '@/components/product/ProductMediaPlaceholder'
+import { useDragScroll } from '@/hooks/useDragScroll'
 import { useTranslation } from '@/i18n'
 import { imageUrl } from '@/lib/imageUrl'
 import { buildProductGallerySlides } from '@/lib/productGallery'
-
-const SWIPE_THRESHOLD = 48
 
 interface ProductGalleryProps {
   product: Pick<Product, 'name' | 'images'>
 }
 
+/**
+ * Square stage holding one slide per image, scrolled horizontally by drag or
+ * touch and snapped into place. The dots sit over the foot of the image and
+ * jump to a slide; the active one is derived from scroll position, so it stays
+ * correct however the slide was reached.
+ */
 export function ProductGallery({ product }: ProductGalleryProps) {
   const { t } = useTranslation()
-  const stageRef = useRef<HTMLDivElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
+  const dragRef = useDragScroll<HTMLDivElement>()
   const slides = useMemo(
     () => buildProductGallerySlides(product.images, product.name),
     [product.images, product.name],
   )
   const [activeIndex, setActiveIndex] = useState(0)
-  const dragStartX = useRef<number | null>(null)
 
   useEffect(() => {
+    trackRef.current?.scrollTo({ left: 0 })
     setActiveIndex(0)
   }, [product.name, slides.length])
 
-  const activeSlide = slides[activeIndex]
+  const handleScroll = useCallback(() => {
+    const track = trackRef.current
+    if (!track || !slides.length) return
 
-  const goToSlide = useCallback(
-    (index: number) => {
-      if (!slides.length) return
-      const normalized = ((index % slides.length) + slides.length) % slides.length
-      setActiveIndex(normalized)
-    },
-    [slides.length],
-  )
+    const index = Math.round(track.scrollLeft / track.clientWidth)
+    setActiveIndex(Math.min(slides.length - 1, Math.max(0, index)))
+  }, [slides.length])
 
-  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (slides.length < 2) return
-    dragStartX.current = event.clientX
-    stageRef.current?.setPointerCapture(event.pointerId)
-    stageRef.current?.classList.add('is-dragging')
+  const goToSlide = (index: number) => {
+    const track = trackRef.current
+    if (!track) return
+
+    track.scrollTo({ left: index * track.clientWidth, behavior: 'smooth' })
   }
 
-  const finishDrag = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (dragStartX.current === null) return
-
-    const deltaX = event.clientX - dragStartX.current
-    dragStartX.current = null
-    stageRef.current?.classList.remove('is-dragging')
-
-    if (stageRef.current?.hasPointerCapture(event.pointerId)) {
-      stageRef.current.releasePointerCapture(event.pointerId)
-    }
-
-    if (Math.abs(deltaX) < SWIPE_THRESHOLD) return
-    goToSlide(activeIndex + (deltaX < 0 ? 1 : -1))
+  if (!slides.length) {
+    return (
+      <div className="pdp-media-col">
+        <div className="pdp-stage">
+          <ProductMediaPlaceholder />
+        </div>
+      </div>
+    )
   }
 
   return (
     <div className="pdp-media-col">
-      <div
-        ref={stageRef}
-        className="pdp-hero-stage"
-        onPointerDown={handlePointerDown}
-        onPointerUp={finishDrag}
-        onPointerCancel={(event) => {
-          dragStartX.current = null
-          stageRef.current?.classList.remove('is-dragging')
-          if (stageRef.current?.hasPointerCapture(event.pointerId)) {
-            stageRef.current.releasePointerCapture(event.pointerId)
-          }
-        }}
-      >
-        {activeSlide ? (
-          <img
-            src={imageUrl(activeSlide.url)}
-            alt={activeSlide.alt}
-            draggable={false}
-          />
-        ) : (
-          <ProductMediaPlaceholder />
-        )}
-      </div>
+      <div className="pdp-stage">
+        <div
+          ref={(node) => {
+            trackRef.current = node
+            dragRef(node)
+          }}
+          className="pdp-stage__track"
+          onScroll={handleScroll}
+          role="group"
+          aria-label={t('product.galleryLabel')}
+        >
+          {slides.map((slide) => (
+            <div key={slide.id} className="pdp-stage__slide">
+              <img src={imageUrl(slide.url)} alt={slide.alt} draggable={false} />
+            </div>
+          ))}
+        </div>
 
-      {slides.length > 1 ? (
-        <div className="pdp-filmstrip" role="tablist" aria-label={t('product.galleryLabel')}>
-          {slides.map((slide, index) => {
-            const isActive = index === activeIndex
-
-            return (
+        {slides.length > 1 ? (
+          <div
+            className="pdp-stage__dots"
+            role="tablist"
+            aria-label={t('product.galleryLabel')}
+          >
+            {slides.map((slide, index) => (
               <button
                 key={slide.id}
                 type="button"
                 role="tab"
-                aria-selected={isActive}
-                className={isActive ? 'is-active' : undefined}
+                aria-selected={index === activeIndex}
+                aria-label={t('product.goToImage', { index: index + 1 })}
+                className={`pdp-stage__dot${index === activeIndex ? ' is-active' : ''}`}
                 onClick={() => goToSlide(index)}
-              >
-                <img src={imageUrl(slide.thumbUrl)} alt="" />
-              </button>
-            )
-          })}
-        </div>
-      ) : null}
+              />
+            ))}
+          </div>
+        ) : null}
+      </div>
     </div>
   )
 }

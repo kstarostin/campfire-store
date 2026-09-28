@@ -2,6 +2,7 @@ import type { Currency, Product } from '@/api/types'
 import { ProductCard } from '@/components/product/ProductCard'
 import { ProductCardSkeleton } from '@/components/product/ProductCardSkeleton'
 import { ErrorState } from '@/components/ui/ErrorState'
+import { useDragScroll } from '@/hooks/useDragScroll'
 import { useTranslation } from '@/i18n'
 
 interface RelatedProductsRailProps {
@@ -22,6 +23,7 @@ export function RelatedProductsRail({
   onRetry,
 }: RelatedProductsRailProps) {
   const { t } = useTranslation()
+  const scrollRef = useDragScroll<HTMLDivElement>()
 
   if (!isLoading && !isError && products.length === 0) return null
 
@@ -34,7 +36,11 @@ export function RelatedProductsRail({
       <h2 id="pdp-related-heading">{heading}</h2>
 
       {isLoading ? (
-        <div className="pdp-related-scroll" aria-busy="true" aria-label={t('common.loading')}>
+        <div
+          className="pdp-related-scroll"
+          aria-busy="true"
+          aria-label={t('common.loading')}
+        >
           {Array.from({ length: 4 }, (_, index) => (
             <ProductCardSkeleton key={index} />
           ))}
@@ -46,7 +52,7 @@ export function RelatedProductsRail({
       ) : null}
 
       {!isLoading && !isError && products.length > 0 ? (
-        <div className="pdp-related-scroll">
+        <div ref={scrollRef} className="pdp-related-scroll">
           {products.map((product) => (
             <ProductCard key={product._id} product={product} currency={currency} />
           ))}

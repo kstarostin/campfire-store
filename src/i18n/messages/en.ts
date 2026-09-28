@@ -297,6 +297,7 @@ export const en = {
     loading: 'Loading product…',
     error: 'This product could not be loaded. Please try again.',
     relatedError: 'Related products could not be loaded. Please try again.',
+    goToImage: 'Show image {index}',
     galleryLabel: 'Product images',
     quantity: 'Quantity',
     decreaseQuantity: 'Decrease quantity',
