@@ -101,6 +101,11 @@ export const en = {
     featuredEmptyTitle: 'No featured picks match',
     featuredEmptyBody:
       'Try clearing the brand or budget filter to see more products from the catalog.',
+    newArrivals: 'New arrivals',
+    newArrivalsDescription: 'The latest gear to land in the store, freshest first.',
+    newArrivalsAll: 'See all new',
+    recentlyViewed: 'Recently viewed',
+    recentlyViewedDescription: 'Pick up where you left off.',
   },
   footer: {
     blurb:

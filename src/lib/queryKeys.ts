@@ -1,5 +1,6 @@
 const LOCALE_SENSITIVE_ROOTS = new Set([
   'account-user',
+  'badges',
   'cart',
   'wishlist',
   'orders',

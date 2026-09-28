@@ -180,10 +180,7 @@ export function parseCategoryList(
   return documents.map((document) => normalizeCategory(document, language))
 }
 
-function normalizeBadge(
-  document: ApiBadgeDocument,
-  language: Language,
-): ProductBadge {
+function normalizeBadge(document: ApiBadgeDocument, language: Language): ProductBadge {
   return {
     _id: document._id,
     code: document.code,
@@ -223,6 +220,15 @@ export function parseProduct(
   language: Language,
 ): Product {
   return normalizeProduct(response.data.document, language)
+}
+
+export function parseBadgeList(
+  response: ApiListEnvelope<ApiBadgeDocument>,
+  language: Language,
+): ProductBadge[] {
+  const payload = response.data
+  const documents = Array.isArray(payload) ? payload : (payload?.documents ?? [])
+  return documents.map((document) => normalizeBadge(document, language))
 }
 
 export function parseProductList(
@@ -289,7 +295,10 @@ export function normalizeUser(document: User): User {
   }
 }
 
-export function parseAuthResponse(response: AuthResponse): { token: string; user: User } {
+export function parseAuthResponse(response: AuthResponse): {
+  token: string
+  user: User
+} {
   return {
     token: response.token,
     user: normalizeUser(response.data.document),

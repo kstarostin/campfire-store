@@ -9,6 +9,7 @@ import { RelatedProductsRail } from '@/components/product/detail/RelatedProducts
 import { Container } from '@/components/layout/Container'
 import { useLocale } from '@/hooks/useLocale'
 import { usePdpBuySticky } from '@/hooks/usePdpBuySticky'
+import { useRecordProductView } from '@/hooks/useRecentlyViewed'
 import { categoryPath } from '@/lib/categoryPath'
 
 interface ProductDetailViewProps {
@@ -41,6 +42,8 @@ export function ProductDetailView({
   )
   const { isBuyPinned, pinnedStyle, placeholderHeight, squeezedSections } =
     usePdpBuySticky(pageRef, buySlotRef, buyRef, product._id, belowSectionRefs)
+
+  useRecordProductView(product._id)
 
   const category =
     product.category && typeof product.category === 'object' ? product.category : undefined

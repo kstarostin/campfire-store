@@ -12,6 +12,7 @@ import type {
   OrderDocumentResponse,
   PaginationParams,
   Product,
+  ProductBadge,
   User,
   UserDocumentResponse,
   Wishlist,
@@ -28,15 +29,21 @@ export const endpoints = {
 
   currencies: () => api.get<{ data: { code: string; name: string }[] }>('/currencies'),
 
+  badges: (language: Language) =>
+    api.get<ApiListEnvelope<ProductBadge>>('/badges', { params: { language } }),
+
   categories: (language: Language, currency: Currency) =>
     api.get<ApiListEnvelope<Category>>('/categories', {
       params: { ...withLocale(language, currency), limit: 100 },
     }),
 
   category: (code: string, language: Language, currency: Currency) =>
-    api.get<{ data: { document: Category } }>(`/categories/${encodeURIComponent(code)}`, {
-      params: withLocale(language, currency),
-    }),
+    api.get<{ data: { document: Category } }>(
+      `/categories/${encodeURIComponent(code)}`,
+      {
+        params: withLocale(language, currency),
+      },
+    ),
 
   categoryProducts: (
     code: string,
@@ -47,14 +54,20 @@ export const endpoints = {
       fields?: string
     },
   ) =>
-    api.get<ApiListEnvelope<Product>>(`/categories/${encodeURIComponent(code)}/products`, {
-      params: listQueryParams({ language, currency }, pagination),
-    }),
+    api.get<ApiListEnvelope<Product>>(
+      `/categories/${encodeURIComponent(code)}/products`,
+      {
+        params: listQueryParams({ language, currency }, pagination),
+      },
+    ),
 
   products: (
     language: Language,
     currency: Currency,
-    pagination?: PaginationParams & { filter?: Record<string, unknown> | string; fields?: string },
+    pagination?: PaginationParams & {
+      filter?: Record<string, unknown> | string
+      fields?: string
+    },
   ) =>
     api.get<ApiListEnvelope<Product>>('/products', {
       params: listQueryParams({ language, currency }, pagination),
@@ -65,12 +78,7 @@ export const endpoints = {
       params: withLocale(language, currency),
     }),
 
-  relatedProducts: (
-    id: string,
-    language: Language,
-    currency: Currency,
-    limit = 8,
-  ) =>
+  relatedProducts: (id: string, language: Language, currency: Currency, limit = 8) =>
     api.get<ApiListEnvelope<Product>>(`/products/${id}/related`, {
       params: { ...withLocale(language, currency), limit },
     }),
@@ -101,8 +109,7 @@ export const endpoints = {
   login: (body: { email: string; password: string }) =>
     api.post<AuthResponse>('/users/login', body),
 
-  logout: (token: string) =>
-    api.get<void>('/users/logout', { token }),
+  logout: (token: string) => api.get<void>('/users/logout', { token }),
 
   user: (id: string, token: string, language: Language, currency: Currency) =>
     api.get<UserDocumentResponse>(`/users/${id}`, {

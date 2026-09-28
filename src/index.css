@@ -2374,7 +2374,7 @@
     color: var(--color-primary-hover);
   }
 
-  .pdp-related-scroll {
+  .product-rail {
     display: flex;
     gap: 1rem;
     padding-top: 0.25rem;
@@ -2386,13 +2386,13 @@
 
   /* Snapping is suspended mid-drag so the rail tracks the pointer instead of
      fighting it back to the nearest card. */
-  .pdp-related-scroll.is-dragging {
+  .product-rail.is-dragging {
     cursor: grabbing;
     scroll-snap-type: none;
     scroll-behavior: auto;
   }
 
-  .pdp-related-scroll .product-card {
+  .product-rail .product-card {
     flex: 0 0 min(72vw, 14rem);
     scroll-snap-align: start;
   }

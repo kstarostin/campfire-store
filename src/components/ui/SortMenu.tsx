@@ -1,5 +1,5 @@
 import { ChevronDown } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 export interface SortMenuOption<T extends string> {
   value: T
@@ -33,6 +33,7 @@ export function SortMenu<T extends string>({
 }: SortMenuProps<T>) {
   const [open, setOpen] = useState(false)
   const rootRef = useRef<HTMLDivElement>(null)
+  const panelRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLButtonElement>(null)
   const optionRefs = useRef<(HTMLButtonElement | null)[]>([])
 
@@ -41,6 +42,36 @@ export function SortMenu<T extends string>({
     options.findIndex((option) => option.value === value),
   )
   const selected = options[selectedIndex]
+
+  /*
+   * The panel hangs from the trigger's right edge, which is what keeps it
+   * inside the page while the control sits at the end of the filter bar. Once
+   * the bar wraps, though, the trigger is at the bar's left and the panel — a
+   * good deal wider than it — runs off the left of the screen.
+   *
+   * Nudging it back in beats flipping it to left-aligned, which is the fix the
+   * manufacturer menu can afford only because it always sits at the left: on a
+   * right-hand trigger the same flip trades the overflow for one off the other
+   * edge. This reads the rendered position, so it needs no breakpoint and no
+   * guess at where the bar happens to wrap.
+   */
+  useLayoutEffect(() => {
+    const panel = panelRef.current
+    if (!open || !panel) return
+
+    // Written straight to the node rather than held in state: this is a
+    // measurement correcting the layout it just measured, and a state round
+    // trip would only re-render the panel to the same place.
+    panel.style.transform = ''
+    const rect = panel.getBoundingClientRect()
+    const margin = 8
+    const shift =
+      rect.left < margin
+        ? margin - rect.left
+        : Math.min(0, window.innerWidth - margin - rect.right)
+
+    if (shift) panel.style.transform = `translateX(${shift}px)`
+  }, [open])
 
   useEffect(() => {
     if (!open) return
@@ -118,7 +149,12 @@ export function SortMenu<T extends string>({
       </button>
 
       {open ? (
-        <div className="sort-menu__panel" role="listbox" aria-label={label}>
+        <div
+          ref={panelRef}
+          className="sort-menu__panel"
+          role="listbox"
+          aria-label={label}
+        >
           {options.map((option, index) => (
             <button
               key={option.value}

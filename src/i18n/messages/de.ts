@@ -105,6 +105,11 @@ export const de: Messages = {
     featuredEmptyTitle: 'Keine passenden Highlights',
     featuredEmptyBody:
       'Hebe den Marken- oder Budgetfilter auf, um mehr Produkte aus dem Katalog zu sehen.',
+    newArrivals: 'Neu eingetroffen',
+    newArrivalsDescription: 'Die neueste Ausrüstung im Shop — das Frischeste zuerst.',
+    newArrivalsAll: 'Alle Neuheiten',
+    recentlyViewed: 'Zuletzt angesehen',
+    recentlyViewedDescription: 'Mach dort weiter, wo du aufgehört hast.',
   },
   footer: {
     blurb:
