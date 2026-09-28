@@ -379,11 +379,6 @@
       animation: none;
     }
 
-    .not-found-page__flame::before {
-      animation: none;
-      opacity: 0.8;
-    }
-
     .category-card__photo,
     .category-card__cta {
       transition: opacity 0.25s ease;
