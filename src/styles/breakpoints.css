@@ -36,8 +36,27 @@
         var(--hero-image-md, none), var(--hero-fallback);
     }
 
-    .pdp-buy-actions__cart {
+    /* Single column: the panel is just copy here. Price, quantity, wishlist
+       and add-to-cart all live in the mobile bar pinned to the viewport. */
+    .pdp-buy .pdp-product-price,
+    .pdp-buy-actions {
       display: none;
+    }
+
+    /* With the full page width to play with, the key rows read better across
+       than stacked — as many per line as fit. */
+    .pdp-keys {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1.25rem 1.5rem;
+    }
+
+    /* One fixed track rather than content width, so a key is the same size
+       whichever line it lands on and a wrapped row sits in the columns the
+       row above set. Sized to the widest label in either language. */
+    .pdp-key {
+      flex: none;
+      width: 10.5rem;
     }
 
     .account-page.has-mobile-nav {

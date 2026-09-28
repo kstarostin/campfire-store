@@ -109,7 +109,12 @@ export function ProductDetailView({
         </div>
       </Container>
 
-      <ProductMobileBuyBar product={product} currency={currency} />
+      <ProductMobileBuyBar
+        product={product}
+        currency={currency}
+        quantity={quantity}
+        onQuantityChange={setQuantity}
+      />
     </>
   )
 }

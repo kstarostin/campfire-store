@@ -2398,12 +2398,15 @@
   }
 
   .pdp-mobile-buy-bar {
+    container: pdp-buy-bar / inline-size;
     position: fixed;
     inset-inline: 0;
     bottom: 0;
     z-index: 40;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
+    justify-content: space-between;
     gap: 0.75rem;
     padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom, 0px));
     border-top: 1px solid var(--color-border);
@@ -2412,14 +2415,46 @@
     box-shadow: 0 -4px 20px rgb(0 0 0 / 6%);
   }
 
+  /* The bar renders outside the .section--products container, so it misses the
+     accent colour the panel's price picks up from it — restated here, along
+     with the display face, so both prices read as the same element. */
   .pdp-mobile-buy-bar .product-price {
-    font-size: 1.375rem;
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-primary-hover);
     white-space: nowrap;
   }
 
+  .pdp-mobile-buy-bar__controls {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .pdp-mobile-buy-bar .pdp-qty-stepper {
+    flex: none;
+  }
+
+  /* Natural width, so the bar's space-between can show between all three
+     groups. */
   .pdp-mobile-buy-bar .btn-primary {
-    flex: 1;
+    flex: 0 1 auto;
     width: auto;
+  }
+
+  /* Below this the three groups stop fitting one line and the button takes a
+     row of its own, where a 100% basis has it fill the width rather than sit
+     left at its label's size. The threshold is set by the widest label, not by
+     a layout tier — hence a container query: "Add to cart" runs out of room at
+     429px but "In den Warenkorb" already does at 474px, so 30rem clears both
+     and the bar breaks at the same width in either language. */
+  @container pdp-buy-bar (max-width: 30rem) {
+    .pdp-mobile-buy-bar .btn-primary {
+      flex: 1 0 100%;
+    }
   }
 
   .confirm-dialog {

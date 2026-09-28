@@ -12,6 +12,7 @@ import { useLocaleNavigate } from '@/hooks/useLocaleNavigate'
 import { useTranslation } from '@/i18n'
 import { localizedText } from '@/lib/localizedText'
 import { productHighlightIcon, productHighlightLabelKey } from '@/lib/productHighlights'
+import { clampQuantity } from '@/lib/quantity'
 import { useIsAuthenticated } from '@/store/authStore'
 
 interface ProductBuyPanelProps {
@@ -37,8 +38,6 @@ export const ProductBuyPanel = forwardRef<HTMLElement, ProductBuyPanelProps>(
     const toggleWishlist = useToggleWishlist()
     const isInWishlist = useIsInWishlist(product._id)
     const tagline = localizedText(product.taglineI18n, language)
-
-    const clampQuantity = (value: number) => Math.min(99, Math.max(1, value))
 
     const handleWishlistToggle = () => {
       if (!isAuthenticated) {

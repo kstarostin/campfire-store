@@ -1,6 +1,9 @@
 import { useEffect, useState, type CSSProperties, type RefObject } from 'react'
 
-const PDP_DESKTOP_MIN_WIDTH = 900
+/* Matches the breakpoint at which the CSS gives the PDP its second column.
+   Below it the buy panel is full width with the mobile bar carrying the
+   purchase controls, so there is nothing to pin and nothing to squeeze. */
+const PDP_DESKTOP_MIN_WIDTH = 1024
 
 /** Clear space left between the pinned panel and whatever follows the page. */
 const PDP_BUY_BOTTOM_GAP = 32
