@@ -10,7 +10,8 @@ import { SearchField } from '@/components/layout/SearchField'
 import { useCartItemCount } from '@/hooks/useCart'
 import { useTranslation } from '@/i18n'
 import { userPhotoUrl } from '@/lib/imageUrl'
-import { stripLangPrefix } from '@/lib/localePath'
+import { useIsHomePage } from '@/hooks/useIsHomePage'
+import { HOME_SECTIONS } from '@/lib/homeSections'
 import { useAuthStore, useIsAuthenticated } from '@/store/authStore'
 
 function HeaderAccountIcon() {
@@ -30,12 +31,23 @@ function HeaderAccountIcon() {
     .toUpperCase()
 
   if (photoSrc) {
-    return <img src={photoSrc} alt="" className="header-account-avatar" width={40} height={40} />
+    return (
+      <img
+        src={photoSrc}
+        alt=""
+        className="header-account-avatar"
+        width={40}
+        height={40}
+      />
+    )
   }
 
   if (initials) {
     return (
-      <span className="header-account-avatar header-account-avatar--initials" aria-hidden>
+      <span
+        className="header-account-avatar header-account-avatar--initials"
+        aria-hidden
+      >
         {initials}
       </span>
     )
@@ -57,7 +69,8 @@ export function Header() {
 
   // Pages with a full-height hero let the header overlay it transparently; the
   // solid bar only takes over once the hero has scrolled fully out of view.
-  const overlaysHero = stripLangPrefix(location.pathname) === '/'
+  const isHome = useIsHomePage()
+  const overlaysHero = isHome
   const [revealed, setRevealed] = useState(!overlaysHero)
 
   useEffect(() => {
@@ -118,7 +131,9 @@ export function Header() {
               ? 'site-header--revealed fixed inset-x-0 top-0 bg-[rgb(10_50_72/96%)] backdrop-blur-[10px]'
               : 'site-header--overlay absolute inset-x-0 top-0 border-transparent bg-transparent'
             : 'sticky top-0 bg-[rgb(10_50_72/96%)] backdrop-blur-[10px]',
-          megaOpen || (overlaysHero && !revealed) ? 'border-transparent' : 'border-header-border',
+          megaOpen || (overlaysHero && !revealed)
+            ? 'border-transparent'
+            : 'border-header-border',
         ].join(' ')}
         onMouseLeave={() => setMegaOpen(false)}
       >
@@ -150,6 +165,21 @@ export function Header() {
                   aria-hidden
                 />
               </button>
+
+              {/* Jumps to the home page's own sections, so they are only
+                  shown there. Hidden until xl: at lg the last label runs under
+                  the centred logo, which is absolutely positioned and so
+                  cannot push it aside. */}
+              {isHome &&
+                HOME_SECTIONS.map((section) => (
+                  <LocaleLink
+                    key={section.to}
+                    to={section.to}
+                    className="hidden whitespace-nowrap uppercase tracking-[0.06em] text-inherit hover:text-[#ff7a33] xl:inline"
+                  >
+                    {t(section.labelKey)}
+                  </LocaleLink>
+                ))}
             </nav>
 
             <LocaleLink
@@ -215,7 +245,11 @@ export function Header() {
           </div>
         </Container>
 
-        <MegaMenu open={megaOpen} id={megaMenuId} />
+        <MegaMenu
+          open={megaOpen}
+          id={megaMenuId}
+          onNavigate={() => setMegaOpen(false)}
+        />
       </header>
 
       <MobileNav

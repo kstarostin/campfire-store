@@ -17,7 +17,8 @@ export const en = {
     defaultDescription:
       'Shop kayaks, bikes, camping gear, and trail equipment at Campfire Store — priced in your language and currency.',
     productFallbackDescription: 'Shop {name} at Campfire Store.',
-    categoryDescription: 'Browse {name} at Campfire Store — outdoor gear priced in your language and currency.',
+    categoryDescription:
+      'Browse {name} at Campfire Store — outdoor gear priced in your language and currency.',
   },
   toast: {
     addedToCart: 'Added to cart',
@@ -55,7 +56,8 @@ export const en = {
     menu: 'Menu',
     closeMenu: 'Close menu',
     categories: 'Categories',
-    viewAllCategories: 'View all categories',
+    arrivals: 'Arrivals',
+    featured: 'Featured',
     expandCategory: 'Expand {category} subcategories',
     collapseCategory: 'Collapse {category} subcategories',
     languageCurrency: 'Language and currency',
@@ -136,18 +138,22 @@ export const en = {
     titleWithQuery: 'Search: “{query}”',
     resultsFor: 'Search results for',
     emptyTitle: 'Search the store',
-    emptyBody: 'Look up gear, brands, and categories from the search field in the header.',
-    emptyHint: 'Enter a search term in the header to look up gear, brands, and categories.',
+    emptyBody:
+      'Look up gear, brands, and categories from the search field in the header.',
+    emptyHint:
+      'Enter a search term in the header to look up gear, brands, and categories.',
   },
   catalog: {
-    allCategoriesDescription: 'Kayaks to skis, tents to trail bikes — pick your aisle and go.',
+    allCategoriesDescription:
+      'Kayaks to skis, tents to trail bikes — pick your aisle and go.',
     shopCategory: 'Shop this category',
     browseAllCategory: 'Browse all {name}',
     categoryLoading: 'Loading category…',
     categoryError: 'This category could not be loaded. Please try again.',
     oneProduct: '1 product',
     productCount: '{count} products',
-    searchMatches: '{count} products matched across name, brand, description, and categories',
+    searchMatches:
+      '{count} products matched across name, brand, description, and categories',
     filters: 'Filters',
     showFilters: 'Show filters',
     hideFilters: 'Hide filters',
@@ -167,8 +173,10 @@ export const en = {
     sortPriceDesc: 'Sort: Price high–low',
     sortRelevance: 'Sort: Relevance',
     productsLoading: 'Loading products…',
-    productsError: 'Products could not be loaded. The API may be waking up — try again shortly.',
-    noFilterMatch: 'No products match these filters. Try another brand or adjust the price range.',
+    productsError:
+      'Products could not be loaded. The API may be waking up — try again shortly.',
+    noFilterMatch:
+      'No products match these filters. Try another brand or adjust the price range.',
     filtersEmptyTitle: 'No matches for these filters',
     filtersEmptyBody:
       'No products match these filters. Try another brand or adjust the price range.',
@@ -348,7 +356,7 @@ export const en = {
     checkout: 'Checkout',
     emptyTitle: 'Your cart is empty',
     emptyDescription:
-      'Add gear from the catalog — your cart is saved while you\'re signed in.',
+      "Add gear from the catalog — your cart is saved while you're signed in.",
     browseProducts: 'Browse products',
     unitPriceEach: '{price} each',
     removeItem: 'Remove {name}',
@@ -358,7 +366,8 @@ export const en = {
   wishlist: {
     savedCount: '{count} saved',
     emptyTitle: 'Your wishlist is empty',
-    emptyDescription: 'Tap the heart on any product to save it here while you are signed in.',
+    emptyDescription:
+      'Tap the heart on any product to save it here while you are signed in.',
     browseProducts: 'Browse products',
     removeItem: 'Remove {name}',
     addToCart: 'Add to cart',

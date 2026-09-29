@@ -58,7 +58,8 @@ export const de: Messages = {
     menu: 'Menü',
     closeMenu: 'Menü schließen',
     categories: 'Kategorien',
-    viewAllCategories: 'Alle Kategorien anzeigen',
+    arrivals: 'Neuheiten',
+    featured: 'Empfohlen',
     expandCategory: 'Unterkategorien von {category} einblenden',
     collapseCategory: 'Unterkategorien von {category} ausblenden',
     languageCurrency: 'Sprache und Währung',
@@ -146,11 +147,13 @@ export const de: Messages = {
       'Gib einen Suchbegriff in der Kopfzeile ein, um Ausrüstung, Marken und Kategorien zu finden.',
   },
   catalog: {
-    allCategoriesDescription: 'Vom Kajak bis zum Ski — wähl deine Abteilung und leg los.',
+    allCategoriesDescription:
+      'Vom Kajak bis zum Ski — wähl deine Abteilung und leg los.',
     shopCategory: 'Diese Kategorie shoppen',
     browseAllCategory: 'Alle {name} entdecken',
     categoryLoading: 'Kategorie wird geladen…',
-    categoryError: 'Diese Kategorie konnte nicht geladen werden. Bitte erneut versuchen.',
+    categoryError:
+      'Diese Kategorie konnte nicht geladen werden. Bitte erneut versuchen.',
     oneProduct: '1 Produkt',
     productCount: '{count} Produkte',
     searchMatches:
@@ -261,7 +264,8 @@ export const de: Messages = {
       'Aktualisiere, wie dein Name in Bestellungen und beim Checkout angezeigt wird.',
     fullName: 'Vollständiger Name',
     email: 'E-Mail',
-    emailHint: 'Die E-Mail ist mit deiner Anmeldung verknüpft und kann hier nicht geändert werden.',
+    emailHint:
+      'Die E-Mail ist mit deiner Anmeldung verknüpft und kann hier nicht geändert werden.',
     uploadPhoto: 'Profilfoto hochladen',
     photoHint: 'JPEG, PNG oder WebP · min. 500×500',
     saveProfile: 'Änderungen speichern',
@@ -312,7 +316,8 @@ export const de: Messages = {
   product: {
     loading: 'Produkt wird geladen…',
     error: 'Dieses Produkt konnte nicht geladen werden. Bitte versuche es erneut.',
-    relatedError: 'Ähnliche Produkte konnten nicht geladen werden. Bitte versuche es erneut.',
+    relatedError:
+      'Ähnliche Produkte konnten nicht geladen werden. Bitte versuche es erneut.',
     goToImage: 'Bild {index} anzeigen',
     galleryLabel: 'Produktbilder',
     quantity: 'Menge',
@@ -389,7 +394,8 @@ export const de: Messages = {
     quantity: 'Menge {count}',
     placeOrder: 'Bestellung aufgeben',
     placingOrder: 'Bestellung wird aufgegeben…',
-    placeOrderError: 'Bestellung konnte nicht aufgegeben werden. Bitte versuche es erneut.',
+    placeOrderError:
+      'Bestellung konnte nicht aufgegeben werden. Bitte versuche es erneut.',
     backToCart: 'Zurück zum Warenkorb',
     noAddressTitle: 'Keine Lieferadresse gespeichert',
     noAddressBody: 'Füge in deinem Konto eine Adresse hinzu, bevor du zur Kasse gehst.',

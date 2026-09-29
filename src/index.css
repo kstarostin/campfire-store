@@ -153,14 +153,6 @@
     color: #ff7a33;
   }
 
-  .mega-menu-link--view-all {
-    color: var(--color-header-text);
-  }
-
-  .mega-menu-link--view-all:hover {
-    color: #ff7a33;
-  }
-
   .mobile-nav-body .mega-menu-link {
     padding-inline: 1.375rem 0.5rem;
   }
@@ -2378,9 +2370,16 @@
 
   .pdp-story__dropcap {
     float: left;
-    margin: calc(var(--story-line) * -0.06) 0.35rem 0 0;
+    /* Two numbers that have to be tuned together.
+       The lift comes from the margin, not the size: the float pins its box top
+       to the line box, so a bigger cap only grows its own internal leading and
+       pushes the letter further down.
+       What decides how many lines wrap around it is the float's footprint,
+       font-size + margin-top. Keep that under two lines (2.15 - 0.18 = 1.97)
+       or a third line indents too. */
+    margin: calc(var(--story-line) * -0.18) 0.35rem 0 0;
     font-family: var(--font-display);
-    font-size: calc(var(--story-line) * 2);
+    font-size: calc(var(--story-line) * 2.15);
     line-height: 1;
     font-weight: 700;
     color: var(--color-primary-hover);

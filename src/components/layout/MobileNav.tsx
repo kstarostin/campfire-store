@@ -7,7 +7,9 @@ import { LoadingState } from '@/components/ui/LoadingState'
 import { useFocusTrap } from '@/hooks/useFocusTrap'
 import { useTranslation } from '@/i18n'
 import { useCategories } from '@/hooks/useCategories'
+import { useIsHomePage } from '@/hooks/useIsHomePage'
 import { categoryPath } from '@/lib/categoryPath'
+import { HOME_SECTIONS } from '@/lib/homeSections'
 import { useIsAuthenticated } from '@/store/authStore'
 
 interface MobileNavProps {
@@ -22,6 +24,7 @@ export function MobileNav({ open, onClose, returnFocusRef }: MobileNavProps) {
   const navRef = useRef<HTMLElement>(null)
   const isAuthenticated = useIsAuthenticated()
   const categories = useCategories()
+  const isHome = useIsHomePage()
   const [expandedCategoryId, setExpandedCategoryId] = useState<string | null>(null)
 
   useFocusTrap(open, navRef, returnFocusRef)
@@ -68,6 +71,23 @@ export function MobileNav({ open, onClose, returnFocusRef }: MobileNavProps) {
         </div>
 
         <div className="mobile-nav-body min-h-0 flex-1 overflow-y-auto overscroll-y-contain px-4 py-4">
+          {/* Same jumps the header bar shows from xl up, which this drawer is
+              always below. */}
+          {isHome ? (
+            <div className="mb-4 flex flex-wrap gap-x-6 gap-y-2 border-b border-header-border pb-4">
+              {HOME_SECTIONS.map((section) => (
+                <MegaMenuLink
+                  key={section.to}
+                  to={section.to}
+                  className="mega-menu-link--title cursor-pointer rounded-md py-1 font-medium"
+                  onClick={onClose}
+                >
+                  {t(section.labelKey)}
+                </MegaMenuLink>
+              ))}
+            </div>
+          ) : null}
+
           <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-[#8e9a9a]">
             {t('nav.categories')}
           </p>
@@ -149,17 +169,6 @@ export function MobileNav({ open, onClose, returnFocusRef }: MobileNavProps) {
                   </li>
                 )
               })}
-
-              <li className="pt-1">
-                <MegaMenuLink
-                  to="/#categories"
-                  showFire={false}
-                  className="mega-menu-link--view-all w-full rounded-md py-2 text-sm font-semibold"
-                  onClick={onClose}
-                >
-                  {t('nav.viewAllCategories')}
-                </MegaMenuLink>
-              </li>
             </ul>
           ) : null}
         </div>
@@ -169,7 +178,7 @@ export function MobileNav({ open, onClose, returnFocusRef }: MobileNavProps) {
             <li>
               <LocaleLink
                 to={isAuthenticated ? '/account' : '/login'}
-                className="block rounded-md px-2 py-2 hover:bg-white/10 hover:text-[#ff7a33]"
+                className="mega-menu-link--title block rounded-md py-2 pl-[1.375rem] pr-2 font-medium hover:bg-white/10 hover:text-[#ff7a33]"
                 onClick={onClose}
               >
                 {isAuthenticated ? t('nav.account') : t('nav.signIn')}
