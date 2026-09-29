@@ -12,17 +12,28 @@ export function ProductDescription({ product }: ProductDescriptionProps) {
 
   if (!description) return null
 
-  const trimmed = description.trimStart()
-  const firstCharacter = trimmed[0]
-  const remainingText = trimmed.slice(1)
+  // Descriptions carry blank-line paragraph breaks; rendering the whole string
+  // in one <p> would collapse them into a single run-on block.
+  const paragraphs = description
+    .split(/\n\s*\n/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean)
 
   return (
     <section className="pdp-story" aria-labelledby="pdp-story-heading">
       <h2 id="pdp-story-heading">{t('product.onTheTrail')}</h2>
-      <p>
-        <span className="pdp-story__dropcap">{firstCharacter}</span>
-        {remainingText}
-      </p>
+      {paragraphs.map((paragraph, index) => (
+        <p key={index}>
+          {index === 0 ? (
+            <>
+              <span className="pdp-story__dropcap">{paragraph[0]}</span>
+              {paragraph.slice(1)}
+            </>
+          ) : (
+            paragraph
+          )}
+        </p>
+      ))}
     </section>
   )
 }
