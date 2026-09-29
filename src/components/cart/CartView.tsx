@@ -26,9 +26,13 @@ export function CartView() {
     <Container className={`cart-page${hasItems ? ' has-items' : ''}`}>
       <CatalogBreadcrumb items={[{ label: t('pages.cart') }]} />
 
-      <header className="cart-header">
-        <h1>{t('pages.cart')}</h1>
-        {hasItems ? <p>{t('cart.subtitle')}</p> : null}
+      {/* Same .section-head as the catalog and home page sections, so the
+          title and its paragraph carry one treatment across the site. */}
+      <header className="section-head">
+        <div>
+          <h1>{t('pages.cart')}</h1>
+          {hasItems ? <p>{t('cart.subtitle')}</p> : null}
+        </div>
       </header>
 
       {isLoading ? (

@@ -362,10 +362,12 @@ export const de: Messages = {
     proceedToCheckout: 'Zur Kasse',
     continueShopping: 'Weiter einkaufen',
     checkout: 'Kasse',
+    emptyEyebrow: 'Noch nichts eingepackt',
     emptyTitle: 'Dein Warenkorb ist leer',
+    backHome: 'Zurück zur Startseite',
     emptyDescription:
       'Stöbere im Katalog — dein Warenkorb bleibt gespeichert, solange du angemeldet bist.',
-    browseProducts: 'Produkte entdecken',
+    browseProducts: 'Ausrüstung entdecken',
     unitPriceEach: '{price} pro Stück',
     removeItem: '{name} entfernen',
     quantityFor: 'Menge für {name}',

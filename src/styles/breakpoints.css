@@ -121,6 +121,37 @@
       gap: 0.25rem;
     }
 
+    /* The card is a fixed square tall at every width, so on a phone the copy
+       has to shrink to fit it rather than wrap the footer onto extra rows. */
+    .cart-line__meta {
+      font-size: 0.6875rem;
+    }
+
+    .cart-line__unit-price {
+      font-size: 0.6875rem;
+    }
+
+    .cart-line__line-total {
+      font-size: 1.1875rem;
+    }
+
+    .cart-line__footer {
+      gap: 0.5rem;
+    }
+
+    .cart-line__price-block {
+      gap: 0.4375rem;
+    }
+
+    .cart-line .qty-stepper button,
+    .cart-line .qty-stepper input {
+      width: 1.875rem;
+    }
+
+    .cart-line .qty-stepper button {
+      height: 1.875rem;
+    }
+
     .hero-foot {
       flex-direction: column;
       align-items: flex-start;
@@ -165,6 +196,33 @@
     .product-grid {
       grid-template-columns: minmax(0, 1fr);
     }
+
+    /* One more step down: at this width the mobile sizes still push the cart
+       line's footer onto a second row, which the fixed square has no room for. */
+    .cart-line {
+      --cart-line-media: 8.5rem;
+    }
+
+    .cart-line__footer {
+      gap: 0.375rem;
+    }
+
+    /* One line only here — two would not fit the square, and German runs
+       longer than English at the same width. */
+    .cart-line__title {
+      font-size: 1rem;
+      -webkit-line-clamp: 1;
+    }
+
+    /* The widest thing in the footer at this width — "256,95 $ pro Stück" is
+       wider than the stepper — so it sets whether the total fits beside it. */
+    .cart-line__unit-price {
+      font-size: 0.625rem;
+    }
+
+    .cart-line__line-total {
+      font-size: 1rem;
+    }
   }
 
   /* vertical tablet and up */
@@ -192,9 +250,26 @@
     }
 
     .cart-line {
-      grid-template-columns: 6.5rem minmax(0, 1fr);
-      gap: 1.25rem;
-      padding: 1.125rem 1.25rem;
+      --cart-line-media: 11.5rem;
+      --cart-line-inset: 0.5rem;
+    }
+
+    .cart-line__body {
+      gap: 0.75rem;
+      margin: 1rem 1.25rem 1rem 1rem;
+    }
+
+    .cart-line__title {
+      font-size: 1.375rem;
+    }
+
+    .cart-line__body {
+      gap: 0.75rem;
+      margin: 1rem 1.25rem 1rem 1.375rem;
+    }
+
+    .cart-line__body {
+      margin: 1.125rem 1.25rem 1.125rem 1.375rem;
     }
 
     .wishlist-line {

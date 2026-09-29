@@ -354,10 +354,12 @@ export const en = {
     proceedToCheckout: 'Proceed to checkout',
     continueShopping: 'Continue shopping',
     checkout: 'Checkout',
+    emptyEyebrow: 'Nothing packed yet',
     emptyTitle: 'Your cart is empty',
+    backHome: 'Back to home',
     emptyDescription:
       "Add gear from the catalog — your cart is saved while you're signed in.",
-    browseProducts: 'Browse products',
+    browseProducts: 'Browse gear',
     unitPriceEach: '{price} each',
     removeItem: 'Remove {name}',
     quantityFor: 'Quantity for {name}',

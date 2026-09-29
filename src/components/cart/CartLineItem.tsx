@@ -1,4 +1,4 @@
-import { Trash2 } from 'lucide-react'
+import { X } from 'lucide-react'
 import type { Currency } from '@/api/types'
 import { QuantityStepper } from '@/components/cart/QuantityStepper'
 import { LocaleLink } from '@/components/ui/LocaleLink'
@@ -59,15 +59,19 @@ export function CartLineItem({
             disabled={isUpdating}
             onClick={() => onRemove(entry._id)}
           >
-            <Trash2 size={18} aria-hidden />
+            <X size={18} aria-hidden />
           </button>
         </div>
 
         <div className="cart-line__footer">
-          <div>
+          <div className="cart-line__price-block">
             <p className="cart-line__unit-price">
               {t('cart.unitPriceEach', {
-                price: formatAmount(unitPrice(product, currency, entry), currency, formatLocale),
+                price: formatAmount(
+                  unitPrice(product, currency, entry),
+                  currency,
+                  formatLocale,
+                ),
               })}
             </p>
             <QuantityStepper
