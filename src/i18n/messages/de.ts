@@ -403,6 +403,7 @@ export const de: Messages = {
     noAddressTitle: 'Keine Lieferadresse gespeichert',
     noAddressBody: 'Füge in deinem Konto eine Adresse hinzu, bevor du zur Kasse gehst.',
     addAddress: 'Adresse hinzufügen',
+    successEyebrow: 'Vielen Dank',
     successTitle: 'Bestellung aufgegeben',
     successBody: 'Danke, {name}. Deine Bestellung ist bestätigt.',
     successEmailNote: 'Eine Bestätigungs-E-Mail ist unterwegs zu deinem Posteingang.',

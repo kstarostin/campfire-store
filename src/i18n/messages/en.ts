@@ -394,6 +394,7 @@ export const en = {
     noAddressTitle: 'No delivery address saved',
     noAddressBody: 'Add an address in your account before checkout.',
     addAddress: 'Add address',
+    successEyebrow: 'Thank you',
     successTitle: 'Order placed',
     successBody: 'Thanks, {name}. Your order is confirmed.',
     successEmailNote: 'A confirmation email is on its way to your inbox.',
