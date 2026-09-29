@@ -354,6 +354,7 @@ export const en = {
     proceedToCheckout: 'Proceed to checkout',
     continueShopping: 'Continue shopping',
     checkout: 'Checkout',
+    removeItemShort: 'Remove item',
     emptyEyebrow: 'Nothing packed yet',
     emptyTitle: 'Your cart is empty',
     backHome: 'Back to home',

@@ -1,4 +1,4 @@
-import { MapPin, Package } from 'lucide-react'
+import { MapPin, Package, Pencil } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { CatalogBreadcrumb } from '@/components/catalog/CatalogPageHeader'
 import { CheckoutAddressEmpty } from '@/components/checkout/CheckoutAddressEmpty'
@@ -30,11 +30,19 @@ function resolveBillingAddress(
 export function CheckoutView() {
   const { t } = useTranslation()
   const navigate = useLocaleNavigate()
-  const { data: cartData, isLoading: isCartLoading, isError: isCartError, refetch } = useCart()
+  const {
+    data: cartData,
+    isLoading: isCartLoading,
+    isError: isCartError,
+    refetch,
+  } = useCart()
   const { data: user, isLoading: isUserLoading } = useAccountUser()
   const placeOrder = usePlaceOrder()
 
-  const deliveryAddresses = useMemo(() => user?.deliveryAddresses ?? [], [user?.deliveryAddresses])
+  const deliveryAddresses = useMemo(
+    () => user?.deliveryAddresses ?? [],
+    [user?.deliveryAddresses],
+  )
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null)
   const [deliveryNote, setDeliveryNote] = useState('')
   const [deliveryNoteInitialized, setDeliveryNoteInitialized] = useState(false)
@@ -90,7 +98,9 @@ export function CheckoutView() {
   }
 
   return (
-    <Container className={`checkout-page${hasItems && !showSuccess ? ' has-mobile-bar' : ''}`}>
+    <Container
+      className={`checkout-page${hasItems && !showSuccess ? ' has-mobile-bar' : ''}`}
+    >
       <CatalogBreadcrumb
         items={[
           { label: t('pages.cart'), to: '/cart' },
@@ -99,13 +109,16 @@ export function CheckoutView() {
       />
 
       {!showSuccess ? (
-        <header className="checkout-header">
-          <h1>{t('pages.checkout')}</h1>
-          <p>
-            {deliveryAddresses.length === 0
-              ? t('checkout.noAddressSubtitle')
-              : t('checkout.subtitle')}
-          </p>
+        <header className="section-head">
+          {/* Same .section-head as the cart and the catalog pages. */}
+          <div>
+            <h1>{t('pages.checkout')}</h1>
+            <p>
+              {deliveryAddresses.length === 0
+                ? t('checkout.noAddressSubtitle')
+                : t('checkout.subtitle')}
+            </p>
+          </div>
         </header>
       ) : null}
 
@@ -129,8 +142,15 @@ export function CheckoutView() {
                     <MapPin size={18} aria-hidden />
                     {t('checkout.deliveryAddress')}
                   </h2>
-                  <LocaleLink className="checkout-text-link" to="/account?panel=addresses">
-                    {t('checkout.manageAddresses')}
+                  {/* The label lives in the tooltip and the accessible name,
+                      so the head stays a heading and one small control. */}
+                  <LocaleLink
+                    className="icon-link has-tooltip"
+                    to="/account?panel=addresses"
+                    aria-label={t('checkout.manageAddresses')}
+                    data-tooltip={t('checkout.manageAddresses')}
+                  >
+                    <Pencil size={18} aria-hidden />
                   </LocaleLink>
                 </div>
 
@@ -157,7 +177,10 @@ export function CheckoutView() {
                   <Package size={18} aria-hidden />
                   {t('checkout.orderReview')}
                 </h2>
-                <CheckoutOrderReview lines={cartData.lines} currency={cartData.cart.currency} />
+                <CheckoutOrderReview
+                  lines={cartData.lines}
+                  currency={cartData.cart.currency}
+                />
               </section>
             </div>
 
@@ -174,7 +197,10 @@ export function CheckoutView() {
           </div>
 
           {placeOrderError ? (
-            <p className="checkout-form-message checkout-form-message--error" role="alert">
+            <p
+              className="checkout-form-message checkout-form-message--error"
+              role="alert"
+            >
               {placeOrderError}
             </p>
           ) : null}

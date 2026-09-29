@@ -54,8 +54,9 @@ export function CartLineItem({
           </div>
           <button
             type="button"
-            className="cart-line__remove"
+            className="cart-line__remove has-tooltip"
             aria-label={t('cart.removeItem', { name: product.name })}
+            data-tooltip={t('cart.removeItemShort')}
             disabled={isUpdating}
             onClick={() => onRemove(entry._id)}
           >

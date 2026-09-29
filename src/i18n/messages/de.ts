@@ -362,6 +362,7 @@ export const de: Messages = {
     proceedToCheckout: 'Zur Kasse',
     continueShopping: 'Weiter einkaufen',
     checkout: 'Kasse',
+    removeItemShort: 'Artikel entfernen',
     emptyEyebrow: 'Noch nichts eingepackt',
     emptyTitle: 'Dein Warenkorb ist leer',
     backHome: 'Zurück zur Startseite',
