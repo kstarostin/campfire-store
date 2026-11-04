@@ -208,6 +208,17 @@
     font-size: 16.2cqi;
   }
 
+  /* German titles are longer — "Kontakt aufnehmen" renders 767px per 100px,
+     "Bleib auf dem Laufenden" 959px — and, being nowrap, would otherwise
+     overflow into the neighbouring column. */
+  :root[lang='de'] .footer-fill-title--contact {
+    font-size: 13cqi;
+  }
+
+  :root[lang='de'] .footer-fill-title--news {
+    font-size: 10.4cqi;
+  }
+
   .site-footer {
     position: relative;
     margin-top: var(--section-spacing);
